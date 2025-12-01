@@ -54,7 +54,134 @@ Další relevantní informace.
 
 ---
 
+## C# Unit Testing Standards
+
+**KRITICKÉ - PŘI PSANÍ TESTŮ V C#:**
+
+Pro všechny C# projekty používej následující testovací stack:
+
+### Testovací framework: xUnit
+
+```csharp
+// Použij xUnit atributy
+[Fact]
+public void MethodName_Scenario_ExpectedResult()
+{
+    // Arrange
+    // Act  
+    // Assert
+}
+
+[Theory]
+[InlineData("input1", "expected1")]
+[InlineData("input2", "expected2")]
+public void MethodName_MultipleInputs_ReturnsExpected(string input, string expected)
+{
+    // ...
+}
+```
+
+### Mocking framework: Moq
+
+```csharp
+using Moq;
+
+// Vytvoření mocku
+var loggerMock = new Mock<ILogger<MyService>>();
+var repositoryMock = new Mock<IRepository>();
+
+// Setup chování
+repositoryMock.Setup(r => r.GetByIdAsync(It.IsAny<int>()))
+    .ReturnsAsync(new Entity { Id = 1, Name = "Test" });
+
+// Verifikace volání
+repositoryMock.Verify(r => r.SaveAsync(It.IsAny<Entity>()), Times.Once);
+```
+
+### Struktura testovacího projektu
+
+```
+tests/
+  ProjectName.Tests/
+    ProjectName.Tests.csproj
+    Services/
+      MyServiceTests.cs
+    Handlers/
+      MyHandlerTests.cs
+```
+
+### Povinné NuGet balíčky
+
+```xml
+<ItemGroup>
+  <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.*" />
+  <PackageReference Include="xunit" Version="2.*" />
+  <PackageReference Include="xunit.runner.visualstudio" Version="2.*" />
+  <PackageReference Include="Moq" Version="4.*" />
+  <PackageReference Include="coverlet.collector" Version="6.*" />
+</ItemGroup>
+```
+
+### Konvence pojmenování testů
+
+```
+[MethodUnderTest]_[Scenario]_[ExpectedResult]
+```
+
+Příklady:
+- `SaveNoteAsync_ValidInput_CreatesFile`
+- `ParseCommand_EmptyString_ReturnsNull`
+- `Calculate_NegativeNumber_ThrowsException`
+
+### AAA Pattern (Arrange-Act-Assert)
+
+```csharp
+[Fact]
+public async Task SaveNoteAsync_ValidInput_ReturnsSuccess()
+{
+    // Arrange
+    var service = new NoteService(_loggerMock.Object, _config);
+    var title = "Test";
+    var content = "Content";
+
+    // Act
+    var result = await service.SaveNoteAsync(title, content);
+
+    // Assert
+    Assert.True(result.Success);
+    Assert.NotNull(result.FilePath);
+}
+```
+
+**DŮLEŽITÉ:**
+- VŽDY používej Moq pro mockování závislostí (NE NSubstitute, NE FakeItEasy)
+- VŽDY používej xUnit (NE NUnit, NE MSTest)
+- Každý test testuje JEDNU věc
+- Testy jsou izolované - žádná závislost na databázi, síti, souborovém systému (kromě temp složek)
+
+---
+
 ## Deployment Workflow
+
+### 0. Přečti projektový AGENTS.md
+
+**KRITICKÉ - PŘED KAŽDÝM DEPLOYEM:**
+
+Před deployem VŽDY zkontroluj `AGENTS.md` v projektu - může obsahovat specifická pravidla!
+
+```bash
+# Přečti AGENTS.md v projektu
+cat /path/to/project/AGENTS.md | head -50
+```
+
+Projekty mohou mít vlastní pravidla pro:
+- Které služby (ne)restartovat automaticky
+- Specifické kroky před/po deployi
+- Výjimky z obecného workflow
+
+**Teprve potom pokračuj s deployem.**
+
+---
 
 ### 1. Compilation
 
@@ -380,13 +507,31 @@ Ihned po přečtení issue přidej do jeho popisu (nebo komentáře) checklist k
 - GitHub zobrazuje progress (např. "3/8 completed")
 - Slouží jako dokumentace pro ostatní
 
-**Průběžně označuj dokončené kroky:**
+**🚨 KRITICKÉ - PRŮBĚŽNĚ OZNAČUJ DOKONČENÉ KROKY:**
+
+**IHNED po dokončení každého kroku** musíš aktualizovat GitHub issue a označit krok jako hotový `[x]`. **NEČEKEJ na konec!**
+
 ```markdown
 - [x] Vytvořit větev
 - [x] Implementovat hlavní změnu
 - [ ] Napsat unit testy  ← právě pracuji
 - [ ] Spustit všechny testy
 ```
+
+**Workflow při práci na issue:**
+1. Dokončíš krok (např. "Implementovat endpoint")
+2. **IHNED** jdi do GitHub issue
+3. Označ `[ ]` → `[x]` pro tento krok
+4. Pokračuj na další krok
+5. Opakuj
+
+**Proč je to kritické:**
+- Když se práce přeruší, je jasné co už je hotové
+- Uživatel vidí průběh v reálném čase
+- GitHub ukazuje progress bar (např. "5/8 completed")
+- Příště víš, kde jsi skončil
+
+**NIKDY neodškrtávej všechny kroky najednou na konci!**
 
 ### 2. Vytvoření větve
 Před začátkem práce na issue vytvoř novou větev s logickým názvem:
