@@ -32,25 +32,19 @@ gh issue create --repo Olbrasoft/VoiceAssistant \
 | "Udělej z toho issue" | → Vytvoř GitHub Issue |
 | "To bude nová feature" | → Vytvoř GitHub Issue |
 
-### Formát issue:
+### Formát hlavního issue:
 
 ```markdown
-## Popis
+## Problém
 Krátký popis problému nebo požadavku.
-
-## Kroky k dokončení
-- [ ] Krok 1
-- [ ] Krok 2
-- [ ] Napsat testy
-- [ ] Spustit všechny testy
-- [ ] Merge do main
-- [ ] Deploy
 
 ## Poznámky
 Další relevantní informace.
 ```
 
-**DŮLEŽITÉ:** Neptat se uživatele "Mám vytvořit GitHub issue?" - prostě ho vytvoř, když uživatel řekne že chce úkol.
+**DŮLEŽITÉ:** 
+- Neptat se uživatele "Mám vytvořit GitHub issue?" - prostě ho vytvoř, když uživatel řekne že chce úkol.
+- **NEPOUŽÍVEJ markdown checkboxy** (`- [ ]`) pro kroky! Místo toho vytvoř **sub-issues** (viz sekce níže).
 
 ---
 
@@ -375,32 +369,32 @@ Každý issue z GitHubu se řeší v samostatné větvi.
 
 ---
 
-### ⚠️ NEJDŮLEŽITĚJŠÍ PRAVIDLO - PRŮBĚŽNÉ ODŠKRTÁVÁNÍ
+### ⚠️ NEJDŮLEŽITĚJŠÍ PRAVIDLO - PRŮBĚŽNÉ ZAVÍRÁNÍ SUB-ISSUES
 
 > **🚨 TOTO JE MANDATORNÍ - BEZ VÝJIMEK! 🚨**
 >
-> **IHNED po dokončení KAŽDÉHO kroku** musíš jít do GitHub issue a označit krok jako hotový `[x]`.
+> **IHNED po dokončení KAŽDÉHO kroku** musíš zavřít příslušný sub-issue pomocí `gh issue close`.
 >
 > **NEČEKEJ na konec! NEČEKEJ na další krok! UDĚLEJ TO HNED!**
 
 **Proč je to tak důležité:**
 1. Práce může být kdykoli přerušena (výpadek, restart, nová konverzace)
-2. Bez průběžného odškrtávání se ztratí informace o tom, co už je hotové
+2. Bez průběžného zavírání sub-issues se ztratí informace o tom, co už je hotové
 3. Uživatel vidí progress v reálném čase
 4. Příště okamžitě víš, kde jsi skončil
 
 **Správný postup:**
 ```
 1. Dokončíš krok (např. "Napsat testy")
-2. IHNED → Otevři GitHub issue v prohlížeči
-3. IHNED → Klikni na checkbox [ ] → [x]
-4. Teprve potom → Pokračuj na další krok
+2. IHNED → Zavři sub-issue: gh issue close <číslo> --repo Olbrasoft/VoiceAssistant
+3. Teprve potom → Pokračuj na další krok
 ```
 
 **❌ ZAKÁZANÉ CHOVÁNÍ:**
-- Odškrtnout všechny kroky najednou na konci
+- Zavřít všechny sub-issues najednou na konci
 - Čekat "až dokončím ještě jednu věc"
-- Zapomenout odškrtnout a pokračovat dál
+- Zapomenout zavřít a pokračovat dál
+- Používat markdown checkboxy místo sub-issues
 
 ---
 
@@ -459,7 +453,10 @@ Každý issue z GitHubu se řeší v samostatné větvi.
    playwright_browser_press_key → F5
    ```
 
-4. **Označ splněný TODO v issue** (klikni na checkbox přes Playwright)
+4. **Zavři dokončený sub-issue:**
+   ```bash
+   gh issue close <číslo> --repo Olbrasoft/VoiceAssistant
+   ```
 
 5. **Přepni zpět na VS Code:**
    ```bash
@@ -514,55 +511,58 @@ for w in json.loads(d[s:e]):
 
 ### Workflow:
 
-### 1. Aktualizace issue s checklistem
+### 1. Vytvoření sub-issues pro kroky
 
 **KRITICKÉ - PŘI ZAHÁJENÍ PRÁCE NA ISSUE:**
 
-Ihned po přečtení issue přidej do jeho popisu (nebo komentáře) checklist kroků, které je třeba udělat. Používej GitHub Markdown checkboxy:
+Ihned po přečtení hlavního issue vytvoř pro každý krok samostatný **sub-issue**:
 
-```markdown
-## Kroky k dokončení
-- [ ] Vytvořit větev
-- [ ] Implementovat hlavní změnu
-- [ ] Přidat InternalsVisibleTo (pokud potřeba)
-- [ ] Napsat unit testy
-- [ ] Spustit všechny testy
-- [ ] Commit + push
-- [ ] Merge do main
-- [ ] Deploy a restart služby
+```bash
+# Vytvoření sub-issue propojeného s hlavním issue #43
+gh issue create --repo Olbrasoft/VoiceAssistant \
+  --title "Vytvořit větev pro #43" \
+  --body "Sub-issue pro #43"
+
+gh issue create --repo Olbrasoft/VoiceAssistant \
+  --title "Implementovat hlavní změnu pro #43" \
+  --body "Sub-issue pro #43"
+
+gh issue create --repo Olbrasoft/VoiceAssistant \
+  --title "Napsat unit testy pro #43" \
+  --body "Sub-issue pro #43"
 ```
 
-**Proč:**
-- Při příštím otevření issue okamžitě vidíš, co je hotové
-- Nemusíš procházet celý projekt, abys zjistil stav
-- GitHub zobrazuje progress (např. "3/8 completed")
-- Slouží jako dokumentace pro ostatní
+**Proč sub-issues místo markdown checkboxů:**
+- Každý krok má vlastní historii a diskuzi
+- Lze je přiřadit různým lidem
+- GitHub ukazuje progress v `sub_issues_summary`
+- Automatické propojení s TodoWrite pluginem pro zavírání
+- Při příštím otevření okamžitě vidíš stav každého kroku
 
-**🚨 KRITICKÉ - PRŮBĚŽNĚ OZNAČUJ DOKONČENÉ KROKY:**
+**🚨 KRITICKÉ - PRŮBĚŽNĚ ZAVÍREJ DOKONČENÉ SUB-ISSUES:**
 
-**IHNED po dokončení každého kroku** musíš aktualizovat GitHub issue a označit krok jako hotový `[x]`. **NEČEKEJ na konec!**
+**IHNED po dokončení každého kroku** zavři příslušný sub-issue. **NEČEKEJ na konec!**
 
-```markdown
-- [x] Vytvořit větev
-- [x] Implementovat hlavní změnu
-- [ ] Napsat unit testy  ← právě pracuji
-- [ ] Spustit všechny testy
+```bash
+# Zavření sub-issue po dokončení kroku
+gh issue close 44 --repo Olbrasoft/VoiceAssistant
 ```
 
 **Workflow při práci na issue:**
 1. Dokončíš krok (např. "Implementovat endpoint")
-2. **IHNED** jdi do GitHub issue
-3. Označ `[ ]` → `[x]` pro tento krok
-4. Pokračuj na další krok
-5. Opakuj
+2. **IHNED** zavři sub-issue: `gh issue close <číslo>`
+3. Pokračuj na další krok
+4. Opakuj
 
 **Proč je to kritické:**
 - Když se práce přeruší, je jasné co už je hotové
 - Uživatel vidí průběh v reálném čase
-- GitHub ukazuje progress bar (např. "5/8 completed")
+- GitHub ukazuje progress (např. "2/5 completed" v sub_issues_summary)
 - Příště víš, kde jsi skončil
 
-**NIKDY neodškrtávej všechny kroky najednou na konci!**
+**NIKDY nezavírej všechny sub-issues najednou na konci!**
+
+**NEPOUŽÍVEJ markdown checkboxy (`- [ ]`) v body issue!**
 
 ### 2. Vytvoření větve
 Před začátkem práce na issue vytvoř novou větev s logickým názvem:
@@ -667,7 +667,7 @@ git branch -d fix/issue-3-stop-detection-before-routing
 
 Issue **NELZE** uzavřít, dokud nejsou splněny VŠECHNY následující podmínky:
 
-1. **Všechny kroky v checklistu jsou dokončeny** - všechny `[ ]` musí být `[x]`
+1. **Všechny sub-issues jsou zavřené** - žádný otevřený sub-issue nesmí zůstat
 2. **Všechny testy prochází** - `dotnet test` vrací exit code 0
 3. **Kód je deploynutý** - nová verze běží v produkci
 4. **Funkčnost je ověřena** - reálný test s uživatelem
