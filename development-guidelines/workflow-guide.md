@@ -373,6 +373,37 @@ systemctl --user status service.service  # Check!
 
 Každý issue z GitHubu se řeší v samostatné větvi.
 
+---
+
+### ⚠️ NEJDŮLEŽITĚJŠÍ PRAVIDLO - PRŮBĚŽNÉ ODŠKRTÁVÁNÍ
+
+> **🚨 TOTO JE MANDATORNÍ - BEZ VÝJIMEK! 🚨**
+>
+> **IHNED po dokončení KAŽDÉHO kroku** musíš jít do GitHub issue a označit krok jako hotový `[x]`.
+>
+> **NEČEKEJ na konec! NEČEKEJ na další krok! UDĚLEJ TO HNED!**
+
+**Proč je to tak důležité:**
+1. Práce může být kdykoli přerušena (výpadek, restart, nová konverzace)
+2. Bez průběžného odškrtávání se ztratí informace o tom, co už je hotové
+3. Uživatel vidí progress v reálném čase
+4. Příště okamžitě víš, kde jsi skončil
+
+**Správný postup:**
+```
+1. Dokončíš krok (např. "Napsat testy")
+2. IHNED → Otevři GitHub issue v prohlížeči
+3. IHNED → Klikni na checkbox [ ] → [x]
+4. Teprve potom → Pokračuj na další krok
+```
+
+**❌ ZAKÁZANÉ CHOVÁNÍ:**
+- Odškrtnout všechny kroky najednou na konci
+- Čekat "až dokončím ještě jednu věc"
+- Zapomenout odškrtnout a pokračovat dál
+
+---
+
 ### 🖥️ Workflow s okny při vývoji
 
 **KOMPLETNÍ POSTUP PŘI PRÁCI NA GITHUB ISSUE:**
