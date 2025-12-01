@@ -367,37 +367,6 @@ systemctl --user status service.service  # Check!
 
 Každý issue z GitHubu se řeší v samostatné větvi.
 
----
-
-### ⚠️ NEJDŮLEŽITĚJŠÍ PRAVIDLO - PRŮBĚŽNÉ ZAVÍRÁNÍ SUB-ISSUES
-
-> **🚨 TOTO JE MANDATORNÍ - BEZ VÝJIMEK! 🚨**
->
-> **IHNED po dokončení KAŽDÉHO kroku** musíš zavřít příslušný sub-issue pomocí `gh issue close`.
->
-> **NEČEKEJ na konec! NEČEKEJ na další krok! UDĚLEJ TO HNED!**
-
-**Proč je to tak důležité:**
-1. Práce může být kdykoli přerušena (výpadek, restart, nová konverzace)
-2. Bez průběžného zavírání sub-issues se ztratí informace o tom, co už je hotové
-3. Uživatel vidí progress v reálném čase
-4. Příště okamžitě víš, kde jsi skončil
-
-**Správný postup:**
-```
-1. Dokončíš krok (např. "Napsat testy")
-2. IHNED → Zavři sub-issue: gh issue close <číslo> --repo Olbrasoft/VoiceAssistant
-3. Teprve potom → Pokračuj na další krok
-```
-
-**❌ ZAKÁZANÉ CHOVÁNÍ:**
-- Zavřít všechny sub-issues najednou na konci
-- Čekat "až dokončím ještě jednu věc"
-- Zapomenout zavřít a pokračovat dál
-- Používat markdown checkboxy místo sub-issues
-
----
-
 ### 🖥️ Workflow s okny při vývoji
 
 **KOMPLETNÍ POSTUP PŘI PRÁCI NA GITHUB ISSUE:**
@@ -509,8 +478,6 @@ for w in json.loads(d[s:e]):
 
 ---
 
-### Workflow:
-
 ### 1. Vytvoření sub-issues pro kroky
 
 **KRITICKÉ - PŘI ZAHÁJENÍ PRÁCE NA ISSUE:**
@@ -532,11 +499,20 @@ gh issue create --repo Olbrasoft/VoiceAssistant \
   --body "Sub-issue pro #43"
 ```
 
-**Proč sub-issues místo markdown checkboxů:**
+**Proč sub-issues místo markdown checkboxů nebo komentářů:**
+
+> **⚠️ PRAVIDLO: VŽDY SUB-ISSUES - BEZ VÝJIMEK!**
+>
+> I pro malé úkoly (1-2 kroky) VŽDY vytvoř sub-issues.
+> Žádné checkboxy, žádné "poznámky v komentáři".
+
+**Důvody:**
+- **Checkboxy nelze "zavřít"** - není jasný progress, nelze automatizovat
+- **Komentáře nelze označit jako hotové** - jak bys označil že krok v komentáři je dokončený?
+- **Konzistentní workflow** - vždy stejný postup bez výjimek = méně chyb
 - Každý krok má vlastní historii a diskuzi
 - Lze je přiřadit různým lidem
-- GitHub ukazuje progress v `sub_issues_summary`
-- Automatické propojení s TodoWrite pluginem pro zavírání
+- GitHub ukazuje progress v `sub_issues_summary` (např. "2/5 completed")
 - Při příštím otevření okamžitě vidíš stav každého kroku
 
 **🚨 KRITICKÉ - PRŮBĚŽNĚ ZAVÍREJ DOKONČENÉ SUB-ISSUES:**
@@ -584,7 +560,7 @@ git checkout -b enhancement/issue-5-config-to-appsettings
 - `enhancement/issue-N-krátký-popis` - pro vylepšení
 - `refactor/issue-N-krátký-popis` - pro refaktoring
 
-### 2. Implementace s průběžnými commity
+### 3. Implementace s průběžnými commity
 
 **KRITICKÉ - COMMITUJ A PUSHUJ ČASTO:**
 
@@ -633,7 +609,7 @@ git push
 5. "Fix #3: Complete stop detection before routing"
 ```
 
-### 3. Spuštění testů
+### 4. Spuštění testů
 
 ```bash
 cd /path/to/project
@@ -644,7 +620,7 @@ dotnet test
 - Pokud nějaký test selže, oprav ho a commitni + pushni opravu
 - Teprve pak pokračuj k merge
 
-### 4. Sloučení s hlavní větví
+### 5. Sloučení s hlavní větví
 Po dokončení a otestování:
 
 ```bash
@@ -661,7 +637,7 @@ git push origin main
 git branch -d fix/issue-3-stop-detection-before-routing
 ```
 
-### 5. Uzavření issue
+### 6. Uzavření issue
 
 **🚨 KRITICKÉ - PRAVIDLA PRO UZAVŘENÍ ISSUE:**
 
