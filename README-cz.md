@@ -1,5 +1,10 @@
 # Engineering Handbook
 
+> **⚠️ POZNÁMKA K SYNCHRONIZACI:**  
+> Tento soubor je česká verze dokumentu. Pokud upravujete tento soubor, **VŽDY také aktualizujte anglickou verzi** (`README.md`), aby obsahovala všechny stejné informace (kromě této poznámky o synchronizaci).
+
+---
+
 A comprehensive collection of development standards and reference guides for software engineering teams. This repository serves as a centralized knowledge base for coding best practices, architectural patterns, and development workflows.
 
 ## Why This Repository Exists
