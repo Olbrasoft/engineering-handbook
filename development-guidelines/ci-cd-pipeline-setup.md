@@ -1,62 +1,62 @@
-# CI/CD Pipeline Setup for NuGet Package Publishing
+# CI/CD Pipeline Setup for NuGet Packages
 
 ## Overview
 
-This document describes how to set up automated CI/CD pipelines for building, testing, and publishing .NET NuGet packages to NuGet.org using GitHub Actions.
+Automated CI/CD pipeline setup for building, testing, and publishing .NET NuGet packages using GitHub Actions.
 
 ---
 
-## 🎯 Kdy kontrolovat CI/CD nastavení
+## 🎯 When to Check CI/CD Setup
 
-**KRITICKÉ - PŘI KAŽDÉM PROJEKTU:**
+**CRITICAL - FOR EVERY PROJECT:**
 
-Při zahájení práce na **jakémkoli .NET projektu**, který publikuje NuGet balíčky, **VŽDY zkontroluj**, zda existuje správné CI/CD nastavení:
+When starting work on **any .NET project** that publishes NuGet packages, **ALWAYS verify** proper CI/CD configuration exists:
 
-### Kontrolní seznam:
+### Checklist:
 
-- [ ] Existuje `.github/workflows/build.yml`?
-- [ ] Existuje `.github/workflows/publish-nuget.yml`?
-- [ ] Je nakonfigurovaný GitHub Secret `NUGET_API_KEY`?
-- [ ] Obsahují workflows všechny podporované .NET verze?
-- [ ] Jsou v README.md CI/CD status badges?
+- [ ] `.github/workflows/build.yml` exists
+- [ ] `.github/workflows/publish-nuget.yml` exists
+- [ ] GitHub Secret `NUGET_API_KEY` configured
+- [ ] Workflows include all supported .NET versions
+- [ ] README.md includes CI/CD status badges
 
-**Pokud COKOLIV chybí → implementuj to podle tohoto průvodce!**
+**If ANYTHING is missing → implement according to this guide!**
 
 ---
 
-## 📦 Jak funguje publikace balíčků
+## 📦 How Package Publishing Works
 
-### Repository-specifická konfigurace
+### Repository-Specific Configuration
 
-**DŮLEŽITÉ:** CI/CD pipeline je **specifická pro každý GitHub repository**, NENÍ globální.
+**IMPORTANT:** CI/CD pipeline is **repository-specific**, NOT global.
 
-Pro **každý projekt** musíš:
-1. Vytvořit workflow soubory (`.github/workflows/*.yml`)
-2. Nastavit GitHub Secret s NuGet API klíčem
-3. Nakonfigurovat metadata v `.csproj` souborech
+For **each project** you must:
+1. Create workflow files (`.github/workflows/*.yml`)
+2. Set GitHub Secret with NuGet API key
+3. Configure metadata in `.csproj` files
 
-### Automatická detekce balíčků
+### Automatic Package Detection
 
-Pipeline pomocí `dotnet pack` **automaticky najde VŠECHNY** balíčky v solution:
+Pipeline automatically finds **ALL** packages in solution using `dotnet pack`:
 
 ```bash
 dotnet pack --configuration Release --no-build --output ./artifacts
 ```
 
-Tímto příkazem se vytvoří `.nupkg` soubory pro:
-- Všechny projekty, které mají `<IsPackable>true</IsPackable>` (nebo to nemají zakázané)
-- Všechny projekty s nastavenými NuGet metadaty (`<PackageId>`, `<Version>`, atd.)
+Creates `.nupkg` files for:
+- All projects with `<IsPackable>true</IsPackable>` (or not disabled)
+- All projects with NuGet metadata (`<PackageId>`, `<Version>`, etc.)
 
-**Příklad:** V projektu Mediation se publikují **2 balíčky najednou**:
+**Example:** Mediation project publishes **2 packages simultaneously**:
 - `Olbrasoft.Mediation.X.X.X.nupkg`
 - `Olbrasoft.Mediation.Abstractions.X.X.X.nupkg`
 
-### Kdy se publikuje
+### When Publishing Occurs
 
-Publikace na NuGet.org se spustí **pouze když**:
+Publishes to NuGet.org **only when**:
 
-1. ✅ Všechny testy prošly (`dotnet test` exit code 0)
-2. ✅ **A** je to push na `main` branch **NEBO** push tagu `v*` (např. `v10.0.0`)
+1. ✅ All tests pass (`dotnet test` exit code 0)
+2. ✅ **AND** push to `main` branch **OR** push tag `v*` (e.g., `v10.0.0`)
 
 ```yaml
 if: success() && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))
@@ -64,36 +64,36 @@ if: success() && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'ref
 
 ---
 
-## 🔧 Implementace CI/CD v novém projektu
+## 🔧 Implementation in New Project
 
-### Krok 1: NuGet API klíč
+### Step 1: NuGet API Key
 
-**Umístění klíče:**
+**Key location:**
 ```
 ~/Dokumenty/Keys/nuget-key.txt
 ```
 
-**Přidání do GitHub Secrets:**
+**Add to GitHub Secrets:**
 
-1. Přečti klíč ze souboru:
+1. Read key from file:
    ```bash
    cat ~/Dokumenty/Keys/nuget-key.txt
    ```
 
-2. Přidej do GitHub repository:
-   - Jdi na: `Settings` → `Secrets and variables` → `Actions`
-   - Klikni: `New repository secret`
+2. Add to GitHub repository:
+   - Navigate: `Settings` → `Secrets and variables` → `Actions`
+   - Click: `New repository secret`
    - Name: `NUGET_API_KEY`
-   - Value: *[obsah souboru nuget-key.txt]*
-   - Ulož
+   - Value: *[content of nuget-key.txt]*
+   - Save
 
-**⚠️ POZOR:** Stejný NuGet API klíč můžeš použít pro všechny Olbrasoft projekty.
+**⚠️ NOTE:** Same NuGet API key can be used for all Olbrasoft projects.
 
 ---
 
-### Krok 2: Build Workflow
+### Step 2: Build Workflow
 
-Vytvoř soubor `.github/workflows/build.yml`:
+Create `.github/workflows/build.yml`:
 
 ```yaml
 name: Build
@@ -131,17 +131,17 @@ jobs:
       run: dotnet test --configuration Release --no-build --verbosity normal
 ```
 
-**Co dělá:**
-- Spouští se při pushu na `main`/`develop` nebo pull requestech
-- Nainstaluje všechny podporované .NET SDK verze
+**Function:**
+- Triggers on push to `main`/`develop` or pull requests
+- Installs all supported .NET SDK versions
 - Restore → Build → Test
-- **Nepublikuje** na NuGet
+- **Does NOT publish** to NuGet
 
 ---
 
-### Krok 3: Publish Workflow
+### Step 3: Publish Workflow
 
-Vytvoř soubor `.github/workflows/publish-nuget.yml`:
+Create `.github/workflows/publish-nuget.yml`:
 
 ```yaml
 name: Build, Test & Publish NuGet Package
@@ -171,7 +171,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
-        fetch-depth: 0  # Full history for versioning
+        fetch-depth: 0
     
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v4
@@ -220,23 +220,16 @@ jobs:
         retention-days: 30
 ```
 
-**Co dělá:**
-- Spouští se při pushu na `main`, tagech `v*`, pull requestech
-- Restore → Build → Test → Pack
-- **Publikuje na NuGet.org** pouze při pushu na `main` nebo tag `v*`
-- Používá `--skip-duplicate` - nepřepíše existující verzi
-- Ukládá artefakty (.nupkg) pro 30 dní
-
-**Klíčové parametry:**
-- `permissions:` - Povolení pro GitHub Actions
-- `NUGET_API_KEY` - GitHub Secret s API klíčem
-- `--skip-duplicate` - Zabránění chybě při již existující verzi
+**Key parameters:**
+- `permissions:` - GitHub Actions permissions
+- `NUGET_API_KEY` - GitHub Secret with API key
+- `--skip-duplicate` - Prevents error when version exists
 
 ---
 
-### Krok 4: NuGet metadata v .csproj
+### Step 4: NuGet Metadata in .csproj
 
-Každý projekt, který chceš publikovat, musí mít metadata:
+Each project to publish requires metadata:
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
@@ -244,45 +237,32 @@ Každý projekt, který chceš publikovat, musí mít metadata:
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;net6.0;net7.0;net8.0;net9.0;net10.0</TargetFrameworks>
     
-    <!-- NuGet Package Metadata -->
     <PackageId>Olbrasoft.YourProject</PackageId>
     <Version>1.0.0</Version>
     <Authors>Olbrasoft</Authors>
     <Company>Olbrasoft</Company>
-    <Product>Olbrasoft YourProject</Product>
     <Description>Your package description</Description>
     <Copyright>© Olbrasoft 2025</Copyright>
     
-    <!-- NuGet Publishing -->
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/Olbrasoft/YourProject</PackageProjectUrl>
-    <PackageIcon>icon.png</PackageIcon>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>Tag1;Tag2;NET10</PackageTags>
     <PackageReleaseNotes>Version 1.0.0: Initial release</PackageReleaseNotes>
-    
-    <!-- Optional: Disable packaging if this is a test/internal project -->
-    <!-- <IsPackable>false</IsPackable> -->
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="..\..\icon.png" Pack="True" PackagePath="\" />
-    <None Include="..\..\README.md" Pack="True" PackagePath="\" />
-  </ItemGroup>
 
 </Project>
 ```
 
-**Důležité vlastnosti:**
-- `<Version>` - Verzování balíčku (semantic versioning)
-- `<PackageId>` - Jedinečný identifikátor na NuGet.org
-- `<IsPackable>false</IsPackable>` - Zakáže publikaci (pro testovací projekty)
+**Important properties:**
+- `<Version>` - Semantic versioning
+- `<PackageId>` - Unique identifier on NuGet.org
+- `<IsPackable>false</IsPackable>` - Disable publishing (for test projects)
 
 ---
 
-### Krok 5: README badges
+### Step 5: README Badges
 
-Přidej status badges do `README.md`:
+Add status badges to `README.md`:
 
 ```markdown
 [![Build](https://github.com/Olbrasoft/YourProject/actions/workflows/build.yml/badge.svg)](https://github.com/Olbrasoft/YourProject/actions/workflows/build.yml)
@@ -292,106 +272,69 @@ Přidej status badges do `README.md`:
 
 ---
 
-## 🔄 Workflow při vývoji
+## 🔄 Development Workflow
 
-### Běžný vývoj (feature branch)
+### Regular Development (feature branch)
 
 ```bash
-# Vytvoř branch
 git checkout -b feature/new-feature
-
-# Vyvíjej + testy
-# ...
-
-# Commit a push
+# develop + tests
 git add .
 git commit -m "feat: Add new feature"
 git push origin feature/new-feature
 ```
 
-**Výsledek:** Spustí se pouze **Build workflow** (žádná publikace).
+**Result:** Only **Build workflow** runs (no publishing).
 
-### Release (merge do main)
+### Release (merge to main)
 
 ```bash
-# Merge do main
 git checkout main
 git merge feature/new-feature
 git push origin main
 ```
 
-**Výsledek:** 
-1. Spustí se **Build workflow**
-2. Spustí se **Publish workflow**
-3. Pokud testy projdou → **Publikace na NuGet.org**
+**Result:**
+1. **Build workflow** runs
+2. **Publish workflow** runs
+3. If tests pass → **Published to NuGet.org**
 
-### Tagged release
+### Tagged Release
 
 ```bash
-# Vytvoř tag
 git tag v1.0.0
 git push origin v1.0.0
 ```
 
-**Výsledek:** Stejné jako merge do main + tag v Git historii.
+**Result:** Same as merge to main + Git tag in history.
 
 ---
 
-## 🚨 Běžné problémy
+## 🚨 Common Issues
 
-### 1. Workflow nemá oprávnění
+### 1. Workflow Permission Denied
 
-**Chyba:**
-```
-Resource not accessible by integration: 403
-```
+**Error:** `Resource not accessible by integration: 403`
 
-**Řešení:**
-Přidej `permissions:` blok do workflow:
+**Solution:** Add `permissions:` block to workflow.
 
-```yaml
-permissions:
-  contents: read
-  checks: write
-  pull-requests: write
-```
+### 2. Package Already Exists
 
-### 2. Publikace selže s "Package already exists"
+**Error:** `409 Conflict - Package version 'X.X.X' already exists`
 
-**Chyba:**
-```
-Response status code does not indicate success: 409 (Conflict - The feed already contains 'Package' version 'X.X.X'.)
-```
+**Solution:** Increase version in `.csproj` or use `--skip-duplicate` (already in workflow).
 
-**Řešení:**
-Zvyš verzi v `.csproj` souboru:
+### 3. NuGet API Key Not Set
 
-```xml
-<Version>1.0.1</Version>  <!-- Změna z 1.0.0 -->
-```
+**Error:** `Unable to load service index for https://api.nuget.org/v3/index.json`
 
-Nebo použij `--skip-duplicate` flag (už je ve workflow).
+**Solution:** Verify GitHub Secret `NUGET_API_KEY` exists.
 
-### 3. NuGet API klíč není nastaven
+### 4. Tests Fail in CI, Pass Locally
 
-**Chyba:**
-```
-error: Unable to load the service index for source https://api.nuget.org/v3/index.json
-```
+**Causes:** Different .NET versions, missing dependencies, timing-dependent tests
 
-**Řešení:**
-Zkontroluj, že GitHub Secret `NUGET_API_KEY` existuje a je správně nakonfigurovaný.
-
-### 4. Testy selhávají v CI, lokálně fungují
-
-**Možné příčiny:**
-- Rozdílné .NET verze
-- Chybějící závislosti
-- Časově závislé testy
-
-**Řešení:**
-Spusť testy lokálně se všemi .NET verzemi:
-
+**Solution:** Run tests locally with all .NET versions:
 ```bash
 dotnet test --framework net6.0
 dotnet test --framework net8.0
@@ -400,34 +343,25 @@ dotnet test --framework net10.0
 
 ---
 
-## 📚 Reference
-
-### Oficiální odkazy
+## 📚 References
 
 - [GitHub Actions Documentation](https://docs.github.com/en/actions)
 - [NuGet CLI Reference](https://docs.microsoft.com/en-us/nuget/reference/cli-reference/cli-ref-push)
-- [.NET Multi-targeting](https://docs.microsoft.com/en-us/dotnet/standard/frameworks)
-
-### Příklady v Olbrasoft projektech
-
-- [Mediation CI/CD](https://github.com/Olbrasoft/Mediation/tree/main/.github/workflows)
-  - `build.yml` - Build workflow
-  - `publish-nuget.yml` - Publish workflow
-  - Publikuje 2 balíčky: `Olbrasoft.Mediation` + `Olbrasoft.Mediation.Abstractions`
+- [Mediation CI/CD Example](https://github.com/Olbrasoft/Mediation/tree/main/.github/workflows)
 
 ---
 
-## ✅ Checklist pro nový projekt
+## ✅ New Project Checklist
 
-Před začátkem vývoje zkontroluj:
+Before development:
 
-- [ ] `.github/workflows/build.yml` existuje
-- [ ] `.github/workflows/publish-nuget.yml` existuje
-- [ ] GitHub Secret `NUGET_API_KEY` je nastaven (Settings → Secrets)
-- [ ] `.csproj` obsahuje NuGet metadata (`PackageId`, `Version`, `Description`, ...)
-- [ ] `README.md` obsahuje CI/CD status badges
-- [ ] Workflows obsahují všechny podporované .NET verze (6, 7, 8, 9, 10)
-- [ ] `permissions:` blok je v publish workflow
-- [ ] Lokální testy prochází: `dotnet test`
+- [ ] `.github/workflows/build.yml` exists
+- [ ] `.github/workflows/publish-nuget.yml` exists
+- [ ] GitHub Secret `NUGET_API_KEY` set
+- [ ] `.csproj` contains NuGet metadata
+- [ ] `README.md` includes CI/CD badges
+- [ ] Workflows include all supported .NET versions
+- [ ] `permissions:` block in publish workflow
+- [ ] Local tests pass: `dotnet test`
 
-**Pokud cokoliv chybí → implementuj podle tohoto průvodce!**
+**If anything missing → implement per this guide!**
