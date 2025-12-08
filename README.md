@@ -18,6 +18,7 @@ This handbook provides a single source of truth for:
 ├── dotnet-development/           ← C# and .NET development guides
 ├── design-patterns/              ← GoF Design Patterns cheat sheet
 ├── solid-principles/             ← SOLID principles documentation
+├── task-management/              ← Task assignment framework
 ```
 
 ## Contents
@@ -33,6 +34,10 @@ Gang of Four (GoF) Design Patterns cheat sheet and reference materials for commo
 ### [SOLID Principles](./solid-principles/)
 
 Documentation on SOLID principles for object-oriented design, with examples and practical applications.
+
+### [Task Management](./task-management/)
+
+Task assignment framework - guidelines for preparing well-defined tasks for developers. Focus on WHAT and WHY, leave HOW to the programmer.
 
 ## License
 

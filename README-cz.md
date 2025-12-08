@@ -5,40 +5,45 @@
 
 ---
 
-A comprehensive collection of development standards and reference guides for software engineering teams. This repository serves as a centralized knowledge base for coding best practices, architectural patterns, and development workflows.
+Komplexní sbírka vývojových standardů a referenčních průvodců pro týmy softwarového inženýrství. Toto úložiště slouží jako centralizovaná znalostní báze pro osvědčené postupy při kódování, architektonické vzory a vývojové pracovní postupy.
 
-## Why This Repository Exists
+## Proč toto úložiště existuje
 
-This handbook provides a single source of truth for:
+Tato příručka poskytuje jediný zdroj pravdy pro:
 
-- **Consistent coding standards** across projects and teams
-- **Quick reference guides** for common patterns and principles
-- **Onboarding materials** for new team members
-- **Best practices** based on industry standards and real-world experience
+- **Konzistentní kódovací standardy** napříč projekty a týmy
+- **Rychlé referenční průvodce** pro běžné vzory a principy
+- **Materiály pro onboarding** nových členů týmu
+- **Osvědčené postupy** založené na průmyslových standardech a reálných zkušenostech
 
-## Repository Structure
+## Struktura úložiště
 
 ```
-├── README.md                     ← Introduction and overview
-├── dotnet-development/           ← C# and .NET development guides
-├── design-patterns/              ← GoF Design Patterns cheat sheet
-├── solid-principles/             ← SOLID principles documentation
+├── README.md                     ← Úvod a přehled
+├── dotnet-development/           ← Průvodci C# a .NET vývojem
+├── design-patterns/              ← Tahák GoF návrhových vzorů
+├── solid-principles/             ← Dokumentace SOLID principů
+├── task-management/              ← Framework pro zadávání úkolů
 ```
 
-## Contents
+## Obsah
 
 ### [.NET Development](./dotnet-development/)
 
-Everything related to C# and .NET development, including deployment guides, coding standards, and best practices.
+Vše související s vývojem v C# a .NET, včetně průvodců nasazením, kódovacích standardů a osvědčených postupů.
 
 ### [Design Patterns](./design-patterns/)
 
-Gang of Four (GoF) Design Patterns cheat sheet and reference materials for commonly used software design patterns.
+Tahák Gang of Four (GoF) návrhových vzorů a referenční materiály pro běžně používané návrhové vzory softwaru.
 
 ### [SOLID Principles](./solid-principles/)
 
-Documentation on SOLID principles for object-oriented design, with examples and practical applications.
+Dokumentace SOLID principů pro objektově orientovaný design, s příklady a praktickými aplikacemi.
 
-## License
+### [Task Management](./task-management/)
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Framework pro zadávání úkolů - průvodce pro přípravu dobře definovaných úkolů pro vývojáře. Soustřeď se na CO a PROČ, JAK nech na programátorovi.
+
+## Licence
+
+Tento projekt je licencován pod MIT licencí - viz soubor [LICENSE](LICENSE) pro detaily.
