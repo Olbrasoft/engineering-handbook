@@ -1,14 +1,14 @@
-# Framework pro zadávání úkolů
+# Průvodce psaním issues
 
-Praktický průvodce pro přípravu dobře definovaných úkolů pro vývojáře. Soustřeď se na **CO** a **PROČ**, **JAK** nech na programátorovi.
+Praktický průvodce pro přípravu dobře definovaných GitHub issues. Soustřeď se na **CO** a **PROČ**, **JAK** nech na programátorovi.
 
 ## Rozdělení rolí
 
 | Role | Analytik | Programátor |
 |------|----------|-------------|
-| **Odpovědnost** | Analyzuje, navrhuje, vytváří úkoly, testuje | Implementuje, ladí, nasazuje |
+| **Odpovědnost** | Analyzuje, navrhuje, vytváří issues, testuje | Implementuje, ladí, nasazuje |
 | **Zaměření** | CO & PROČ | JAK |
-| **Výstup** | Dobře definované úkoly s akceptačními kritérii | Funkční kód |
+| **Výstup** | Dobře definované issues s akceptačními kritérii | Funkční kód |
 
 ### Co analytik dělá
 - Chápe a popisuje problém
@@ -24,7 +24,7 @@ Praktický průvodce pro přípravu dobře definovaných úkolů pro vývojáře
 
 ---
 
-## Šablona úkolu
+## Šablona issue
 
 ```markdown
 ## Shrnutí
@@ -36,7 +36,6 @@ Jako [persona/role] chci [akce/funkce], abych [přínos/hodnota].
 ## Kontext
 - Současný stav: [Co existuje nyní]
 - Problém: [Co je špatně nebo chybí]
-- Související: #číslo_issue (pokud existuje)
 
 ## Požadavky
 ### Musí mít
@@ -51,12 +50,55 @@ Jako [persona/role] chci [akce/funkce], abych [přínos/hodnota].
 - [ ] Když [kontext], pokud [akce], pak [očekávaný výsledek]
 
 ## Mimo rozsah
-- Co tento úkol NEZAHRNUJE
+- Co tento issue NEZAHRNUJE
 ```
 
 ---
 
-## Kontrolní seznam před zadáním úkolu
+## Sub-Issues: Kritické pravidlo
+
+**Sub-issues se MUSÍ propojovat přes nativní GitHub funkci sub-issues, NE jako textové reference.**
+
+### Špatný způsob
+
+NEPIŠTE toto do těla issue:
+- "Part of #123"
+- "Sub-issue of #123"  
+- "Parent Issue: #123"
+- "## Parent Issue\n#123"
+
+Toto NEVYTVÁŘÍ žádný skutečný vztah rodič-potomek. Je to jen text.
+
+### Správný způsob
+
+**Možnost 1: Přes GitHub UI**
+1. Otevři rodičovský issue
+2. Klikni na tlačítko "Add sub-issue" (nebo ho najdi v postranním panelu)
+3. Vyber nebo vytvoř podřízený issue
+
+**Možnost 2: Přes GitHub API**
+```bash
+curl -X POST \
+  -H "Authorization: token YOUR_TOKEN" \
+  -H "Accept: application/vnd.github+json" \
+  "https://api.github.com/repos/OWNER/REPO/issues/PARENT_NUMBER/sub_issues" \
+  -d '{"sub_issue_id": CHILD_ISSUE_ID}'
+```
+
+### Proč jsou nativní Sub-Issues důležité
+
+| Aspekt | Textová reference | Nativní Sub-Issue |
+|--------|------------------|-------------------|
+| Sledování postupu | Ruční počítání | Automatické procento |
+| Navigace | Vyžaduje hledání | Přímé obousměrné odkazy |
+| Reporting | Není možné | Vestavěné přehledy |
+| Automatizace | Křehké parsování regex | Spolehlivý přístup přes API |
+| Dokončení rodiče | Ruční ověření | Automatické blokování |
+| Viditelnost | Schováno v textu | Prominentní v UI |
+
+---
+
+## Kontrolní seznam před vytvořením issue
 
 ### Srozumitelnost
 - [ ] Lze pochopit bez dodatečného kontextu?
@@ -70,13 +112,17 @@ Jako [persona/role] chci [akce/funkce], abych [přínos/hodnota].
 - [ ] Jsou akceptační kritéria měřitelná?
 
 ### Rozsah
-- [ ] Je úkol dostatečně malý na dokončení v jedné session?
+- [ ] Je issue dostatečně malý na dokončení v jedné session?
 - [ ] Žádné skryté závislosti?
 - [ ] Je definováno co je mimo rozsah?
 
 ### Testovatelnost
 - [ ] Lze ověřit nezávisle?
 - [ ] Jsou kritéria úspěchu objektivní?
+
+### Vztahy
+- [ ] Pokud je toto sub-issue, je PROPOJENÝ (ne jen referencovaný) k rodiči?
+- [ ] Jsou související issues zmíněny v sekci Kontext?
 
 ---
 
@@ -98,10 +144,10 @@ Jako [persona/role] chci [akce/funkce], abych [přínos/hodnota].
    - Odstraň implementační detaily
    - Zkontroluj nejednoznačnosti
 
-4. ZADEJ
-   - Vytvoř GitHub issue
+4. VYTVOŘ
+   - Vytvoř GitHub issue se správnou šablonou
    - Označ vhodně
-   - Odkaz na nadřazené issues pokud existují
+   - PROPOJ k rodičovskému issue pokud je to sub-issue (ne jen referencuj!)
 
 5. OVĚŘ
    - Otestuj funkcionalitu (API/CLI/UI)
@@ -113,7 +159,7 @@ Jako [persona/role] chci [akce/funkce], abych [přínos/hodnota].
 
 ## Příklady
 
-### Dobrý popis úkolu
+### Dobrý popis issue
 > **Shrnutí:** Uživatelé potřebují vidět informace o svém profilu.
 >
 > **User Story:** Jako přihlášený uživatel chci zobrazit svůj profil, abych mohl ověřit údaje o svém účtu.
@@ -127,12 +173,12 @@ Jako [persona/role] chci [akce/funkce], abych [přínos/hodnota].
 > - Když mám platné ID uživatele a požádám o profil, pak dostanu jméno, email, URL avataru a datum registrace
 > - Když mám neplatné ID uživatele a požádám o profil, pak dostanu chybu 404
 
-### Špatný popis úkolu (Příliš technický)
+### Špatný popis issue (Příliš technický)
 > Vytvoř endpoint `GET /api/users/{id}/profile` pomocí UserRepository patternu. Použij DTO s AutoMapperem. Ulož avatar do Azure Blob Storage s CDN cachováním.
 
 **Proč je to špatně:** Diktuje implementační detaily. Programátor by měl rozhodnout o struktuře endpointu, vzorech a řešení úložiště.
 
-### Špatný popis úkolu (Příliš vágní)
+### Špatný popis issue (Příliš vágní)
 > Oprav tu věc s profilem uživatele
 
 **Proč je to špatně:** Žádný kontext, žádné očekávané chování, žádný způsob jak ověřit úspěch.
@@ -169,7 +215,8 @@ Jako [persona/role] chci [akce/funkce], abych [přínos/hodnota].
 - Piš implementačně neutrální požadavky (CO, ne JAK)
 - Zahrnuj akceptační kritéria
 - Prioritizuj požadavky (musí mít / mělo by mít)
-- Rozděl velké úkoly na menší
+- Rozděl velké issues na menší sub-issues
+- **PROPOJUJ sub-issues správně pomocí GitHub funkce**
 
 ### NEDĚLEJ
 - Nespecifikuj schéma databáze nebo strukturu tabulek
@@ -177,10 +224,12 @@ Jako [persona/role] chci [akce/funkce], abych [přínos/hodnota].
 - Nedefinuj cesty API endpointů ani HTTP metody
 - Nedělej architektonická rozhodnutí
 - Nepoužívej nejednoznačný jazyk ("mělo by fungovat", "možná bude potřeba")
+- **Nepiš "Part of #X" místo skutečného propojení sub-issues**
 
 ---
 
 ## Reference
 
+- [GitHub Sub-Issues Documentation](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/adding-sub-issues)
 - [Atlassian User Stories Guide](https://www.atlassian.com/agile/project-management/user-stories)
 - [Mountain Goat Software - User Stories](https://www.mountaingoatsoftware.com/agile/user-stories)

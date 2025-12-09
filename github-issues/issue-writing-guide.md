@@ -1,6 +1,6 @@
-# Task Assignment Framework
+# Issue Writing Guide
 
-A practical guide for preparing well-defined tasks for developers. Focus on **WHAT** and **WHY**, leave **HOW** to the programmer.
+A practical guide for preparing well-defined GitHub issues. Focus on **WHAT** and **WHY**, leave **HOW** to the programmer.
 
 ## Role Division
 
@@ -8,7 +8,7 @@ A practical guide for preparing well-defined tasks for developers. Focus on **WH
 |------|---------|------------|
 | **Responsibility** | Analyzes, proposes, creates issues, reviews, tests | Implements, debugs, deploys |
 | **Focus** | WHAT & WHY | HOW |
-| **Output** | Well-defined tasks with acceptance criteria | Working code |
+| **Output** | Well-defined issues with acceptance criteria | Working code |
 
 ### What Analyst Does
 - Understands and describes the problem
@@ -24,7 +24,7 @@ A practical guide for preparing well-defined tasks for developers. Focus on **WH
 
 ---
 
-## Task Template
+## Issue Template
 
 ```markdown
 ## Summary
@@ -36,7 +36,6 @@ As a [persona/role], I want to [action/feature], so that [benefit/value].
 ## Context
 - Current state: [What exists now]
 - Problem: [What's wrong or missing]
-- Related: #issue_number (if applicable)
 
 ## Requirements
 ### Must Have
@@ -51,12 +50,55 @@ As a [persona/role], I want to [action/feature], so that [benefit/value].
 - [ ] Given [context], when [action], then [expected result]
 
 ## Out of Scope
-- What this task does NOT include
+- What this issue does NOT include
 ```
 
 ---
 
-## Checklist Before Assigning Task
+## Sub-Issues: The Critical Rule
+
+**Sub-issues MUST be linked via GitHub's native sub-issue feature, NOT as text references.**
+
+### The Wrong Way
+
+Do NOT write these in issue body:
+- "Part of #123"
+- "Sub-issue of #123"  
+- "Parent Issue: #123"
+- "## Parent Issue\n#123"
+
+This creates NO actual parent-child relationship. It's just text.
+
+### The Correct Way
+
+**Option 1: Via GitHub UI**
+1. Open the parent issue
+2. Click "Add sub-issue" button (or find it in the sidebar)
+3. Select or create the child issue
+
+**Option 2: Via GitHub API**
+```bash
+curl -X POST \
+  -H "Authorization: token YOUR_TOKEN" \
+  -H "Accept: application/vnd.github+json" \
+  "https://api.github.com/repos/OWNER/REPO/issues/PARENT_NUMBER/sub_issues" \
+  -d '{"sub_issue_id": CHILD_ISSUE_ID}'
+```
+
+### Why Native Sub-Issues Matter
+
+| Aspect | Text Reference | Native Sub-Issue |
+|--------|---------------|------------------|
+| Progress tracking | Manual counting | Automatic percentage |
+| Navigation | Search required | Direct bidirectional links |
+| Reporting | Not possible | Built-in summaries |
+| Automation | Fragile regex parsing | Reliable API access |
+| Parent completion | Manual verification | Automatic blocking |
+| Visibility | Hidden in body text | Prominent in UI |
+
+---
+
+## Checklist Before Creating Issue
 
 ### Clarity
 - [ ] Can be understood without additional context?
@@ -70,13 +112,17 @@ As a [persona/role], I want to [action/feature], so that [benefit/value].
 - [ ] Acceptance criteria are measurable?
 
 ### Scope
-- [ ] Task is small enough to complete in one session?
+- [ ] Issue is small enough to complete in one session?
 - [ ] No hidden dependencies?
 - [ ] Out of scope is defined?
 
 ### Testability
 - [ ] Can be verified independently?
 - [ ] Success criteria are objective?
+
+### Relationships
+- [ ] If this is a sub-issue, is it LINKED (not just referenced) to parent?
+- [ ] Related issues are mentioned in Context section?
 
 ---
 
@@ -98,10 +144,10 @@ As a [persona/role], I want to [action/feature], so that [benefit/value].
    - Remove implementation details
    - Check for ambiguity
 
-4. ASSIGN
-   - Create GitHub issue
+4. CREATE
+   - Create GitHub issue with proper template
    - Tag appropriately
-   - Reference parent issues if applicable
+   - LINK to parent issue if sub-issue (don't just reference!)
 
 5. VERIFY
    - Test functionality (API/CLI/UI)
@@ -113,7 +159,7 @@ As a [persona/role], I want to [action/feature], so that [benefit/value].
 
 ## Examples
 
-### Good Task Description
+### Good Issue Description
 > **Summary:** Users need to see their profile information.
 >
 > **User Story:** As a logged-in user, I want to view my profile, so that I can verify my account details.
@@ -127,12 +173,12 @@ As a [persona/role], I want to [action/feature], so that [benefit/value].
 > - Given a valid user ID, when I request the profile, then I receive name, email, avatar URL, and registration date
 > - Given an invalid user ID, when I request the profile, then I receive a 404 error
 
-### Bad Task Description (Too Technical)
+### Bad Issue Description (Too Technical)
 > Create an endpoint `GET /api/users/{id}/profile` using the UserRepository pattern. Use a DTO with AutoMapper. Store avatar in Azure Blob Storage with CDN caching.
 
 **Why it's bad:** Dictates implementation details. The programmer should decide the endpoint structure, patterns, and storage solutions.
 
-### Bad Task Description (Too Vague)
+### Bad Issue Description (Too Vague)
 > Fix the user profile thing
 
 **Why it's bad:** No context, no expected behavior, no way to verify success.
@@ -169,7 +215,8 @@ As a [persona/role], I want to [action/feature], so that [benefit/value].
 - Write implementation-neutral requirements (WHAT, not HOW)
 - Include acceptance criteria
 - Prioritize requirements (must have / should have)
-- Break large tasks into smaller pieces
+- Break large issues into smaller sub-issues
+- **LINK sub-issues properly using GitHub's feature**
 
 ### DON'T
 - Specify database schema or table structure
@@ -177,10 +224,12 @@ As a [persona/role], I want to [action/feature], so that [benefit/value].
 - Define API endpoint paths or HTTP methods
 - Make architectural decisions
 - Use ambiguous language ("should work", "might need")
+- **Write "Part of #X" instead of actually linking sub-issues**
 
 ---
 
 ## References
 
+- [GitHub Sub-Issues Documentation](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/adding-sub-issues)
 - [Atlassian User Stories Guide](https://www.atlassian.com/agile/project-management/user-stories)
 - [Mountain Goat Software - User Stories](https://www.mountaingoatsoftware.com/agile/user-stories)

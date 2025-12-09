@@ -18,7 +18,7 @@ This handbook provides a single source of truth for:
 ├── dotnet-development/           ← C# and .NET development guides
 ├── design-patterns/              ← GoF Design Patterns cheat sheet
 ├── solid-principles/             ← SOLID principles documentation
-├── task-management/              ← Task assignment framework
+├── github-issues/                ← Issue writing guide and sub-issues best practices
 ```
 
 ## Contents
@@ -35,9 +35,9 @@ Gang of Four (GoF) Design Patterns cheat sheet and reference materials for commo
 
 Documentation on SOLID principles for object-oriented design, with examples and practical applications.
 
-### [Task Management](./task-management/)
+### [GitHub Issues](./github-issues/)
 
-Task assignment framework - guidelines for preparing well-defined tasks for developers. Focus on WHAT and WHY, leave HOW to the programmer.
+Issue writing guide - how to create well-defined GitHub issues. Includes critical information about properly linking sub-issues using GitHub's native feature (not text references).
 
 ## License
 

@@ -23,7 +23,7 @@ Tato příručka poskytuje jediný zdroj pravdy pro:
 ├── dotnet-development/           ← Průvodci C# a .NET vývojem
 ├── design-patterns/              ← Tahák GoF návrhových vzorů
 ├── solid-principles/             ← Dokumentace SOLID principů
-├── task-management/              ← Framework pro zadávání úkolů
+├── github-issues/                ← Průvodce psaním issues a best practices pro sub-issues
 ```
 
 ## Obsah
@@ -40,9 +40,9 @@ Tahák Gang of Four (GoF) návrhových vzorů a referenční materiály pro bě�
 
 Dokumentace SOLID principů pro objektově orientovaný design, s příklady a praktickými aplikacemi.
 
-### [Task Management](./task-management/)
+### [GitHub Issues](./github-issues/)
 
-Framework pro zadávání úkolů - průvodce pro přípravu dobře definovaných úkolů pro vývojáře. Soustřeď se na CO a PROČ, JAK nech na programátorovi.
+Průvodce psaním issues - jak vytvářet dobře definované GitHub issues. Obsahuje kritické informace o správném propojování sub-issues pomocí nativní GitHub funkce (ne textové reference).
 
 ## Licence
 
