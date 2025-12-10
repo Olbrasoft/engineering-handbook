@@ -2,27 +2,7 @@
 
 A practical guide for preparing well-defined GitHub issues. Focus on **WHAT** and **WHY**, leave **HOW** to the programmer.
 
-## Role Division
-
-| Role | Analyst | Programmer |
-|------|---------|------------|
-| **Responsibility** | Analyzes, proposes, creates issues, reviews, tests | Implements, debugs, deploys |
-| **Focus** | WHAT & WHY | HOW |
-| **Output** | Well-defined issues with acceptance criteria | Working code |
-
-### What Analyst Does
-- Understands and describes the problem
-- Defines requirements from user perspective
-- Sets measurable acceptance criteria
-- Tests the result (API calls, UI verification)
-- Reports bugs with expected vs actual behavior
-
-### What Analyst Does NOT Do
-- Make implementation decisions (database schema, architecture)
-- Debug code
-- Choose specific technologies or libraries
-
----
+> **Note:** Role division (Analyst vs Programmer) is defined in `~/.config/opencode/AGENTS.md`
 
 ## Issue Template
 
