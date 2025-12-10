@@ -193,6 +193,127 @@ systemctl --user status "$SERVICE_NAME" --no-pager
 
 ---
 
+## Secrets Management
+
+**CRITICAL - NEVER STORE SECRETS IN GIT!**
+
+### 🚨 The Golden Rule
+
+> **NEVER store passwords, API keys, or connection strings in `appsettings.json` that is committed to Git!**
+
+### Configuration File Strategy
+
+| File | In Git? | Contains Secrets? | Purpose |
+|------|---------|-------------------|---------|
+| `appsettings.json` | ✅ Yes | ❌ **NO** | Default values + placeholders |
+| `appsettings.Development.json` | ❌ No | ⚠️ Local only | Dev environment overrides |
+| **User Secrets** | ❌ No | ✅ Yes | Development secrets |
+| Published folder config | ❌ No | ✅ Yes | Production secrets |
+
+### .gitignore Setup
+
+Ensure your `.gitignore` includes:
+
+```gitignore
+# appsettings with secrets
+appsettings.Development.json
+appsettings.Local.json
+```
+
+### User Secrets for Development
+
+.NET's Secret Manager stores secrets **outside your project**, so they're never committed.
+
+**Storage location:**
+- **Linux/Mac:** `~/.microsoft/usersecrets/<UserSecretsId>/secrets.json`
+- **Windows:** `%APPDATA%\Microsoft\UserSecrets\<UserSecretsId>\secrets.json`
+
+**Setup:**
+
+```bash
+cd src/YourProject
+
+# Initialize (adds UserSecretsId to .csproj)
+dotnet user-secrets init
+
+# Set a secret
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Host=localhost;Database=mydb;Username=user;Password=SECRET"
+
+# List all secrets
+dotnet user-secrets list
+
+# Remove a secret
+dotnet user-secrets remove "ConnectionStrings:DefaultConnection"
+
+# Clear all secrets
+dotnet user-secrets clear
+```
+
+### appsettings.json Template (IN GIT)
+
+Use placeholders to indicate where values come from:
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "<from-user-secrets>"
+  },
+  "ExternalApi": {
+    "BaseUrl": "https://api.example.com",
+    "ApiKey": "<from-user-secrets>"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information"
+    }
+  }
+}
+```
+
+### How .NET Configuration Works
+
+When app starts in **Development** mode, configuration is loaded in order (later overrides earlier):
+
+1. `appsettings.json` (defaults)
+2. `appsettings.Development.json` (environment overrides)
+3. **User Secrets** ← secrets come from here!
+4. Environment variables
+5. Command line arguments
+
+### Production Deployment Strategy
+
+**Option 1: Config in Published Folder**
+
+Published folder (e.g., `/home/user/Apps/myapp/`) is NOT in Git, so `appsettings.json` there CAN contain real secrets:
+
+```bash
+# Publish
+dotnet publish -c Release -o /home/user/Apps/myapp
+
+# Edit config in deploy folder (not in Git!)
+nano /home/user/Apps/myapp/appsettings.json
+```
+
+**Option 2: Environment Variables**
+
+```bash
+export ConnectionStrings__DefaultConnection="Host=prod;Password=PROD_SECRET"
+```
+
+**Option 3: Azure Key Vault (Enterprise)**
+
+For cloud deployments, use Azure Key Vault with Managed Identity.
+
+### Quick Checklist
+
+- [ ] `appsettings.json` contains NO passwords (only placeholders)
+- [ ] `appsettings.Development.json` is in `.gitignore`
+- [ ] User Secrets initialized (`dotnet user-secrets init`)
+- [ ] All developers know to use `dotnet user-secrets set`
+- [ ] Production secrets are in deploy folder OR environment variables
+
+---
+
 ## Git Workflow for GitHub Issues
 
 **CRITICAL - WHEN WORKING ON GITHUB ISSUES:**
