@@ -277,6 +277,129 @@ systemctl --user status "$SERVICE_NAME" --no-pager
 echo "✅ Deployment completed successfully"
 ```
 
+---
+
+## Správa hesel a tajných údajů (Secrets Management)
+
+**KRITICKÉ - NIKDY NEUKLÁDEJ HESLA DO GITU!**
+
+### 🚨 Zlaté pravidlo
+
+> **NIKDY neukládej hesla, API klíče nebo connection stringy do `appsettings.json`, který je commitnutý v Gitu!**
+
+### Strategie konfiguračních souborů
+
+| Soubor | V Gitu? | Obsahuje hesla? | Účel |
+|--------|---------|-----------------|------|
+| `appsettings.json` | ✅ Ano | ❌ **NE** | Výchozí hodnoty + placeholdery |
+| `appsettings.Development.json` | ❌ Ne | ⚠️ Lokálně | Přepisy pro vývoj |
+| **User Secrets** | ❌ Ne | ✅ Ano | Hesla pro vývoj |
+| Publishnutá složka | ❌ Ne | ✅ Ano | Produkční hesla |
+
+### Nastavení .gitignore
+
+Ujisti se, že `.gitignore` obsahuje:
+
+```gitignore
+# appsettings s hesly
+appsettings.Development.json
+appsettings.Local.json
+```
+
+### User Secrets pro vývoj
+
+.NET Secret Manager ukládá hesla **mimo projekt**, takže se nikdy nedostanou do Gitu.
+
+**Kde se ukládají:**
+- **Linux/Mac:** `~/.microsoft/usersecrets/<UserSecretsId>/secrets.json`
+- **Windows:** `%APPDATA%\Microsoft\UserSecrets\<UserSecretsId>\secrets.json`
+
+**Nastavení:**
+
+```bash
+cd src/MujProjekt
+
+# Inicializace (přidá UserSecretsId do .csproj)
+dotnet user-secrets init
+
+# Nastavení hesla
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Host=localhost;Database=mydb;Username=user;Password=TAJNE_HESLO"
+
+# Zobrazení všech hesel
+dotnet user-secrets list
+
+# Smazání hesla
+dotnet user-secrets remove "ConnectionStrings:DefaultConnection"
+
+# Smazání všech hesel
+dotnet user-secrets clear
+```
+
+### Šablona appsettings.json (V GITU)
+
+Používej placeholdery pro označení, odkud hodnoty pochází:
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "<from-user-secrets>"
+  },
+  "ExternalApi": {
+    "BaseUrl": "https://api.example.com",
+    "ApiKey": "<from-user-secrets>"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information"
+    }
+  }
+}
+```
+
+### Jak funguje konfigurace v .NET
+
+Když aplikace startuje v **Development** módu, konfigurace se načítá v tomto pořadí (pozdější přepisuje dřívější):
+
+1. `appsettings.json` (výchozí hodnoty)
+2. `appsettings.Development.json` (přepisy pro prostředí)
+3. **User Secrets** ← hesla se berou odsud!
+4. Environment variables
+5. Command line arguments
+
+### Strategie pro produkční nasazení
+
+**Možnost 1: Konfigurace v publishnuté složce**
+
+Publishnutá složka (např. `/home/user/Apps/myapp/`) NENÍ v Gitu, takže `appsettings.json` tam MŮŽE obsahovat skutečná hesla:
+
+```bash
+# Publish
+dotnet publish -c Release -o /home/user/Apps/myapp
+
+# Úprava konfigurace v deploy složce (není v Gitu!)
+nano /home/user/Apps/myapp/appsettings.json
+```
+
+**Možnost 2: Environment variables**
+
+```bash
+export ConnectionStrings__DefaultConnection="Host=prod;Password=PROD_HESLO"
+```
+
+**Možnost 3: Azure Key Vault (Enterprise)**
+
+Pro cloudové nasazení použij Azure Key Vault s Managed Identity.
+
+### Rychlý checklist
+
+- [ ] `appsettings.json` neobsahuje ŽÁDNÁ hesla (jen placeholdery)
+- [ ] `appsettings.Development.json` je v `.gitignore`
+- [ ] User Secrets jsou inicializované (`dotnet user-secrets init`)
+- [ ] Všichni vývojáři vědí, jak použít `dotnet user-secrets set`
+- [ ] Produkční hesla jsou v deploy složce NEBO v environment variables
+
+---
+
 ## Service Configuration
 
 Services are typically configured in `~/.config/systemd/user/`:
