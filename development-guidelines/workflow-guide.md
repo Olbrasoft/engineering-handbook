@@ -69,46 +69,47 @@ This creates NO actual parent-child relationship. It's just text.
 
 ### The Correct Way
 
-**Option 1: Via GitHub UI**
-1. Open the **child issue** (the one that will become a sub-issue)
-2. In the right sidebar, find **"Relationships"** section
-3. Click **"Edit Relationships"** button
-4. Click **"Add parent"** in the dropdown menu
-5. Search for and select the parent issue
+**Option 1: Via GitHub MCP Server (Recommended)**
 
-Alternative (from parent issue):
+GitHub MCP Server (`github/github-mcp-server` v0.24.1+) provides native sub-issues support.
+
+**Creating a sub-issue:**
+```
+1. Create the child issue using `github_issue_write` (method: create)
+   → Returns issue ID (numeric, e.g., 3725925667)
+
+2. Link it to parent using `github_sub_issue_write`:
+   - method: "add"
+   - owner: "Olbrasoft"
+   - repo: "engineering-handbook"
+   - issue_number: 4  (parent issue number)
+   - sub_issue_id: 3725925667  (child issue ID from step 1)
+```
+
+**Reading sub-issues:**
+```
+Use `github_issue_read` with method: "get_sub_issues"
+- owner: "Olbrasoft"
+- repo: "engineering-handbook"
+- issue_number: 4  (parent issue number)
+```
+
+**Available MCP tools for sub-issues:**
+
+| Tool | Method | Description |
+|------|--------|-------------|
+| `github_issue_read` | `get_sub_issues` | List all sub-issues of a parent |
+| `github_sub_issue_write` | `add` | Link existing issue as sub-issue |
+| `github_sub_issue_write` | `remove` | Unlink sub-issue from parent |
+| `github_sub_issue_write` | `reprioritize` | Change sub-issue order |
+
+⚠️ **Important:** The `sub_issue_id` parameter requires the issue's numeric `id` (from API response), NOT the issue `number` (from URL).
+
+**Option 2: Via GitHub UI**
+
 1. Open the **parent issue**
 2. In the right sidebar, find **"Sub-issues"** section
 3. Click **"Create sub-issue"** or use the dropdown to add existing issue
-
-**Option 2: Via GitHub REST API**
-
-⚠️ **Important:** The API requires the issue's numeric `id` (from API response), NOT the issue `number` (from URL).
-
-```bash
-# Step 1: Get the sub-issue's numeric ID
-curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
-  "https://api.github.com/repos/OWNER/REPO/issues/ISSUE_NUMBER" | jq '.id'
-
-# Step 2: Add sub-issue to parent
-curl -L -X POST \
-  -H "Accept: application/vnd.github+json" \
-  -H "Authorization: Bearer $GITHUB_TOKEN" \
-  -H "X-GitHub-Api-Version: 2022-11-28" \
-  "https://api.github.com/repos/OWNER/REPO/issues/PARENT_NUMBER/sub_issues" \
-  -d '{"sub_issue_id": NUMERIC_ID_FROM_STEP_1}'
-```
-
-**Available Sub-Issue API Endpoints:**
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/repos/{owner}/{repo}/issues/{issue_number}/parent` | Get parent issue |
-| GET | `/repos/{owner}/{repo}/issues/{issue_number}/sub_issues` | List sub-issues |
-| POST | `/repos/{owner}/{repo}/issues/{issue_number}/sub_issues` | Add sub-issue |
-| DELETE | `/repos/{owner}/{repo}/issues/{issue_number}/sub_issue` | Remove sub-issue |
-| PATCH | `/repos/{owner}/{repo}/issues/{issue_number}/sub_issues/priority` | Reprioritize |
-
-See: https://docs.github.com/en/rest/issues/sub-issues
 
 ### Why Native Sub-Issues Matter
 
