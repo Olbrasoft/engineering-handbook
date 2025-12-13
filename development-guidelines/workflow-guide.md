@@ -50,6 +50,33 @@ As a [persona/role], I want to [action/feature], so that [benefit/value].
 | `refactor` | Code cleanup, no behavior change |
 | `docs` | Documentation only |
 
+### GitHub API Pagination Limits
+
+**CRITICAL:** Always use `perPage` parameter when listing issues, PRs, or commits to prevent context overflow.
+
+| Tool | Recommended `perPage` | Use Case |
+|------|----------------------|----------|
+| `github_list_issues` | 10-20 | Quick overview |
+| `github_list_pull_requests` | 10-20 | Recent PRs |
+| `github_list_commits` | 10-30 | Commit history |
+| `github_search_issues` | 10-20 | Search results |
+| `github_search_code` | 10-20 | Code search |
+
+**Rules:**
+- **NEVER call without `perPage`** - default returns too many results
+- For specific searches, use filters (labels, state, author) + low `perPage`
+- For broad searches, start with `perPage: 10`, increase only if needed
+- Maximum allowed: 100 (but rarely needed)
+
+**Example - Searching issues:**
+```
+github_search_issues:
+  query: "bug label:high-priority"
+  owner: "Olbrasoft"
+  repo: "VirtualAssistant"
+  perPage: 15  # Always specify!
+```
+
 ---
 
 ## Sub-Issues: Critical Rules
