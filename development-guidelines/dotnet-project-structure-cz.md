@@ -1,6 +1,8 @@
-# Struktura C# .NET projektů
+# Struktura .NET projektů
 
-Kompletní průvodce strukturováním C# .NET projektů v Olbrasoft repozitářích.
+Kompletní průvodce strukturováním .NET projektů v Olbrasoft repozitářích.
+
+> **Poznámka:** Tyto konvence platí pro všechny .NET jazyky (C#, F#, VB.NET, C++/CLI), nejen pro C#. Pojmenování namespace následuje [Microsoft Framework Design Guidelines](https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/names-of-namespaces).
 
 ---
 

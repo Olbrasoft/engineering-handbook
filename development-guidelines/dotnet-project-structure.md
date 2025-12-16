@@ -1,6 +1,8 @@
-# C# .NET Project Structure Guide
+# .NET Project Structure Guide
 
-Complete guide for structuring C# .NET projects in Olbrasoft repositories.
+Complete guide for structuring .NET projects in Olbrasoft repositories.
+
+> **Note:** These conventions apply to all .NET languages (C#, F#, VB.NET, C++/CLI), not just C#. The namespace naming follows [Microsoft Framework Design Guidelines](https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/names-of-namespaces).
 
 ---
 
