@@ -199,13 +199,13 @@ if (!CryptographicOperations.FixedTimeEquals(
 
 ### Credentials Location
 
-Webhook secrets and configuration details are stored in:
+Webhook secrets and all API keys are stored locally in:
 
 ```
-~/Dokumenty/guidebooks/github-webhooks.md
+~/Dokumenty/přístupy/api-keys.md
 ```
 
-**Never commit webhook secrets to Git.**
+**Never commit secrets to Git.**
 
 ## Secrets Management
 
@@ -214,7 +214,7 @@ Webhook secrets and configuration details are stored in:
 | Type | Location | Access |
 |------|----------|--------|
 | API Keys | `~/Dokumenty/přístupy/api-keys.md` | Local only |
-| Webhook Secrets | `~/Dokumenty/guidebooks/github-webhooks.md` | Local only |
+| Webhook Secrets | `~/Dokumenty/přístupy/api-keys.md` | Local only |
 | DB Passwords | `dotnet user-secrets` | Per-project |
 | CI/CD Secrets | GitHub Settings → Secrets | Repository |
 

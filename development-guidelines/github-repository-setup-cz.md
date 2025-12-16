@@ -199,13 +199,13 @@ if (!CryptographicOperations.FixedTimeEquals(
 
 ### Umístění credentials
 
-Webhook secrets a konfigurační detaily jsou uloženy v:
+Webhook secrets a všechny API klíče jsou uloženy lokálně v:
 
 ```
-~/Dokumenty/guidebooks/github-webhooks.md
+~/Dokumenty/přístupy/api-keys.md
 ```
 
-**Nikdy necommituj webhook secrets do Gitu.**
+**Nikdy necommituj secrets do Gitu.**
 
 ## Správa secrets
 
@@ -214,7 +214,7 @@ Webhook secrets a konfigurační detaily jsou uloženy v:
 | Typ | Umístění | Přístup |
 |-----|----------|---------|
 | API klíče | `~/Dokumenty/přístupy/api-keys.md` | Pouze lokálně |
-| Webhook secrets | `~/Dokumenty/guidebooks/github-webhooks.md` | Pouze lokálně |
+| Webhook secrets | `~/Dokumenty/přístupy/api-keys.md` | Pouze lokálně |
 | DB hesla | `dotnet user-secrets` | Per-projekt |
 | CI/CD secrets | GitHub Settings → Secrets | Repozitář |
 
