@@ -1,37 +1,29 @@
-# CI/CD Pipeline Setup for NuGet Packages
+# CI/CD for NuGet Packages
 
-## When to Check
+## Checklist
 
-For **every .NET project** publishing NuGet packages, verify:
-- [ ] `.github/workflows/build.yml` exists
-- [ ] `.github/workflows/publish-nuget.yml` exists
-- [ ] GitHub Secret `NUGET_API_KEY` configured
+- [ ] `.github/workflows/build.yml`
+- [ ] `.github/workflows/publish-nuget.yml`
+- [ ] Secret `NUGET_API_KEY` configured
 
----
-
-## How It Works
-
-- `dotnet pack` finds ALL packable projects automatically
-- Publishes to NuGet.org **only when**: tests pass AND (push to `main` OR tag `v*`)
-
----
+Publishes when: tests pass AND (push to `main` OR tag `v*`)
 
 ## Setup
 
-### 1. NuGet API Key
+### 1. NuGet Key
 ```bash
 cat ~/Dokumenty/Keys/nuget-key.txt
 ```
-Add to: `Settings` → `Secrets` → `Actions` → `NUGET_API_KEY`
+Add: Settings → Secrets → Actions → `NUGET_API_KEY`
 
-### 2. Build Workflow (`.github/workflows/build.yml`)
+### 2. build.yml
 ```yaml
 name: Build
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
@@ -49,13 +41,13 @@ jobs:
     - run: dotnet test -c Release --no-build
 ```
 
-### 3. Publish Workflow (`.github/workflows/publish-nuget.yml`)
+### 3. publish-nuget.yml
 ```yaml
 name: Publish NuGet
 on:
   push:
-    branches: [ main ]
-    tags: [ 'v*' ]
+    branches: [main]
+    tags: ['v*']
 
 jobs:
   publish:
@@ -77,22 +69,18 @@ jobs:
       run: dotnet nuget push ./artifacts/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
 ```
 
-### 4. .csproj Metadata
+### 4. .csproj
 ```xml
-<PropertyGroup>
-  <PackageId>Olbrasoft.YourProject</PackageId>
-  <Version>1.0.0</Version>
-  <Authors>Olbrasoft</Authors>
-  <PackageLicenseExpression>MIT</PackageLicenseExpression>
-</PropertyGroup>
+<PackageId>Olbrasoft.YourProject</PackageId>
+<Version>1.0.0</Version>
+<Authors>Olbrasoft</Authors>
+<PackageLicenseExpression>MIT</PackageLicenseExpression>
 ```
 
----
+## Errors
 
-## Common Issues
-
-| Error | Solution |
-|-------|----------|
-| 403 Permission | Add `permissions:` block |
-| 409 Version exists | Increase version or use `--skip-duplicate` |
-| API key error | Check `NUGET_API_KEY` secret |
+| Error | Fix |
+|-------|-----|
+| 403 | Add `permissions:` block |
+| 409 | Increase version / use `--skip-duplicate` |
+| API key | Check `NUGET_API_KEY` secret |
