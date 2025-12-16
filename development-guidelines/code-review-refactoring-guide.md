@@ -10,18 +10,89 @@ Complete guide for conducting code reviews and refactoring in .NET/C# projects, 
 
 ### Purpose of Code Review
 
-1. **Find bugs early** - Catch issues before they reach production
-2. **Knowledge sharing** - Spread understanding of the codebase
-3. **Maintain consistency** - Ensure code follows team standards
-4. **Improve design** - Identify architectural improvements
-5. **Documentation** - Create a record of design decisions
+1. **Find bugs early** - Catch issues before they cause problems
+2. **Improve design** - Identify architectural improvements
+3. **Learn and improve** - Each review teaches something new
+4. **Documentation** - Create a record of design decisions
+5. **Maintain consistency** - Ensure code follows standards
 
-### Review Mindset
+### Self-Review (Solo Development)
 
-| Role | Focus |
-|------|-------|
-| **Author** | Be open to feedback, explain context, respond promptly |
-| **Reviewer** | Be constructive, ask questions, focus on issues not style |
+When working alone or with AI assistance, you are your own reviewer:
+
+| Before Commit | Ask Yourself |
+|---------------|--------------|
+| **Read the diff** | Does every change make sense? |
+| **Explain it** | Could I explain this to someone else? |
+| **Sleep on it** | Does it still look good tomorrow? |
+| **Run it** | Did I actually test this works? |
+
+**The "Fresh Eyes" technique:**
+- Take a 15-minute break before reviewing your own code
+- Read the code as if you didn't write it
+- Ask: "What would confuse me if I saw this in 6 months?"
+
+### AI-Assisted Review
+
+When using AI (Claude, Copilot) for code review:
+
+| Good for | Less reliable for |
+|----------|-------------------|
+| Catching obvious bugs | Business logic correctness |
+| Naming suggestions | Architecture decisions |
+| Finding code smells | Performance in your specific context |
+| Suggesting refactoring | Understanding your domain |
+| Security pattern checks | "Does this actually work?" |
+
+**Best practice:** Use AI as a second pair of eyes, but always verify suggestions make sense for your context.
+
+---
+
+## Branch & Commit Guidelines
+
+### When to Use Branches
+
+For solo development, branches are useful for:
+
+| Situation | Use Branch? | Why |
+|-----------|-------------|-----|
+| Large feature (multi-day) | ✅ Yes | Keep main working while you experiment |
+| Risky experiment | ✅ Yes | Easy to abandon if it doesn't work |
+| Quick bug fix | ❌ No | Just commit to main |
+| Small improvement | ❌ No | Not worth the overhead |
+| "I want to save this state" | ✅ Yes | Create branch as a "checkpoint" |
+
+### Practical Branch Strategy
+
+```
+main (always working)
+  │
+  ├── feature/voice-recognition  ← big feature, might break things
+  │
+  ├── experiment/new-ai-model    ← trying something, might abandon
+  │
+  └── backup/before-refactor     ← checkpoint before risky change
+```
+
+**Simple rules:**
+- `main` should always work
+- Branch when you're not sure something will work
+- Delete branches when merged or abandoned
+
+### Commit Size
+
+Even solo, good commit hygiene helps:
+
+| Commit Type | Size | Example |
+|-------------|------|---------|
+| **Atomic** | 1 logical change | "Add customer validation" |
+| **Too big** | Multiple unrelated changes | "Various fixes and improvements" ❌ |
+| **Too small** | Incomplete change | "WIP" ❌ |
+
+**Why it matters for solo dev:**
+- Easier to find when bug was introduced (`git bisect`)
+- Easier to revert specific changes
+- Better history for future reference
 
 ---
 
@@ -97,6 +168,18 @@ Complete guide for conducting code reviews and refactoring in .NET/C# projects, 
 | **Testability** | Can this code be unit tested easily? |
 | **Extensibility** | Can new features be added without modifying existing code? |
 
+#### Architecture Impact Assessment
+
+Before committing larger changes, ask:
+
+| Question | Why it matters |
+|----------|----------------|
+| How will this look in 6 months? | Prevents short-term thinking |
+| Does this increase or decrease complexity? | Small complexities add up |
+| Can I understand this after a break? | Tests maintainability |
+| What breaks if I need to change this? | Identifies coupling |
+| Is this the right layer for this logic? | Ensures proper separation |
+
 #### Design Patterns to Look For
 
 **Creational:**
@@ -132,30 +215,53 @@ Complete guide for conducting code reviews and refactoring in .NET/C# projects, 
 | Controllers/API | 60% | 70% |
 | UI Components | 50% | 60% |
 
-> **Industry Standard:** 80% code coverage is the commonly accepted goal for corporate projects. Microsoft's own documentation mentions maintaining 90% coverage as an example.
+> **Industry Standard:** 80% code coverage is the commonly accepted goal. Going from 80% to 100% requires disproportionate effort that's usually better spent elsewhere.
 
 ### Coverage Quality vs Quantity
 
-**Important:** High coverage doesn't guarantee quality tests!
+> ⚠️ **Critical:** 100% coverage does NOT mean bug-free code. An app with 50k lines can have hundreds of bugs even at 100% coverage.
 
-```
-BAD (100% coverage, 0% value):
+**What coverage number tells you:**
+- ✅ Which code paths were executed
+- ❌ Whether assertions are meaningful
+- ❌ Whether edge cases are covered
+- ❌ Whether tests verify correct behavior
+
+**Test review checklist:**
+- [ ] Does the test have meaningful assertions (not just `Assert.NotNull`)?
+- [ ] Are edge cases covered (null, empty, boundary values)?
+- [ ] Does the test name describe the expected behavior?
+- [ ] Is the test independent (no reliance on other tests)?
+- [ ] Would the test fail if the code was wrong?
+
+### Test Anti-Patterns to Avoid
+
+```csharp
+// ❌ No assertion - test always passes
 [Fact]
-public void Test()
+public void ProcessOrder_DoesNotThrow()
 {
-    var service = new MyService();
-    service.DoSomething(); // No assertions!
+    var service = new OrderService();
+    service.ProcessOrder(new Order()); // No Assert!
 }
 
-GOOD (meaningful test):
+// ❌ Testing implementation, not behavior
 [Fact]
-public void CalculateTotal_WithDiscount_ReturnsReducedPrice()
+public void GetCustomer_CallsRepository()
 {
-    var calculator = new PriceCalculator();
+    _mockRepo.Verify(r => r.GetById(It.IsAny<int>()), Times.Once);
+    // Doesn't verify the RESULT is correct
+}
+
+// ✅ Good - tests behavior and result
+[Fact]
+public void GetCustomer_WithValidId_ReturnsCustomerWithCorrectData()
+{
+    var result = _service.GetCustomer(123);
     
-    var result = calculator.CalculateTotal(100, discount: 0.1m);
-    
-    Assert.Equal(90, result);
+    Assert.NotNull(result);
+    Assert.Equal(123, result.Id);
+    Assert.Equal("John", result.Name);
 }
 ```
 
@@ -198,7 +304,7 @@ public void Add_TwoNumbers_ReturnsSum()
 | Code smell detected | Refactor immediately |
 | Adding new feature | Refactor first, then add feature |
 | Fixing bug | Refactor to prevent similar bugs |
-| Code review feedback | Refactor before merging |
+| Before commit | Clean up while it's fresh in mind |
 
 ### Common Code Smells
 
@@ -219,9 +325,9 @@ public void Add_TwoNumbers_ReturnsSum()
 2. **Make small changes** - One refactoring at a time
 3. **Run tests frequently** - After each small change
 4. **Commit often** - Small, focused commits
-5. **Review your own changes** - Before submitting for review
+5. **Review your changes** - Read the diff before pushing
 
-### Refactoring Techniques
+### Classic Refactoring Techniques
 
 #### Extract Method
 ```csharp
@@ -278,6 +384,107 @@ public class RegularDiscount : IDiscountStrategy
 }
 ```
 
+### Modern C# Refactoring Techniques
+
+#### Primary Constructors (C# 12)
+
+```csharp
+// Before - 15 lines
+public class CustomerService
+{
+    private readonly IRepository _repository;
+    private readonly ILogger _logger;
+
+    public CustomerService(IRepository repository, ILogger logger)
+    {
+        _repository = repository;
+        _logger = logger;
+    }
+}
+
+// After - 1 line
+public class CustomerService(IRepository repository, ILogger logger)
+{
+    // Use repository and logger directly
+}
+```
+
+#### Records for Immutable Data
+
+```csharp
+// Before - 20+ lines with Equals, GetHashCode, ToString
+public class CustomerDto
+{
+    public int Id { get; init; }
+    public string Name { get; init; }
+    public string Email { get; init; }
+}
+
+// After - 1 line, includes equality, deconstruction, ToString
+public record CustomerDto(int Id, string Name, string Email);
+```
+
+#### Collection Expressions (C# 12)
+
+```csharp
+// Before
+var list = new List<int> { 1, 2, 3 };
+var array = new int[] { 1, 2, 3 };
+var empty = Array.Empty<string>();
+
+// After
+List<int> list = [1, 2, 3];
+int[] array = [1, 2, 3];
+string[] empty = [];
+```
+
+#### File-Scoped Namespaces
+
+```csharp
+// Before - extra indentation level
+namespace MyApp.Services
+{
+    public class MyService
+    {
+        // ...
+    }
+}
+
+// After - cleaner, less nesting
+namespace MyApp.Services;
+
+public class MyService
+{
+    // ...
+}
+```
+
+#### Pattern Matching
+
+```csharp
+// Before
+if (obj is Customer)
+{
+    var customer = (Customer)obj;
+    ProcessCustomer(customer);
+}
+
+// After
+if (obj is Customer customer)
+{
+    ProcessCustomer(customer);
+}
+
+// Switch expressions
+var discount = customer.Type switch
+{
+    CustomerType.Regular => 0.05m,
+    CustomerType.Premium => 0.15m,
+    CustomerType.VIP => 0.25m,
+    _ => 0m
+};
+```
+
 ---
 
 ## Code Analysis Tools
@@ -306,7 +513,7 @@ Add to your projects via `common.props`:
 
 ### EditorConfig
 
-Use `.editorconfig` to enforce style rules across the team:
+Use `.editorconfig` to enforce style rules automatically:
 
 ```ini
 [*.cs]
@@ -322,30 +529,31 @@ csharp_prefer_braces = true:error
 
 ---
 
-## Review Checklist Summary
+## Quick Self-Review Checklist
 
-### Before Submitting for Review
+### Before Every Commit
 
 - [ ] Code compiles without warnings
 - [ ] All tests pass
-- [ ] New code has tests (80%+ coverage)
+- [ ] I've read the diff - every change makes sense
 - [ ] No hardcoded secrets or connection strings
+- [ ] No `Console.WriteLine` debugging left behind
+- [ ] No commented-out code
+
+### For Larger Changes
+
+- [ ] New code has tests (aim for 80%)
 - [ ] SOLID principles followed
 - [ ] Naming conventions followed
 - [ ] No magic numbers/strings
-- [ ] Async methods named correctly
-- [ ] Exception handling is specific
-- [ ] Resources are disposed properly
+- [ ] Could I understand this in 6 months?
+- [ ] Does this increase or decrease overall complexity?
 
-### During Review
+### Before Pushing
 
-- [ ] Does the code do what it claims?
-- [ ] Is the logic correct?
-- [ ] Are edge cases handled?
-- [ ] Is the code readable?
-- [ ] Could this be simpler?
-- [ ] Are there security concerns?
-- [ ] Are there performance concerns?
+- [ ] Did I actually run and test this?
+- [ ] Is the commit message clear?
+- [ ] Would I be comfortable explaining this change?
 
 ---
 
@@ -356,5 +564,6 @@ csharp_prefer_braces = true:error
 - [Microsoft Unit Testing Best Practices](https://learn.microsoft.com/dotnet/core/testing/unit-testing-best-practices)
 - [Microsoft Engineering Fundamentals - C# Code Reviews](https://microsoft.github.io/code-with-engineering-playbook/code-reviews/recipes/csharp/)
 - [Framework Design Guidelines](https://learn.microsoft.com/dotnet/standard/design-guidelines/)
+- [Google Engineering Practices - Code Review](https://google.github.io/eng-practices/review/)
 - [SOLID Principles Guide](../solid-principles/solid-principles-2025.md)
 - [Design Patterns Guide](../design-patterns/gof-design-patterns-2025.md)
