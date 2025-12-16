@@ -1,98 +1,24 @@
 # Code Review and Refactoring Guide for .NET/C#
 
-Complete guide for conducting code reviews and refactoring in .NET/C# projects, aligned with Microsoft recommendations and industry best practices for 2025.
+Guide for reviewing and refactoring existing .NET/C# code. Use this when code is working and you want to clean it up, improve quality, or prepare for future changes.
 
-> **Sources:** This guide is based on [Microsoft's Engineering Fundamentals Playbook](https://microsoft.github.io/code-with-engineering-playbook/code-reviews/recipes/csharp/), [Microsoft C# Coding Conventions](https://learn.microsoft.com/dotnet/csharp/fundamentals/coding-style/coding-conventions), and [Framework Design Guidelines](https://learn.microsoft.com/dotnet/standard/design-guidelines/).
+> **When to use this guide:** After initial development is done, when you want to improve existing code quality.
+>
+> **For programming workflow:** See [workflow-guide.md](workflow-guide.md) for branches, commits, issues, and development process.
 
----
-
-## Code Review Process
-
-### Purpose of Code Review
-
-1. **Find bugs early** - Catch issues before they cause problems
-2. **Improve design** - Identify architectural improvements
-3. **Learn and improve** - Each review teaches something new
-4. **Documentation** - Create a record of design decisions
-5. **Maintain consistency** - Ensure code follows standards
-
-### Self-Review (Solo Development)
-
-When working alone or with AI assistance, you are your own reviewer:
-
-| Before Commit | Ask Yourself |
-|---------------|--------------|
-| **Read the diff** | Does every change make sense? |
-| **Explain it** | Could I explain this to someone else? |
-| **Sleep on it** | Does it still look good tomorrow? |
-| **Run it** | Did I actually test this works? |
-
-**The "Fresh Eyes" technique:**
-- Take a 15-minute break before reviewing your own code
-- Read the code as if you didn't write it
-- Ask: "What would confuse me if I saw this in 6 months?"
-
-### AI-Assisted Review
-
-When using AI (Claude, Copilot) for code review:
-
-| Good for | Less reliable for |
-|----------|-------------------|
-| Catching obvious bugs | Business logic correctness |
-| Naming suggestions | Architecture decisions |
-| Finding code smells | Performance in your specific context |
-| Suggesting refactoring | Understanding your domain |
-| Security pattern checks | "Does this actually work?" |
-
-**Best practice:** Use AI as a second pair of eyes, but always verify suggestions make sense for your context.
+> **Sources:** Based on [Microsoft's Engineering Fundamentals Playbook](https://microsoft.github.io/code-with-engineering-playbook/code-reviews/recipes/csharp/), [Microsoft C# Coding Conventions](https://learn.microsoft.com/dotnet/csharp/fundamentals/coding-style/coding-conventions), and [Framework Design Guidelines](https://learn.microsoft.com/dotnet/standard/design-guidelines/).
 
 ---
 
-## Branch & Commit Guidelines
+## When to Review & Refactor
 
-### When to Use Branches
-
-For solo development, branches are useful for:
-
-| Situation | Use Branch? | Why |
-|-----------|-------------|-----|
-| Large feature (multi-day) | ✅ Yes | Keep main working while you experiment |
-| Risky experiment | ✅ Yes | Easy to abandon if it doesn't work |
-| Quick bug fix | ❌ No | Just commit to main |
-| Small improvement | ❌ No | Not worth the overhead |
-| "I want to save this state" | ✅ Yes | Create branch as a "checkpoint" |
-
-### Practical Branch Strategy
-
-```
-main (always working)
-  │
-  ├── feature/voice-recognition  ← big feature, might break things
-  │
-  ├── experiment/new-ai-model    ← trying something, might abandon
-  │
-  └── backup/before-refactor     ← checkpoint before risky change
-```
-
-**Simple rules:**
-- `main` should always work
-- Branch when you're not sure something will work
-- Delete branches when merged or abandoned
-
-### Commit Size
-
-Even solo, good commit hygiene helps:
-
-| Commit Type | Size | Example |
-|-------------|------|---------|
-| **Atomic** | 1 logical change | "Add customer validation" |
-| **Too big** | Multiple unrelated changes | "Various fixes and improvements" ❌ |
-| **Too small** | Incomplete change | "WIP" ❌ |
-
-**Why it matters for solo dev:**
-- Easier to find when bug was introduced (`git bisect`)
-- Easier to revert specific changes
-- Better history for future reference
+| Situation | Action |
+|-----------|--------|
+| Feature is working | Review before moving on |
+| Code feels messy | Refactor now while it's fresh |
+| Adding new feature to old code | Review & refactor first |
+| Found a bug | Review surrounding code for similar issues |
+| "I'll fix it later" | Fix it now - later never comes |
 
 ---
 
@@ -170,7 +96,7 @@ Even solo, good commit hygiene helps:
 
 #### Architecture Impact Assessment
 
-Before committing larger changes, ask:
+Before larger refactoring, ask:
 
 | Question | Why it matters |
 |----------|----------------|
@@ -204,37 +130,28 @@ Before committing larger changes, ask:
 
 ---
 
-## Unit Test Coverage
+## Unit Test Review
 
-### Recommended Coverage Targets
+### Coverage Targets
 
-| Project Type | Minimum Coverage | Target Coverage |
-|--------------|------------------|-----------------|
+| Project Type | Minimum | Target |
+|--------------|---------|--------|
 | Business Logic | 80% | 90%+ |
 | Data Access | 70% | 80% |
 | Controllers/API | 60% | 70% |
 | UI Components | 50% | 60% |
 
-> **Industry Standard:** 80% code coverage is the commonly accepted goal. Going from 80% to 100% requires disproportionate effort that's usually better spent elsewhere.
+> ⚠️ **Critical:** 100% coverage does NOT mean bug-free code. Focus on test quality, not just the number.
 
-### Coverage Quality vs Quantity
+### Test Quality Checklist
 
-> ⚠️ **Critical:** 100% coverage does NOT mean bug-free code. An app with 50k lines can have hundreds of bugs even at 100% coverage.
-
-**What coverage number tells you:**
-- ✅ Which code paths were executed
-- ❌ Whether assertions are meaningful
-- ❌ Whether edge cases are covered
-- ❌ Whether tests verify correct behavior
-
-**Test review checklist:**
 - [ ] Does the test have meaningful assertions (not just `Assert.NotNull`)?
 - [ ] Are edge cases covered (null, empty, boundary values)?
 - [ ] Does the test name describe the expected behavior?
 - [ ] Is the test independent (no reliance on other tests)?
 - [ ] Would the test fail if the code was wrong?
 
-### Test Anti-Patterns to Avoid
+### Test Anti-Patterns to Fix
 
 ```csharp
 // ❌ No assertion - test always passes
@@ -265,46 +182,9 @@ public void GetCustomer_WithValidId_ReturnsCustomerWithCorrectData()
 }
 ```
 
-### Test Naming Convention
-
-```
-[Method]_[Scenario]_[ExpectedResult]
-```
-
-**Examples:**
-- `GetCustomer_WithValidId_ReturnsCustomer`
-- `CreateOrder_WithEmptyCart_ThrowsException`
-- `CalculateDiscount_ForPremiumMember_Returns20Percent`
-
-### Arrange-Act-Assert Pattern
-
-```csharp
-[Fact]
-public void Add_TwoNumbers_ReturnsSum()
-{
-    // Arrange
-    var calculator = new Calculator();
-    
-    // Act
-    var result = calculator.Add(2, 3);
-    
-    // Assert
-    Assert.Equal(5, result);
-}
-```
-
 ---
 
 ## Refactoring Guidelines
-
-### When to Refactor
-
-| Trigger | Action |
-|---------|--------|
-| Code smell detected | Refactor immediately |
-| Adding new feature | Refactor first, then add feature |
-| Fixing bug | Refactor to prevent similar bugs |
-| Before commit | Clean up while it's fresh in mind |
 
 ### Common Code Smells
 
@@ -529,31 +409,23 @@ csharp_prefer_braces = true:error
 
 ---
 
-## Quick Self-Review Checklist
+## Review Checklist Summary
 
-### Before Every Commit
+### Quick Review (Small Changes)
 
-- [ ] Code compiles without warnings
-- [ ] All tests pass
-- [ ] I've read the diff - every change makes sense
-- [ ] No hardcoded secrets or connection strings
-- [ ] No `Console.WriteLine` debugging left behind
-- [ ] No commented-out code
+- [ ] Does every change make sense?
+- [ ] Are there any obvious bugs?
+- [ ] Is naming clear?
+- [ ] No magic numbers?
 
-### For Larger Changes
+### Full Review (Larger Changes)
 
-- [ ] New code has tests (aim for 80%)
-- [ ] SOLID principles followed
-- [ ] Naming conventions followed
-- [ ] No magic numbers/strings
+- [ ] SOLID principles followed?
+- [ ] Code smells addressed?
+- [ ] Tests cover new/changed code?
+- [ ] Architecture impact considered?
+- [ ] Security checked?
 - [ ] Could I understand this in 6 months?
-- [ ] Does this increase or decrease overall complexity?
-
-### Before Pushing
-
-- [ ] Did I actually run and test this?
-- [ ] Is the commit message clear?
-- [ ] Would I be comfortable explaining this change?
 
 ---
 
@@ -564,6 +436,5 @@ csharp_prefer_braces = true:error
 - [Microsoft Unit Testing Best Practices](https://learn.microsoft.com/dotnet/core/testing/unit-testing-best-practices)
 - [Microsoft Engineering Fundamentals - C# Code Reviews](https://microsoft.github.io/code-with-engineering-playbook/code-reviews/recipes/csharp/)
 - [Framework Design Guidelines](https://learn.microsoft.com/dotnet/standard/design-guidelines/)
-- [Google Engineering Practices - Code Review](https://google.github.io/eng-practices/review/)
 - [SOLID Principles Guide](../solid-principles/solid-principles-2025.md)
 - [Design Patterns Guide](../design-patterns/gof-design-patterns-2025.md)
