@@ -1,6 +1,6 @@
 # C# .NET Application Workflow Guide
 
-Complete guide for .NET development: issues, Git workflow, testing, deployment, and secrets.
+Complete guide for .NET development: issues, Git workflow, branches, commits, testing, deployment, and secrets.
 
 ---
 
@@ -150,7 +150,86 @@ Use `github_issue_read` with method: "get_sub_issues"
 
 ---
 
-## Git Workflow
+## Branch Strategy
+
+### When to Use Branches
+
+For solo development with AI, branches are useful in specific situations:
+
+| Situation | Use Branch? | Why |
+|-----------|-------------|-----|
+| Large feature (multi-day) | ✅ Yes | Keep main working while you experiment |
+| Risky experiment | ✅ Yes | Easy to abandon if it doesn't work |
+| Quick bug fix | ❌ No | Just commit to main |
+| Small improvement | ❌ No | Not worth the overhead |
+| "I want to save this state" | ✅ Yes | Create branch as a "checkpoint" |
+
+### Practical Branch Naming
+
+```
+main (always working)
+  │
+  ├── feature/voice-recognition  ← big feature, might break things
+  │
+  ├── experiment/new-ai-model    ← trying something, might abandon
+  │
+  └── backup/before-refactor     ← checkpoint before risky change
+```
+
+**Simple rules:**
+- `main` should always work
+- Branch when you're not sure something will work
+- Delete branches when merged or abandoned
+
+### Branch Naming Convention
+
+| Type | Pattern | Example |
+|------|---------|---------|
+| Feature | `feature/issue-N-short-desc` | `feature/issue-42-voice-input` |
+| Bug fix | `fix/issue-N-short-desc` | `fix/issue-15-null-reference` |
+| Experiment | `experiment/desc` | `experiment/new-tts-provider` |
+| Backup | `backup/desc` | `backup/before-big-refactor` |
+
+---
+
+## Commit Guidelines
+
+### Commit Size
+
+| Commit Type | Size | Example |
+|-------------|------|---------|
+| **Atomic** ✅ | 1 logical change | "Add customer validation" |
+| **Too big** ❌ | Multiple unrelated changes | "Various fixes and improvements" |
+| **Too small** ❌ | Incomplete change | "WIP" |
+
+**Why good commits matter (even solo):**
+- Easier to find when bug was introduced (`git bisect`)
+- Easier to revert specific changes
+- Better history for future reference
+
+### Commit Message Format
+
+```
+[Type]: Short description (max 50 chars)
+
+Optional longer explanation if needed.
+- What changed
+- Why it changed
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+```
+
+**Types:**
+- `Add` - New feature or file
+- `Fix` - Bug fix
+- `Update` - Enhancement to existing feature
+- `Refactor` - Code cleanup, no behavior change
+- `Remove` - Deleting code or files
+- `Docs` - Documentation only
+
+### Git Workflow Summary
 
 - Each issue = separate branch (`fix/issue-N-desc`, `feature/issue-N-desc`)
 - **COMMIT + PUSH after every step**
@@ -159,34 +238,66 @@ Use `github_issue_read` with method: "get_sub_issues"
 
 ---
 
-## Issue Writing Principles
+## Self-Review (Before Committing)
 
-### DO
-- Write from user's perspective
-- Write implementation-neutral requirements (WHAT, not HOW)
-- Include acceptance criteria
-- Prioritize requirements (must have / should have)
-- Break large issues into smaller sub-issues
-- **LINK sub-issues properly using GitHub's native feature**
+When working alone or with AI assistance, you are your own reviewer.
 
-### DON'T
-- Specify database schema or table structure
-- Choose frameworks or libraries
-- Define API endpoint paths or HTTP methods
-- Make architectural decisions
-- Use ambiguous language ("should work", "might need")
-- **Write "Part of #X" instead of actually linking sub-issues**
+### Quick Self-Check
 
-### Checklist Before Creating Issue
+| Before Commit | Ask Yourself |
+|---------------|--------------|
+| **Read the diff** | Does every change make sense? |
+| **Explain it** | Could I explain this to someone else? |
+| **Run it** | Did I actually test this works? |
+| **Sleep on it** | Does it still look good after a break? |
 
-- [ ] Can be understood without additional context?
-- [ ] No ambiguous terms?
-- [ ] WHO benefits is clear?
-- [ ] WHAT needs to be done is defined?
-- [ ] WHY it's needed is explained?
-- [ ] Acceptance criteria are measurable?
-- [ ] Issue is small enough to complete in one session?
-- [ ] If sub-issue, is it LINKED (not just referenced) to parent?
+### The "Fresh Eyes" Technique
+
+- Take a 15-minute break before reviewing your own code
+- Read the code as if you didn't write it
+- Ask: "What would confuse me if I saw this in 6 months?"
+
+### Before Every Commit Checklist
+
+- [ ] Code compiles without warnings
+- [ ] All tests pass
+- [ ] I've read the diff - every change makes sense
+- [ ] No hardcoded secrets or connection strings
+- [ ] No `Console.WriteLine` debugging left behind
+- [ ] No commented-out code
+
+---
+
+## AI-Assisted Development
+
+When using AI (Claude Code, Copilot) for development:
+
+### What AI is Good For
+
+| Good for | Less reliable for |
+|----------|-------------------|
+| Catching obvious bugs | Business logic correctness |
+| Naming suggestions | Architecture decisions |
+| Finding code smells | Performance in your specific context |
+| Suggesting refactoring | Understanding your domain |
+| Security pattern checks | "Does this actually work?" |
+| Boilerplate code | Complex integrations |
+
+### Best Practices
+
+- **Always verify** - AI suggestions may look correct but miss context
+- **Test everything** - Don't assume generated code works
+- **Understand the code** - Don't commit code you don't understand
+- **Provide context** - The more context AI has, the better suggestions
+
+### When to Ask AI for Help
+
+| Situation | AI Can Help With |
+|-----------|------------------|
+| "How do I...?" | Syntax, patterns, examples |
+| "What's wrong?" | Error analysis, debugging suggestions |
+| "Make this better" | Refactoring, naming, simplification |
+| "Is this secure?" | Common vulnerability patterns |
 
 ---
 
@@ -195,6 +306,11 @@ Use `github_issue_read` with method: "get_sub_issues"
 **Framework:** xUnit + Moq (ALWAYS)
 
 **Naming:** `[Method]_[Scenario]_[Expected]`
+
+**Examples:**
+- `GetCustomer_WithValidId_ReturnsCustomer`
+- `CreateOrder_WithEmptyCart_ThrowsException`
+- `CalculateDiscount_ForPremiumMember_Returns20Percent`
 
 ---
 
@@ -252,3 +368,4 @@ Published folder config (not in Git) OR `export DbPassword="prod_secret"`
 - [GitHub Sub-Issues Documentation](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/adding-sub-issues)
 - [Atlassian User Stories Guide](https://www.atlassian.com/agile/project-management/user-stories)
 - [Microsoft App Secrets](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets)
+- [Google Engineering Practices - Code Review](https://google.github.io/eng-practices/review/)
