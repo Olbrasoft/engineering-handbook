@@ -188,6 +188,46 @@ var discount = type switch
 <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 ```
 
+## Code Review Output
+
+**IMPORTANT: Code review findings → GitHub Issues**
+
+After completing code review, create GitHub issues for identified problems:
+
+| Priority | Create Issue? | Label |
+|----------|---------------|-------|
+| Critical (red flags) | ✅ Yes, immediately | `refactor`, `priority:high` |
+| Code smells | ✅ Yes | `refactor` |
+| Minor improvements | Optional | `enhancement` |
+
+**Issue template for refactoring:**
+```markdown
+## Summary
+[What needs to be refactored and why]
+
+## Problem
+- Current state: [describe the smell/violation]
+- Impact: [why it matters]
+
+## Proposed Solution
+- [ ] Step 1
+- [ ] Step 2
+
+## Files Affected
+- `path/to/file.cs` (X lines)
+
+## Acceptance Criteria
+- [ ] Tests pass
+- [ ] No new warnings
+- [ ] Code follows SOLID
+```
+
+**Why issues instead of just notes:**
+- Trackable progress
+- Can be assigned and prioritized
+- History preserved
+- Sub-issues for large refactoring
+
 ## Quick Checklist
 
 **Small changes:** Makes sense? Bugs? Clear names? No magic numbers?
