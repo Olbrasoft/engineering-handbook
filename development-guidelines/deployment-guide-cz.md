@@ -861,6 +861,7 @@ sudo journalctl -u actions.runner.XXX.service | grep "dotnet --version"
 | **Používej systemd pro automatický start** | Runner se spustí po restartu systému |
 | **Organization-level runner pro více repozitářů** | Efektivnější než desítky repository-level runnerů |
 | **⚠️ VŽDY nastav PATH s .NET SDK** | Prevent NETSDK1045 chyby |
+| **⚠️ PO KAŽDÉM PUSH zkontroluj výsledek workflow** | Ověř, že deploy skutečně proběhl (ne pouze assume) |
 
 ### Reference
 
@@ -880,6 +881,7 @@ sudo journalctl -u actions.runner.XXX.service | grep "dotnet --version"
 - [ ] Dokumentace (README) vysvětluje strukturu adresářů
 - [ ] Data nejsou ukládána do složky s binárkami
 - [ ] **Pokud používáš GitHub Actions: Self-hosted runner je zaregistrovaný pro tento repozitář**
+- [ ] **Po push na main: Zkontroluj výsledek workflow na GitHubu** (`gh run watch` nebo GitHub web UI)
 
 ---
 
