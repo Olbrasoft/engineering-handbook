@@ -127,6 +127,49 @@ public async Task<TtsResult> SynthesizeAsync(TtsRequest request, CancellationTok
 - [ ] Jsou služby registrovány se správným lifetime (Singleton/Scoped/Transient)?
 - [ ] Jsou pro závislosti použita rozhraní, ne konkrétní třídy?
 
+#### Using direktivy a jmenné prostory
+- [ ] Jsou odstraněny všechny nepoužité `using` direktivy?
+- [ ] Jsou using direktivy seřazeny (nejprve System, pak ostatní)?
+- [ ] Není použit `using System;` pokud nejsou použity typy ze System namespace?
+- [ ] Nejsou importovány celé jmenné prostory pokud se používají jen 1-2 typy?
+
+**SPRÁVNĚ (pouze potřebné using):**
+```csharp
+using System.Threading;
+using System.Threading.Tasks;
+using Olbrasoft.VirtualAssistant.Data;
+
+namespace Olbrasoft.TextToSpeech.Core;
+
+public class TtsService
+{
+    // Používá Task, CancellationToken, TtsRequest
+}
+```
+
+**ŠPATNĚ (nepoužité using):**
+```csharp
+using System;                           // ← Nepoužito
+using System.Collections.Generic;       // ← Nepoužito
+using System.Linq;                      // ← Nepoužito
+using System.Text;                      // ← Nepoužito
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;     // ← Nepoužito
+using Olbrasoft.VirtualAssistant.Data;
+
+namespace Olbrasoft.TextToSpeech.Core;
+
+public class TtsService
+{
+    // Používá pouze Task, CancellationToken, TtsRequest
+}
+```
+
+**Automatické odstranění v IDE:**
+- Visual Studio: `Ctrl+R, Ctrl+G` (Remove and Sort Usings)
+- VS Code/Rider: `Ctrl+.` → "Remove unnecessary usings"
+
 #### Výkon
 - [ ] Je LINQ použito vhodně (ne pro jednoduché smyčky)?
 - [ ] Existují potenciální problémy s alokací paměti (boxing, krátkodobé objekty)?
@@ -257,6 +300,7 @@ public void Add_TwoNumbers_ReturnsSum()
 | **God Class** | Aplikovat Single Responsibility |
 | **Feature Envy** | Přesunout metodu do třídy, kterou nejvíce používá |
 | **Primitive Obsession** | Vytvořit value objekty |
+| **Nepoužívané using direktivy** | Odstranit všechny nepoužité `using` |
 
 ### Bezpečné kroky refaktoringu
 
