@@ -13,10 +13,16 @@ Best practices for deploying .NET apps on Linux with proper secrets management.
 
 ## Directory Structure
 
-### Production (Linux FHS)
+### ⚠️ IMPORTANT: We Use Production-Only Deployment
+
+**We do NOT have separate dev/staging environments.** All applications run in production mode at `/opt/olbrasoft/<app>/`.
+
+User Secrets are for local development in IDE only. When deploying, ALWAYS deploy to `/opt/olbrasoft/`.
+
+### Production Directory (ONLY deployment target)
 
 ```
-/opt/<vendor>/<app>/
+/opt/olbrasoft/<app>/
 ├── app/                      # Binaries (AppContext.BaseDirectory)
 ├── config/                   # appsettings.json (no secrets!)
 ├── data/                     # Runtime data
@@ -24,11 +30,10 @@ Best practices for deploying .NET apps on Linux with proper secrets management.
 └── logs/                     # Application logs
 ```
 
-### Development
-
-```
-~/apps/<app>/                 # Alternative: ~/.local/share/<app>/
-```
+**Examples:**
+- `/opt/olbrasoft/virtual-assistant/`
+- `/opt/olbrasoft/push-to-talk/`
+- `/opt/olbrasoft/github-issues/`
 
 ### AI Models (Read-Only Data)
 
@@ -52,6 +57,11 @@ dotnet test --verbosity minimal || exit 1
 dotnet publish src/MyApp/MyApp.csproj -c Release -o "$BASE_DIR/app" --no-self-contained
 
 echo "✅ Deployed to $BASE_DIR"
+```
+
+**Usage:**
+```bash
+./deploy/deploy.sh /opt/olbrasoft/myapp
 ```
 
 ### With systemd restart
