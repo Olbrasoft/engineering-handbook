@@ -70,7 +70,7 @@ runtime → AppContext.BaseDirectory
 
 **Příklad:**
 ```
-/opt/olbrasoft/virtualassistant/
+/opt/olbrasoft/virtual-assistant/
 ```
 
 ### Uživatelská / Vývojová Instance
@@ -601,6 +601,225 @@ sudo systemctl start myapp.service
 
 ---
 
+## Secrets a Environment Variables
+
+### Pravidlo: Connection Strings a Hesla
+
+**✅ SPRÁVNĚ:**
+- `appsettings.json` - connection string **BEZ hesla** (může do Gitu)
+- **Environment variable** - **CELÝ** connection string s heslem (nesmí do Gitu)
+
+**❌ ŠPATNĚ:**
+- Heslo v `appsettings.json` nebo `appsettings.Production.json`
+- Heslo v kódu
+- Heslo commitnuté do Gitu
+
+### Environment Variables v .NET Core
+
+**.NET Core formát (double underscore):**
+```bash
+# SPRÁVNĚ - dvojité underscore "__"
+ConnectionStrings__DefaultConnection="Server=localhost;Database=mydb;User Id=sa;Password=secret;"
+
+# ŠPATNĚ - jedno underscore (nefunguje!)
+ConnectionStrings_DefaultConnection="..."
+```
+
+**Proč dvojité underscore?**
+- .NET Core používá `__` pro zanořené konfigurace
+- `ConnectionStrings__DefaultConnection` = `ConnectionStrings:DefaultConnection` v JSON
+
+### Pořadí Načítání Konfigurace (.NET Core)
+
+```
+1. appsettings.json                    (základní)
+2. appsettings.{Environment}.json      (override podle prostředí)
+3. User Secrets                        (development only)
+4. Environment Variables               ← NEJVYŠŠÍ PRIORITA (produkce)
+5. Command-line arguments              (ruční override)
+```
+
+**Environment variables PŘEBIJÍ všechno ostatní!**
+
+### Praktický Příklad
+
+**appsettings.Production.json** (BEZ hesla, může do Gitu):
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost;Database=mydb;User Id=sa;"
+  }
+}
+```
+
+**Startup script** (S heslem, NESMÍ do Gitu):
+```bash
+#!/bin/bash
+# github-start.sh
+
+cd /opt/olbrasoft/myapp/app
+
+# Environment variable PŘEBIJE appsettings.json
+ConnectionStrings__DefaultConnection="Server=localhost;Database=mydb;User Id=sa;Password=TajneHeslo123!" \
+ASPNETCORE_ENVIRONMENT=Production \
+dotnet MyApp.dll
+```
+
+**Systemd service** (alternativa):
+```ini
+[Service]
+Environment="ConnectionStrings__DefaultConnection=Server=localhost;Database=mydb;User Id=sa;Password=TajneHeslo123!"
+Environment="ASPNETCORE_ENVIRONMENT=Production"
+ExecStart=/usr/bin/dotnet /opt/olbrasoft/myapp/app/MyApp.dll
+```
+
+### Ověření
+
+Toto bylo ověřeno z oficiální dokumentace a Stack Overflow:
+- [Configuration in ASP.NET Core | Microsoft Learn](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/)
+- [Stack Overflow: How to correctly store connection strings in environment variables](https://stackoverflow.com/questions/44931613/)
+- Datum ověření: 2025-12-20
+
+---
+
+## GitHub Actions Self-Hosted Runners
+
+### Nutnost Kontroly před Automatickým Deploymentem
+
+**⚠️ KRITICKÉ:** Pokud používáš GitHub Actions workflow s `runs-on: self-hosted`, **MUSÍŠ** mít pro daný repozitář zaregistrovaný self-hosted runner!
+
+### Kontrola Existence Runneru
+
+**Před vytvořením GitHub Actions workflow:**
+
+```bash
+# 1. Zkontroluj existující runnery
+ls -d ~/actions-runner* 2>/dev/null
+
+# 2. Zkontroluj jejich konfiguraci
+cat ~/actions-runner/.runner | grep -E "agentName|gitHubUrl"
+cat ~/actions-runner-va/.runner | grep -E "agentName|gitHubUrl"
+
+# 3. Ověř aktivní runnery
+systemctl --user list-units | grep actions.runner
+# nebo
+sudo systemctl list-units | grep actions.runner
+```
+
+### Příklad Výstupu
+
+```json
+// ~/actions-runner/.runner
+{
+  "agentName": "debian",
+  "gitHubUrl": "https://github.com/Olbrasoft/SpeechToText"
+}
+
+// ~/actions-runner-va/.runner
+{
+  "agentName": "debian-va",
+  "gitHubUrl": "https://github.com/Olbrasoft/VirtualAssistant"
+}
+```
+
+**Problém:** Pokud vytvoříš workflow pro `Olbrasoft/GitHub.Issues`, ale žádný runner není pro tento repozitář zaregistrovaný, workflow bude **trvale ve stavu "Queued"** (hnědá tečka).
+
+### Řešení
+
+**Možnost 1: Vytvořit nový repository-level runner**
+```bash
+# Stáhni GitHub Actions Runner
+mkdir ~/actions-runner-github-issues
+cd ~/actions-runner-github-issues
+wget https://github.com/actions/runner/releases/download/v2.x.x/actions-runner-linux-x64-2.x.x.tar.gz
+tar xzf actions-runner-linux-x64-2.x.x.tar.gz
+
+# Registruj runner pro konkrétní repozitář
+./config.sh --url https://github.com/Olbrasoft/GitHub.Issues --token <TOKEN>
+
+# Spusť jako systemd service
+sudo ./svc.sh install
+sudo systemctl enable actions.runner.Olbrasoft-GitHub.Issues.debian.service
+sudo systemctl start actions.runner.Olbrasoft-GitHub.Issues.debian.service
+```
+
+**Možnost 2: Organization-level runner (vyžaduje GitHub Organization)**
+```bash
+# Pokud máš GitHub Organization (např. Olbrasoft-org)
+./config.sh --url https://github.com/Olbrasoft-org --token <TOKEN>
+
+# Tento runner bude dostupný pro VŠECHNY repozitáře v organizaci
+```
+
+**Poznámka:** Repository-level runner funguje **pouze pro jeden repozitář**. Pokud máš více repozitářů, potřebuješ buď:
+- Více runnerů (jeden pro každý repo)
+- Organization-level runner (jeden pro všechny repo v organizaci)
+
+### GitHub Actions Workflow Pattern
+
+**`.github/workflows/deploy-local.yml`:**
+```yaml
+name: Deploy App (Local)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: self-hosted  # ← VYŽADUJE runner!
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run tests
+        run: dotnet test --configuration Release
+
+      - name: Deploy
+        run: |
+          # Base directory z argumentu (SINGLE SOURCE OF TRUTH)
+          sudo ./deploy/deploy.sh /opt/olbrasoft/myapp
+
+      - name: Restart service
+        run: systemctl --user restart myapp.service
+```
+
+### Diagnostika Problémů
+
+**Workflow je "Queued" (hnědá tečka) a nespouští se:**
+
+```bash
+# 1. Zkontroluj, jestli máš runner pro tento repozitář
+gh api repos/Olbrasoft/GitHub.Issues/actions/runners
+
+# 2. Zkontroluj aktivní runnery na stroji
+systemctl --user list-units | grep actions.runner
+
+# 3. Zkontroluj logy runneru
+journalctl --user -u actions.runner.Olbrasoft-MyRepo.debian.service -f
+```
+
+**Pokud žádný runner není zaregistrovaný, workflow NIKDY nezačne běžet!**
+
+### Best Practices
+
+| Pravidlo | Důvod |
+|----------|-------|
+| **Před vytvořením workflow zkontroluj runnery** | Předejdeš "Queued" stavu |
+| **Pojmenuj runnery podle repozitáře** | Snadnější identifikace (např. `debian-va`, `debian-github-issues`) |
+| **Používej systemd pro automatický start** | Runner se spustí po restartu systému |
+| **Organization-level runner pro více repozitářů** | Efektivnější než desítky repository-level runnerů |
+
+### Reference
+
+- [GitHub Actions Self-Hosted Runners Documentation](https://docs.github.com/en/actions/hosting-your-own-runners)
+- [Adding Self-Hosted Runners](https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/adding-self-hosted-runners)
+- Datum ověření: 2025-12-20
+
+---
+
 ## Checklist před Deploymentem
 
 - [ ] Všechny testy prochází (`dotnet test`)
@@ -610,6 +829,7 @@ sudo systemctl start myapp.service
 - [ ] C# kód používá `AppContext.BaseDirectory` (ne natvrdo cestu)
 - [ ] Dokumentace (README) vysvětluje strukturu adresářů
 - [ ] Data nejsou ukládána do složky s binárkami
+- [ ] **Pokud používáš GitHub Actions: Self-hosted runner je zaregistrovaný pro tento repozitář**
 
 ---
 
