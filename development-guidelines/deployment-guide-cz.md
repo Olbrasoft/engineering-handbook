@@ -979,7 +979,17 @@ journalctl --user -u myapp.service -n 20
 Deployment není dokončený dokud aplikace:
 - ✅ Běží (proces existuje)
 - ✅ Odpovídá na HTTP požadavky (ne 000, ne connection refused)
-- ✅ Nemá kritické chyby v lozích
+- ✅ **Nemá ŽÁDNÉ chyby v response ani lozích**
+
+⚠️ **KRITICKÁ CHYBA:** Neříkej, že deployment je úspěšný, když:
+- ❌ HTTP response vrací 500 (i když proces běží!)
+- ❌ V lozích jsou "Failed to...", "Error", "Exception", "InvalidOperationException"
+- ❌ Aplikace hlásí chybějící konfiguraci, connection string, nebo dependencies
+- ❌ V Playwright vidíš "Internal Server Error" stránku
+
+**To jsou STÁLE CHYBY a deployment NENÍ dokončený!**
+
+I když workflow prošel ✅ a proces běží ✅, pokud aplikace hlásí chyby → **NENÍ TO ÚSPĚŠNÝ DEPLOYMENT!**
 
 ---
 
