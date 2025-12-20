@@ -102,6 +102,162 @@ nebo
 
 ---
 
+## Sdílené AI Modely a Read-Only Data
+
+### Kde Ukládat AI/ML Modely (Whisper, Ollama, atd.)
+
+AI modely jsou **read-only, architecture-independent data** → patří do `/usr/share` nebo `~/.local/share`.
+
+| Typ instalace | Cesta | Použití |
+|---------------|-------|---------|
+| **Systémové** (sdílené) | `/usr/share/whisper-models/` | Více uživatelů, vyžaduje sudo |
+| **Uživatelské** | `~/.local/share/whisper-models/` | Jeden uživatel, bez sudo |
+
+### Příklady z Reálného Světa
+
+#### Ollama (AI modely)
+```bash
+# Linux default
+/usr/share/ollama/.ollama/models/
+
+# Přesun (environment variable)
+export OLLAMA_MODELS=/path/to/models
+```
+
+#### Whisper Modely
+```bash
+# Systémové (doporučeno pro servery)
+/usr/share/whisper-models/
+├── ggml-tiny.bin          # 75 MB
+├── ggml-medium.bin        # 1.5 GB
+└── ggml-large-v3.bin      # 2.9 GB
+
+# Uživatelské (doporučeno pro desktop/dev)
+~/.local/share/whisper-models/
+├── ggml-tiny.bin
+├── ggml-medium.bin
+└── ggml-large-v3.bin
+```
+
+### Linux FHS & XDG Zdůvodnění
+
+Podle **Filesystem Hierarchy Standard (FHS)**:
+
+| Adresář | Účel | AI modely? |
+|---------|------|-----------|
+| `/usr/share/` | Read-only architecture-independent data | ✅ **ANO** |
+| `/var/lib/` | Variable state information (mění se za běhu) | ❌ NE |
+| `/opt/` | Add-on application software packages | ❌ NE |
+| `~/.local/share/` | Per-user data files (XDG) | ✅ **ANO** |
+
+**Důvod:**
+- AI modely jsou **binární soubory**
+- Stáhnete **jednou**, nikdy se **nemění**
+- **Architecture-independent** (stejné pro x86, ARM)
+- → Podle FHS patří do `/usr/share` nebo `~/.local/share`
+
+### Použití v C# Kódu
+
+```csharp
+public class WhisperModelLocator
+{
+    public static string GetModelsPath()
+    {
+        // 1. Zkus uživatelský adresář (XDG)
+        var userModels = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "whisper-models"
+        );
+        // Na Linuxu: ~/.local/share/whisper-models
+        
+        if (Directory.Exists(userModels))
+            return userModels;
+        
+        // 2. Zkus systémový adresář
+        var systemModels = "/usr/share/whisper-models";
+        if (Directory.Exists(systemModels))
+            return systemModels;
+        
+        // 3. Fallback - vytvoř uživatelský
+        Directory.CreateDirectory(userModels);
+        return userModels;
+    }
+    
+    public static string GetModelPath(string modelName)
+    {
+        var modelsDir = GetModelsPath();
+        return Path.Combine(modelsDir, modelName);
+    }
+}
+
+// Použití
+var modelPath = WhisperModelLocator.GetModelPath("ggml-large-v3.bin");
+// Vrátí: ~/.local/share/whisper-models/ggml-large-v3.bin
+```
+
+### Instalace Modelů
+
+#### Systémová Instalace (sudo required)
+```bash
+#!/usr/bin/env bash
+# install-whisper-models.sh
+
+MODELS_DIR="/usr/share/whisper-models"
+sudo mkdir -p "$MODELS_DIR"
+
+# Stáhni modely
+cd /tmp
+wget https://huggingface.co/.../ggml-large-v3.bin
+
+# Přesuň do systémového adresáře
+sudo mv ggml-large-v3.bin "$MODELS_DIR/"
+sudo chmod 644 "$MODELS_DIR/ggml-large-v3.bin"
+
+echo "✅ Model installed to $MODELS_DIR"
+```
+
+#### Uživatelská Instalace (bez sudo)
+```bash
+#!/usr/bin/env bash
+# install-whisper-models-user.sh
+
+MODELS_DIR="$HOME/.local/share/whisper-models"
+mkdir -p "$MODELS_DIR"
+
+# Stáhni modely
+cd /tmp
+wget https://huggingface.co/.../ggml-large-v3.bin
+
+# Přesuň do uživatelského adresáře
+mv ggml-large-v3.bin "$MODELS_DIR/"
+chmod 644 "$MODELS_DIR/ggml-large-v3.bin"
+
+echo "✅ Model installed to $MODELS_DIR"
+```
+
+### ⚠️ **CO NEDĚLAT**
+
+| ❌ Špatně | ✅ Správně |
+|----------|-----------|
+| `~/apps/asr-models/` | `~/.local/share/whisper-models/` |
+| `~/.whisper/` | `~/.local/share/whisper-models/` |
+| `/opt/myapp/models/` | `/usr/share/whisper-models/` |
+| `/var/lib/myapp/models/` | `/usr/share/whisper-models/` |
+
+**Důvody:**
+- `~/apps/` není Linux standard (pouze dočasné dev řešení)
+- `~/.whisper/` porušuje XDG specifikaci (dotfiles jsou pro config)
+- `/opt/` je pro aplikační balíčky, ne data
+- `/var/lib/` je pro data která se **MĚNÍ** (modely jsou read-only)
+
+### Reference
+
+- **Linux FHS:** [https://refspecs.linuxfoundation.org/FHS_3.0/fhs/ch04s11.html](https://refspecs.linuxfoundation.org/FHS_3.0/fhs/ch04s11.html) (`/usr/share`)
+- **XDG Base Directory:** [https://specifications.freedesktop.org/basedir-spec/latest/](https://specifications.freedesktop.org/basedir-spec/latest/)
+- **Ollama FAQ:** [https://docs.ollama.com/faq](https://docs.ollama.com/faq) (příklad AI modelů)
+
+---
+
 ## Deploy Script Pattern
 
 ### Minimální Deploy Script
