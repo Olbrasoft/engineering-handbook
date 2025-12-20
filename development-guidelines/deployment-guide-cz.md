@@ -603,6 +603,43 @@ sudo systemctl start myapp.service
 
 ## Secrets a Environment Variables
 
+### Kde Najít Secrets v Našich Projektech
+
+**🔍 Development (User Secrets):**
+```bash
+# Zobraz všechny secrets pro daný projekt
+cd ~/Olbrasoft/<ProjectName>
+dotnet user-secrets list --project src/<ProjectName>/
+
+# Příklad výstupu:
+# GitHub:Token = ghp_xxx...
+# ConnectionStrings:DefaultConnection:Password = xxx...
+# AiProviders:Cohere:Keys:0 = xxx...
+```
+
+**🔍 Production (Startup Scripts):**
+```bash
+# Secrets jsou v startup scriptech jako environment variables
+cat ~/.local/bin/<app>-start.sh
+
+# Příklad:
+# GITHUB_TOKEN="ghp_xxx..."
+# CONNECTION_STRING="Server=...;Password=xxx;"
+```
+
+**📝 Typické Secrets:**
+- `GitHub:Token` - GitHub Personal Access Token (pro načítání issue bodies přes GraphQL)
+- `GitHub:ClientSecret` - GitHub OAuth Client Secret (pro přihlášení uživatelů)
+- `ConnectionStrings:*:Password` - Hesla k databázím
+- `AiProviders:*:Keys:*` - API keys pro AI služby (Cohere, Cerebras, Groq)
+
+**⚠️ DŮLEŽITÉ:**
+1. **NIKDY** necommituj secrets do Gitu
+2. User Secrets jsou **POUZE pro development** (ignorují se v Production)
+3. Pro Production přidej secrets do startup scriptu jako environment variables
+
+---
+
 ### Pravidlo: Connection Strings a Hesla
 
 **✅ SPRÁVNĚ:**
