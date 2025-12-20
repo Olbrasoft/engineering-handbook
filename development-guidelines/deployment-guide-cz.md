@@ -803,6 +803,55 @@ journalctl --user -u actions.runner.Olbrasoft-MyRepo.debian.service -f
 
 **Pokud žádný runner není zaregistrovaný, workflow NIKDY nezačne běžet!**
 
+### ⚠️ KRITICKÉ: PATH a .NET SDK Verze
+
+**Problém:** Runner může používat špatnou verzi .NET SDK!
+
+Pokud máš .NET 10 SDK nainstalované v `~/.dotnet/`, ale systemd service runneru nemá správný PATH, runner použije system-wide .NET SDK (obvykle starší verze v `/usr/share/dotnet/`).
+
+**Symptom:**
+```
+error NETSDK1045: Aktuální sada .NET SDK nepodporuje cílení .NET 10.0.
+Buď zacilte .NET 8.0 nebo nižší, nebo použijte verzi sady .NET SDK, která podporuje .NET 10.0.
+```
+
+**Řešení:** Systemd service MUSÍ mít správný PATH s `~/.dotnet` NA ZAČÁTKU!
+
+**Správná konfigurace:**
+```ini
+[Unit]
+Description=GitHub Actions Runner (...)
+After=network.target
+
+[Service]
+ExecStart=/home/user/actions-runner-xxx/runsvc.sh
+User=user
+WorkingDirectory=/home/user/actions-runner-xxx
+Environment="PATH=/home/user/.dotnet:/home/user/.local/bin:/usr/local/bin:/usr/bin:/bin"
+KillMode=process
+KillSignal=SIGTERM
+TimeoutStopSec=5min
+
+[Install]
+WantedBy=multi-user.target
+```
+
+**Důležité:**
+- `~/.dotnet` MUSÍ být PRVNÍ v PATH
+- Používej absolutní cesty (ne `~`, ale `/home/user/`)
+- Po změně: `sudo systemctl daemon-reload && sudo systemctl restart <service>`
+
+**Ověření:**
+```bash
+# 1. Zkontroluj PATH v service
+sudo systemctl cat actions.runner.XXX.service | grep Environment
+
+# 2. Zkontroluj, kterou verzi dotnet používá runner
+sudo journalctl -u actions.runner.XXX.service | grep "dotnet --version"
+```
+
+**⚠️ BEZ tohoto PATH nastavení bude workflow padat s NETSDK1045 chybou!**
+
 ### Best Practices
 
 | Pravidlo | Důvod |
@@ -811,6 +860,7 @@ journalctl --user -u actions.runner.Olbrasoft-MyRepo.debian.service -f
 | **Pojmenuj runnery podle repozitáře** | Snadnější identifikace (např. `debian-va`, `debian-github-issues`) |
 | **Používej systemd pro automatický start** | Runner se spustí po restartu systému |
 | **Organization-level runner pro více repozitářů** | Efektivnější než desítky repository-level runnerů |
+| **⚠️ VŽDY nastav PATH s .NET SDK** | Prevent NETSDK1045 chyby |
 
 ### Reference
 
