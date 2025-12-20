@@ -993,6 +993,68 @@ I když workflow prošel ✅ a proces běží ✅, pokud aplikace hlásí chyby 
 
 ---
 
+## Funkční Testování Webových Aplikací
+
+**⚠️ KRITICKÉ:** Pro webové aplikace NESTAČÍ ověřit, že proces běží a vrací HTTP 200!
+
+### Povinný Workflow pro Webové Aplikace
+
+1. **Vytvoř Test Plán**
+   - Seznam všech kritických funkcí aplikace
+   - Pro každou funkci specifikuj, co testuje (autentizace, API volání, databáze, AI služby, atd.)
+   - Zapiš test plán do CLAUDE.md v repozitáři projektu
+
+2. **Proveď Funkční Testování pomocí Playwright**
+   - Otevři aplikaci v Playwright (`mcp__playwright__browser_navigate`)
+   - Systematicky projdi VŠECHNY body z test plánu
+   - Testuj každou kritickou funkci (tlačítka, formuláře, načítání dat, API calls)
+   - Pořiď screenshoty úspěšných testů
+
+3. **Zaznamenej Výsledky**
+   - ✅ Test prošel - pokračuj dalším
+   - ❌ Test selhal - oprav problém, redeploy, testuj ZNOVA od začátku
+
+### Příklad Test Plánu
+
+Pro typickou webovou aplikaci testuj minimálně:
+
+```markdown
+### 1. Autentizace
+- Klikni na přihlašovací tlačítko
+- Ověř OAuth/login flow
+- **Testuje:** Authentication handler
+
+### 2. Hlavní Funkcionalita
+- Vyplň formulář
+- Klikni na submit
+- Ověř, že se zobrazí výsledky
+- **Testuje:** Business logic, database, API calls
+
+### 3. Detail View
+- Klikni na položku v seznamu
+- Ověř, že se zobrazí detail
+- **Testuje:** Routing, data fetching
+
+### 4. Filtrování/Vyhledávání
+- Použij filtry
+- Ověř, že filtrování funguje
+- **Testuje:** Query logic, database
+
+### 5. AI/External Services (pokud aplikace používá)
+- Ověř, že se zobrazují AI generované výsledky
+- **Testuje:** External API integrace
+```
+
+### ⚠️ NIKDY nehlásej deployment jako úspěšný dokud:
+
+- ❌ Nevytvořil jsi test plán
+- ❌ Neprovedl jsi VŠECHNY testy z plánu
+- ❌ Jakýkoliv test selhává
+
+**Deployment je dokončený = workflow ✅ + proces běží ✅ + HTTP 200 ✅ + VŠECHNY funkční testy prošly ✅**
+
+---
+
 ## Reference
 
 - [Workflow Guide](./workflow-guide-cz.md) - Git workflow, GitHub issues
