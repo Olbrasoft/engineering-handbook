@@ -885,6 +885,104 @@ sudo journalctl -u actions.runner.XXX.service | grep "dotnet --version"
 
 ---
 
+## Verifikace po Deployu
+
+**⚠️ KRITICKÉ:** Po každém deployu MUSÍŠ ověřit, že aplikace skutečně běží a je funkční!
+
+### 1. Ověř, že proces běží
+
+```bash
+# Zjisti, jestli aplikace běží
+ps aux | grep <název-dll> | grep -v grep
+
+# Pro systemd služby
+systemctl --user status <název-služby>
+# nebo
+sudo systemctl status <název-služby>
+```
+
+### 2. Ověř HTTP response (webové aplikace)
+
+```bash
+# Základní test - vrací HTTP 200?
+curl -s -o /dev/null -w "%{http_code}" http://localhost:<port>
+
+# Pokud vrací 500 nebo jinou chybu, podívej se na response
+curl -s http://localhost:<port> | head -50
+```
+
+### 3. Ověř vizuálně pomocí Playwright (doporučeno pro webové aplikace)
+
+```bash
+# V Claude Code použij Playwright MCP
+mcp__playwright__browser_navigate(url: "http://localhost:<port>")
+mcp__playwright__browser_take_screenshot(filename: "verify-deploy.png")
+```
+
+### 4. Zkontroluj logy
+
+```bash
+# Pro systemd služby
+journalctl --user -u <název-služby> -n 50
+
+# Pro manuálně spuštěné aplikace
+tail -100 /path/to/logfile.log
+```
+
+### Co kontrolovat v lozích:
+
+- ✅ **"Application started"** - aplikace se úspěšně spustila
+- ✅ **"Now listening on: http://localhost:XXXX"** - port je správný
+- ❌ **Configuration errors** - chybná konfigurace (např. špatný connection string)
+- ❌ **Missing dependencies** - chybějící Ollama, databáze, atd.
+- ❌ **Port conflicts** - port už používá jiná aplikace
+
+### Příklad kompletní verifikace:
+
+```bash
+# 1. Proces běží?
+ps aux | grep MyApp.dll | grep -v grep
+# ✅ Výstup: jirka  123456  ... dotnet MyApp.dll
+
+# 2. HTTP response?
+curl -s -o /dev/null -w "%{http_code}" http://localhost:5000
+# ✅ Výstup: 200 (OK) nebo 500 (běží, ale má chybu v konfiguraci)
+# ❌ Výstup: 000 (neběží vůbec)
+
+# 3. Logy?
+journalctl --user -u myapp.service -n 20
+# ✅ Hledej: "Now listening on: http://localhost:5000"
+# ❌ Hledej: "Failed to...", "Error", "Exception"
+```
+
+### ⚠️ Časté chyby při verifikaci:
+
+| Problém | Příčina | Řešení |
+|---------|---------|--------|
+| Proces neběží | Deploy skončil, ale restart selhal | Zkontroluj systemd logy, spusť manuálně |
+| HTTP 000 (no response) | Aplikace neběží nebo běží na jiném portu | Ověř port pomocí `ss -tulpn \| grep <port>` |
+| HTTP 500 (server error) | Konfigurace chyba (connection string, secrets) | Zkontroluj logy, oprav konfiguraci |
+| Špatný port | `ASPNETCORE_URLS` není nastavený | Nastav environment variable v startup scriptu |
+
+### ⚠️ DŮLEŽITÉ: Co dělat když verifikace selže?
+
+**Pokud aplikace neběží nebo má chyby:**
+
+1. **Oprav problém** v kódu nebo konfiguraci
+2. **Commit + push** (spustí se workflow znova)
+3. **Sleduj workflow** (`gh run watch`) - ověř, že tentokrát proběhlo úspěšně
+4. **Verifikuj ZNOVA** - proces, HTTP response, logy, Playwright
+5. **Opakuj dokud verifikace neprojde** ✅
+
+**NIKDY neoznač deploy jako hotový, pokud verifikace selhává!**
+
+Deployment není dokončený dokud aplikace:
+- ✅ Běží (proces existuje)
+- ✅ Odpovídá na HTTP požadavky (ne 000, ne connection refused)
+- ✅ Nemá kritické chyby v lozích
+
+---
+
 ## Reference
 
 - [Workflow Guide](./workflow-guide-cz.md) - Git workflow, GitHub issues
