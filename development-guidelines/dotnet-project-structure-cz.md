@@ -266,7 +266,6 @@ dotnet user-secrets set "GitHubApp:WebhookSecret" "xxx"
 {Doména}.Data.EFCore       → DbContext, Query/Command handlery, Migrace
 {Doména}.Business          → Business služby, strategie, modely
 {Doména}.Sync              → Klienti externích API, sync služby, webhooky
-{Doména}.Caching           → Cachovací vrstva (pouze pokud schváleno)
 {Doména}.AspNetCore.X      → Web vrstva (RazorPages, API controllery)
 ```
 
@@ -280,89 +279,6 @@ Business ←→ Sync
 Data.EntityFrameworkCore
     ↓
 Data (entity, rozhraní)
-```
-
-### ⚠️ KRITICKÉ: Pravidla pro cachování
-
-**NIKDY nevytvářet cachovací vrstvu bez explicitního schválení uživatelem!**
-
-| Co dělat | Co nedělat |
-|----------|------------|
-| ✅ Požádat uživatele o schválení cache | ❌ Automaticky přidat `IMemoryCache` |
-| ✅ Vytvořit samostatný projekt `{Doména}.Caching` | ❌ Přidat cache přímo do Business vrstvy |
-| ✅ Zdokumentovat cache strategii | ❌ "Optimalizovat" přidáním cache bez dotazu |
-| ✅ Cache jako explicitní architektonické rozhodnutí | ❌ Cache jako implementační detail |
-
-**Důvody:**
-- Cache přidává komplexitu (invalidace, konzistence)
-- Může maskovat skutečné výkonnostní problémy
-- Vyžaduje správu životního cyklu (expiraci, memory management)
-- Musí být testována a monitorována
-
-**Správný postup při návrhu cache:**
-
-1. **Identifikovat problém:** "Dotaz trvá 500ms, volá se 100x/sec"
-2. **Navrhnout řešení:** Zvážit indexy DB, optimalizaci dotazu, NEBO cache
-3. **Požádat o schválení:** "Mám přidat cache vrstvu pro X?"
-4. **Po schválení:** Vytvořit `{Doména}.Caching/` projekt
-5. **Implementovat:** Decorator pattern, explicitní cache strategie
-6. **Testovat:** Unit testy + integration testy s cache
-
-**Příklad struktury S cachováním (pouze po schválení):**
-
-```
-GitHub.Issues/
-├── src/
-│   ├── GitHub.Issues.Caching/             # ← Samostatný projekt!
-│   │   ├── Services/
-│   │   │   └── CachedIssueService.cs      # Decorator pro IIssueService
-│   │   └── Configuration/
-│   │       └── CacheSettings.cs
-│   ├── GitHub.Issues.Business/
-│   └── GitHub.Issues.Data.EntityFrameworkCore/
-```
-
-**Příklad implementace (decorator pattern):**
-
-```csharp
-// SPRÁVNĚ - Cache jako decorator, oddělená vrstva
-public class CachedIssueService : IIssueService
-{
-    private readonly IIssueService _innerService;
-    private readonly IMemoryCache _cache;
-
-    public CachedIssueService(IIssueService innerService, IMemoryCache cache)
-    {
-        _innerService = innerService;
-        _cache = cache;
-    }
-
-    public async Task<Issue> GetByIdAsync(int id)
-    {
-        var key = $"issue:{id}";
-        
-        if (_cache.TryGetValue(key, out Issue cached))
-            return cached;
-
-        var issue = await _innerService.GetByIdAsync(id);
-        _cache.Set(key, issue, TimeSpan.FromMinutes(5));
-        
-        return issue;
-    }
-}
-
-// ŠPATNĚ - Cache zabudovaná přímo v business logice
-public class IssueService : IIssueService
-{
-    private readonly IMemoryCache _cache;  // ← Automaticky přidáno bez schválení!
-    
-    public async Task<Issue> GetByIdAsync(int id)
-    {
-        if (_cache.TryGetValue($"issue:{id}", out Issue cached))
-            return cached;
-        // ... zbytek logiky
-    }
-}
 ```
 
 ---

@@ -176,6 +176,129 @@ public class TtsService
 - [ ] Jsou databázové dotazy optimalizovány (N+1 problém, chybějící indexy)?
 - [ ] Je `StringBuilder` použit pro spojování řetězců ve smyčkách?
 
+#### Cesty k souborům a složkám
+- [ ] Je `AppDomain.CurrentDomain.BaseDirectory` použito **POUZE NA JEDNOM MÍSTĚ** v celé aplikaci?
+- [ ] Jsou všechny ostatní cesty relativní a skládané z té základní cesty?
+- [ ] Nejsou natvrdo zapsané absolutní cesty?
+
+**SPRÁVNĚ (BaseDirectory pouze jednou):**
+```csharp
+// V Program.cs nebo konfiguračním souboru (JEDINÉ MÍSTO)
+public static class AppPaths
+{
+    private static readonly string BaseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+    
+    public static string DataDirectory => Path.Combine(BaseDirectory, "data");
+    public static string LogsDirectory => Path.Combine(BaseDirectory, "logs");
+    public static string PluginsDirectory => Path.Combine(BaseDirectory, "plugins");
+    public static string ConfigFile => Path.Combine(BaseDirectory, "appsettings.json");
+}
+
+// V ostatních třídách - použití relativních cest
+public class Logger
+{
+    private readonly string _logPath = Path.Combine(AppPaths.LogsDirectory, "app.log");
+}
+
+public class PluginLoader
+{
+    private readonly string _pluginPath = AppPaths.PluginsDirectory;
+}
+```
+
+**ŠPATNĚ (BaseDirectory na více místech):**
+```csharp
+// V Logger.cs
+public class Logger
+{
+    private readonly string _logPath = Path.Combine(
+        AppDomain.CurrentDomain.BaseDirectory,  // ← ŠPATNĚ!
+        "logs", "app.log");
+}
+
+// V PluginLoader.cs
+public class PluginLoader
+{
+    private readonly string _pluginPath = Path.Combine(
+        AppDomain.CurrentDomain.BaseDirectory,  // ← ŠPATNĚ! Duplicita
+        "plugins");
+}
+
+// V ConfigManager.cs
+public class ConfigManager
+{
+    private readonly string _configPath = 
+        AppDomain.CurrentDomain.BaseDirectory + "appsettings.json";  // ← ŠPATNĚ! + natvrdo zapsaná cesta
+}
+```
+
+**Důvody:**
+- Snadná změna základní cesty (testování, deployment)
+- Konzistence napříč aplikací
+- Jednodušší testování s mock cestami
+- Žádné duplicity
+
+#### Cachování
+- [ ] Je cache použita **POUZE po explicitním schválení uživatelem**?
+- [ ] Je cache implementována jako samostatný projekt `{Doména}.Caching`?
+- [ ] Je použit Decorator pattern (ne přímá závislost v business logice)?
+- [ ] Je cache strategie zdokumentována (expiration, invalidation)?
+
+**SPRÁVNĚ (Decorator pattern po schválení):**
+```csharp
+// Samostatný projekt: Domain.Caching/
+public class CachedIssueService : IIssueService
+{
+    private readonly IIssueService _innerService;
+    private readonly IMemoryCache _cache;
+
+    public CachedIssueService(IIssueService innerService, IMemoryCache cache)
+    {
+        _innerService = innerService;
+        _cache = cache;
+    }
+
+    public async Task<Issue> GetByIdAsync(int id)
+    {
+        var key = $"issue:{id}";
+        if (_cache.TryGetValue(key, out Issue cached))
+            return cached;
+
+        var issue = await _innerService.GetByIdAsync(id);
+        _cache.Set(key, issue, TimeSpan.FromMinutes(5));
+        return issue;
+    }
+}
+
+// V Startup.cs - registrace
+services.AddScoped<IIssueService, IssueService>();
+services.Decorate<IIssueService, CachedIssueService>(); // Scrutor package
+```
+
+**ŠPATNĚ (cache v business logice):**
+```csharp
+// V Business projektu
+public class IssueService : IIssueService
+{
+    private readonly IMemoryCache _cache;  // ← ŠPATNĚ! Bez schválení, v business vrstvě
+    
+    public async Task<Issue> GetByIdAsync(int id)
+    {
+        if (_cache.TryGetValue($"issue:{id}", out Issue cached))
+            return cached;
+        // ...
+    }
+}
+```
+
+**Workflow pro přidání cache:**
+1. **Identifikovat problém:** "Tento dotaz je pomalý"
+2. **Zvážit alternativy:** DB indexy, optimalizace dotazu
+3. **Požádat o schválení:** "Mám vytvořit cache vrstvu pro XY?"
+4. **Po schválení:** Vytvořit `{Doména}.Caching/` projekt
+5. **Implementovat:** Decorator pattern
+6. **Testovat:** Unit + integration testy
+
 ### 4. Architektura & Návrh
 
 | Aspekt | Otázky k položení |
