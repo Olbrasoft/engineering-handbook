@@ -908,8 +908,47 @@ sudo journalctl -u actions.runner.XXX.service | grep "dotnet --version"
 
 ---
 
+## ⚠️ KRITICKÉ: 100% Funkční Aplikace
+
+**🚨 DEPLOYMENT NENÍ DOKONČENÝ, DOKUD VŠECHNY FUNKCE NEFUNGUJÍ!**
+
+### Zlaté Pravidlo
+
+| ❌ NEPŘÍPUSTNÉ | ✅ SPRÁVNĚ |
+|----------------|-----------|
+| "OAuth nefunguje, ale to je očekávané - není nakonfigurovaný ClientSecret" | OAuth MUSÍ fungovat - přidej ClientSecret do produkce |
+| "AI summary se nezobrazuje, ale to nevadí - chybí GitHub token" | AI summary MUSÍ fungovat - přidej GitHub token do produkce |
+| "Databáze nefunguje, ale jinak aplikace běží" | Databáze MUSÍ fungovat - oprav connection string |
+| "HTTP 200, takže deployment je OK" | HTTP 200 + VŠECHNY funkce otestované = OK |
+
+### Pravidla
+
+1. **ŽÁDNÁ feature nesmí být nefunkční** - pokud existuje v kódu, MUSÍ fungovat v produkci
+2. **Všechny secrets MUSÍ být v produkci** - pokud development používá secret, produkce ho MUSÍ mít také
+3. **"Není nakonfigurované" = nefunkční aplikace** - NIKDY to není "očekávané chování"
+4. **Testuj VŠECHNY funkce** - ne jen "základní", ale ÚPLNĚ VŠECHNY
+
+### Před oznámením "deployment dokončen"
+
+```bash
+# ✅ Musíš projít VŠEMI body:
+- [ ] Aplikace běží (proces + HTTP 200)
+- [ ] KAŽDÁ feature v aplikaci je otestovaná a FUNGUJE
+- [ ] Přihlášení funguje (pokud existuje)
+- [ ] Všechny API endpointy fungují
+- [ ] Databázové operace fungují
+- [ ] AI/ML funkce fungují (pokud existují)
+- [ ] Real-time updates fungují (SignalR/WebSockets)
+```
+
+**Pokud COKOLIV nefunguje → deployment NENÍ dokončený!**
+
+---
+
 ## Checklist před Deploymentem
 
+- [ ] **VŠECHNY funkce aplikace MUSÍ být plně funkční v produkci**
+- [ ] **VŠECHNY secrets z User Secrets MUSÍ být přidány do produkčního startup scriptu**
 - [ ] Všechny testy prochází (`dotnet test`)
 - [ ] Deploy script dostává base directory jako argument
 - [ ] Deploy script NEPŘEDPOKLÁDÁ cestu (nemá ji natvrdo)
