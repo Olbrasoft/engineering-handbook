@@ -65,6 +65,51 @@ Kompletní průvodce prováděním code review a refaktoringu v .NET/C# projekte
 
 ### 3. Kvalita kódu
 
+#### XML Dokumentace
+- [ ] Má každá veřejná třída XML dokumentační komentář (`/// <summary>`)?
+- [ ] Má každá veřejná metoda XML dokumentační komentář?
+- [ ] Má každá veřejná vlastnost XML dokumentační komentář?
+- [ ] Mají parametry metod popis (`/// <param name="...">`)?
+- [ ] Má návratová hodnota popis (`/// <returns>`)?
+- [ ] Jsou výjimky dokumentovány (`/// <exception cref="...">`)?
+
+**Příklad správné dokumentace:**
+```csharp
+/// <summary>
+/// Provides text-to-speech synthesis using gTTS (Google Text-to-Speech).
+/// </summary>
+public class GttsProvider : ITtsProvider
+{
+    /// <summary>
+    /// Gets whether the provider is available (gTTS installed).
+    /// </summary>
+    public bool IsAvailable => _isGttsInstalled ??= CheckGttsInstalled();
+
+    /// <summary>
+    /// Synthesizes text to speech asynchronously.
+    /// </summary>
+    /// <param name="request">The TTS request containing text and options.</param>
+    /// <param name="cancellationToken">Cancellation token for async operation.</param>
+    /// <returns>A task representing the TTS result with audio data.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when request is null.</exception>
+    public async Task<TtsResult> SynthesizeAsync(TtsRequest request, CancellationToken cancellationToken = default)
+    {
+        // Implementation
+    }
+}
+```
+
+**ŠPATNĚ (prázdné nebo chybějící):**
+```csharp
+/// <summary>
+/// Gets whether the provider is available (gTTS installed).
+/// </summary>
+public bool IsAvailable => _isGttsInstalled ??= CheckGttsInstalled();
+
+/// <inheritdoc />  ← CHYBA: Prázdný komentář bez vysvětlení
+public async Task<TtsResult> SynthesizeAsync(TtsRequest request, CancellationToken cancellationToken = default)
+```
+
 #### Async/Await
 - [ ] Je `await` použit správně (ne `.Result` nebo `.Wait()`)?
 - [ ] Jsou `CancellationToken` parametry poskytnuty tam, kde je potřeba?
