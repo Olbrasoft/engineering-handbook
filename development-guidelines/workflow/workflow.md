@@ -85,6 +85,16 @@ Never call without `perPage`. Max 100, rarely needed.
 
 Rules: `main` always works, branch when unsure, delete when done.
 
+## Branch Maintenance
+
+Keep the local repository clean by removing stale branches.
+
+**Principle:** When a remote branch is deleted (after PR merge), the local tracking branch should be removed.
+
+1. **Identify:** Find branches marked as `[gone]` in `git branch -vv`.
+2. **Cleanup:** Delete local branches that no longer exist on remote.
+3. **Automate:** Use tools like `/clean_gone` (Claude) or `git fetch --prune` (Gemini/Manual).
+
 ## Commits
 
 ### Size
