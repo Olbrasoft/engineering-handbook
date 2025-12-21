@@ -1,6 +1,16 @@
-# .NET Deployment & Secrets Guide (Linux)
+# CI/CD pro webové služby a API
 
-Best practices for deploying .NET apps on Linux with proper secrets management.
+> **Typ projektu:** Long-running ASP.NET Core aplikace (REST API, SignalR, Blazor Server)
+> 
+> **Příklady:** VirtualAssistant, GitHub.Issues, Push-To-Talk API
+> 
+> **Jiný typ projektu?** Viz [ci-cd-overview-cz.md](ci-cd-overview-cz.md)
+
+---
+
+## Overview
+
+Best practices for deploying .NET web services on Linux with proper secrets management.
 
 ## Core Principles
 

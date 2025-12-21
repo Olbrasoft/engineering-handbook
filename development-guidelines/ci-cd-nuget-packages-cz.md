@@ -1,8 +1,16 @@
-# CI/CD Pipeline Setup for NuGet Package Publishing
+# CI/CD pro NuGet balíčky
+
+> **Typ projektu:** Knihovny publikované na NuGet.org
+> 
+> **Příklady:** TextToSpeech, Mediation, SystemTray
+> 
+> **Jiný typ projektu?** Viz [ci-cd-overview-cz.md](ci-cd-overview-cz.md)
+
+---
 
 ## Overview
 
-This document describes how to set up automated CI/CD pipelines for building, testing, and publishing .NET NuGet packages to NuGet.org using GitHub Actions.
+Tento dokument popisuje nastavení automatizovaného CI/CD pro build, testování a publikaci .NET NuGet balíčků na NuGet.org pomocí GitHub Actions.
 
 ---
 
@@ -61,6 +69,89 @@ Publikace na NuGet.org se spustí **pouze když**:
 ```yaml
 if: success() && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))
 ```
+
+### Multi-package repositories
+
+**Jeden repozitář může obsahovat VÍCE NuGet balíčků + demo aplikace.**
+
+#### Příklad: TextToSpeech
+
+**Struktura:**
+```
+TextToSpeech/
+├── src/                                  # PUBLIKUJE SE na NuGet.org
+│   ├── TextToSpeech.Core/                → Olbrasoft.TextToSpeech.Core.nupkg
+│   ├── TextToSpeech.Providers/           → Olbrasoft.TextToSpeech.Providers.nupkg
+│   ├── TextToSpeech.Providers.EdgeTTS/   → Olbrasoft.TextToSpeech.Providers.EdgeTTS.nupkg
+│   ├── TextToSpeech.Providers.Piper/     → Olbrasoft.TextToSpeech.Providers.Piper.nupkg
+│   └── TextToSpeech.Orchestration/       → Olbrasoft.TextToSpeech.Orchestration.nupkg
+├── tests/                                # Testy (NEPUBLIKUJE SE)
+│   ├── TextToSpeech.Core.Tests/
+│   └── TextToSpeech.Providers.Tests/
+└── examples/                             # Demo aplikace (NEPUBLIKUJE SE)
+    └── TextToSpeech.Demo/                ← Console app pro testování
+```
+
+**Výsledek:** Publikuje se **5 balíčků najednou** při jednom workflow run!
+
+#### Jak to funguje
+
+**1. Projekty v `src/` mají NuGet metadata:**
+```xml
+<!-- src/TextToSpeech.Core/TextToSpeech.Core.csproj -->
+<PropertyGroup>
+  <PackageId>Olbrasoft.TextToSpeech.Core</PackageId>
+  <Version>1.1.0</Version>
+  <Authors>Olbrasoft</Authors>
+  <!-- IsPackable=true je default, není třeba psát -->
+</PropertyGroup>
+```
+
+**2. Demo aplikace má zakázané balíčkování:**
+```xml
+<!-- examples/TextToSpeech.Demo/TextToSpeech.Demo.csproj -->
+<PropertyGroup>
+  <IsPackable>false</IsPackable>
+</PropertyGroup>
+```
+
+**3. Workflow najde VŠECHNY `.nupkg` soubory:**
+```yaml
+- name: Collect packages
+  run: |
+    mkdir -p ./artifacts
+    find . -name "*.nupkg" -path "*/bin/Release/*" -exec cp {} ./artifacts/ \;
+
+- name: List packages (verification)
+  run: ls -la ./artifacts/
+
+- name: Publish to NuGet.org
+  run: |
+    dotnet nuget push ./artifacts/*.nupkg \
+      --source https://api.nuget.org/v3/index.json \
+      --api-key ${{ secrets.NUGET_API_KEY }} \
+      --skip-duplicate
+```
+
+#### Výhody multi-package přístupu
+
+| Výhoda | Popis |
+|--------|-------|
+| **Modulární architektura** | Uživatelé instalují jen co potřebují (`Core` nebo `Core + Providers`) |
+| **Nezávislé verzování** | Každý balíček může mít vlastní `<Version>` |
+| **Společné testy** | Testuje se celý ekosystém najednou |
+| **Jediný CI/CD** | Jeden workflow publikuje vše |
+
+#### Kdy použít multi-package
+
+✅ **ANO:**
+- Máš core library + různé provider implementace (TextToSpeech)
+- Máš abstractions + concrete implementations (Mediation)
+- Chceš uživatelům nabídnout volbu závislostí
+
+❌ **NE:**
+- Logicky nesouvisející projekty → samostatné repozitáře
+- Projekty s odlišným release cyklem → samostatné repozitáře
 
 ---
 
