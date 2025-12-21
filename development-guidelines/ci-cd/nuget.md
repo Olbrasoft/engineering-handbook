@@ -185,6 +185,70 @@ Publish only when pushing tags: `git tag v1.2.3 && git push --tags`
 | No .nupkg found | Missing metadata | Add `<PackageId>` to .csproj |
 | Demo app published | Missing `<IsPackable>false</IsPackable>` | Add to demo .csproj |
 
+## Consuming Olbrasoft Packages
+
+⚠️ **REQUIRED: Always use floating versions for Olbrasoft packages**
+
+When referencing Olbrasoft NuGet packages in your projects, **ALWAYS** use floating version patterns to automatically get the latest compatible version.
+
+### Why Floating Versions?
+
+- ✅ Automatic updates on every build
+- ✅ No manual version bumps needed
+- ✅ Always use latest bug fixes
+- ✅ Prevents version drift across projects
+- ❌ Eliminates forgotten version updates
+
+### How to Use Floating Versions
+
+**CORRECT ✅**
+```xml
+<PackageReference Include="Olbrasoft.SystemTray.Linux" Version="1.*" />
+<PackageReference Include="Olbrasoft.Data.Cqrs.Common" Version="1.*" />
+<PackageReference Include="Olbrasoft.TextToSpeech.Core" Version="1.*" />
+```
+
+**INCORRECT ❌**
+```xml
+<PackageReference Include="Olbrasoft.SystemTray.Linux" Version="1.1.2" />
+<PackageReference Include="Olbrasoft.Data.Cqrs.Common" Version="1.7.0" />
+```
+
+### Version Patterns
+
+| Pattern | Meaning | Use Case |
+|---------|---------|----------|
+| `1.*` | Latest 1.x version | **RECOMMENDED** - Major version lock |
+| `*` | Latest version | ⚠️ Use with caution - may break on major updates |
+
+### When to Pin Versions
+
+Only pin to specific versions for:
+- **External packages** (Microsoft.*, Npgsql.*, etc.)
+- **Breaking dependency** (known incompatibility)
+- **Temporary workaround** (document reason in comment)
+
+**Example with comment:**
+```xml
+<!-- Pinned to 1.5.0 due to breaking change in 1.6.0 - TODO: upgrade after fix -->
+<PackageReference Include="Olbrasoft.SomePackage" Version="1.5.0" />
+```
+
+### Build Behavior
+
+With `Version="1.*"`:
+- Local: `dotnet restore` downloads latest 1.x
+- CI/CD: Fresh restore gets latest published version
+- Result: Always synchronized across team
+
+### Examples
+
+See how VirtualAssistant uses floating versions:
+```bash
+~/Olbrasoft/VirtualAssistant/src/VirtualAssistant.Service/VirtualAssistant.Service.csproj
+~/Olbrasoft/VirtualAssistant/src/VirtualAssistant.Voice/VirtualAssistant.Voice.csproj
+```
+
 ## Reference
 
 - [Mediation example](https://github.com/Olbrasoft/Mediation/tree/main/.github/workflows)
