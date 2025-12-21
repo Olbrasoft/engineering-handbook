@@ -55,4 +55,40 @@ SOLID Cheat-Sheet 2025 – One-Page Summary
 
 PrincipleEveryday meaning (2025)Typical violation todayModern fix (language-agnostic)SRPOne class = one job = one team/actorController/Service that does everythingFeature folders, vertical slices, CQRSOCPAdd new behavior → add new class, never change old codeGiant switch/if-else that keeps growingPlugin system, auto-registration, conventionsLSPChild class 100% replaceable by parentSquare ⊃ Rectangle, Penguin ⊃ BirdPrefer composition or discriminated unionsISPMany small, focused interfaces“God interface” with 20+ methodsRole interfaces (Reader/Writer/…)DIPDepend on abstractions + inject everythingnew Database() inside business logicDependency Injection container + mocks
 This version is timeless, framework-independent, and perfect for onboarding, posters, or internal wiki pages in any company in 2025 and beyond.
-Whenever you need a language-specific version (C#/.NET, Python, TypeScript, Java/Kotlin, Rust…), just say the word and I’ll send it instantly.
+## 📦 Examples from Olbrasoft Projects
+
+### Single Responsibility Principle (SRP)
+**Project:** `VirtualAssistant`  
+**Location:** `VirtualAssistant.PushToTalk/Monitors/`  
+**What it demonstrates:** Separation of mouse button monitoring strategies.
+- **Good:** `LeftButtonMonitor`, `MiddleButtonMonitor`, `RightButtonMonitor` are separate classes.
+- **Bad:** One `MouseMonitor` class with a giant switch statement.
+
+### Open/Closed Principle (OCP) & Strategy Pattern
+**Project:** `NotificationAudio`  
+**Location:** `NotificationAudio.Core/NotificationPlayer.cs`  
+**What it demonstrates:** Adding new playback tools without modifying the core player.
+- **Implementation:** `INotificationPlayer` uses a collection of `IPlaybackProvider`. If you want to support a new tool (e.g., `VlcProvider`), you just implement the interface and register it in DI.
+
+### Dependency Inversion Principle (DIP)
+**Project:** `TextToSpeech` (Any library)  
+**What it demonstrates:** Depending on abstractions for audio providers.
+- **Implementation:** `TtsService` depends on `ITtsProvider`, not `AzureTtsProvider`. This allows swapping Azure for OpenAI or Edge TTS without changing the service logic.
+
+---
+
+## ✅ Before You Start - SOLID Refactoring
+
+- [ ] I can identify which SOLID principle applies to my current task.
+- [ ] I've checked if a similar problem was already solved using these principles (e.g., in `VirtualAssistant`).
+- [ ] My refactoring makes the code more testable (can I easily mock the dependencies?).
+- [ ] I am NOT over-engineering for a "maybe" future requirement.
+- [ ] I understand the trade-offs (e.g., more classes vs. simpler code).
+
+---
+
+## Related Topics
+
+- 🚀 [Feature Development](../development-guidelines/feature-development/feature-workflow.md) - Applying SOLID during design phase
+- 🏛️ [Design Patterns](../design-patterns/gof-design-patterns-2025.md) - SOLID in practice
+- 🔍 [Code Review](../development-guidelines/code-review-refactoring-guide.md) - Verifying SOLID during review

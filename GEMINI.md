@@ -46,6 +46,7 @@ To maximize efficiency, we distinguish between **Gemini** (Operational/Analysis)
 | Task | Responsible Agent | Primary Model |
 | :--- | :--- | :--- |
 | **Handbook Analysis / Search** | **Gemini** | Gemini 3 Pro |
+| **Feature Development (Plan)** | **CloudCode** | Claude 4.5 Opus |
 | **Linux SysOps / CLI / Scripts** | **Gemini** | Gemini 3 Flash |
 | **C# Logic / SOLID / Refactoring** | **CloudCode** | Claude 4.5 Opus |
 | **Automated Code Review** | **CloudCode** | Claude 4.5 Sonnet |
@@ -56,5 +57,6 @@ To maximize efficiency, we distinguish between **Gemini** (Operational/Analysis)
 ## 📍 Navigation (Where I look for details)
 
 - **Process & Setup:** [development-guidelines/GEMINI.md](development-guidelines/GEMINI.md)
+- **Feature Dev:** [development-guidelines/feature-development/GEMINI.md](development-guidelines/feature-development/GEMINI.md)
 - **Code Standards:** [solid-principles/GEMINI.md](solid-principles/GEMINI.md)
 - **Patterns:** [design-patterns/GEMINI.md](design-patterns/GEMINI.md)

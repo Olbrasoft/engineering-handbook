@@ -11,5 +11,6 @@
 | Code Review | [code-review/GEMINI.md](code-review/GEMINI.md) |
 | CI/CD | [ci-cd/GEMINI.md](ci-cd/GEMINI.md) |
 | Git Workflow | [workflow/GEMINI.md](workflow/GEMINI.md) |
+| Feature Development | [feature-development/GEMINI.md](feature-development/GEMINI.md) |
 | Project Structure | [project-structure/GEMINI.md](project-structure/GEMINI.md) |
 | Repository Setup | [repository-setup/GEMINI.md](repository-setup/GEMINI.md) |

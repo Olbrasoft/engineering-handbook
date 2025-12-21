@@ -35,8 +35,11 @@ What am I doing?
 ├─ Structuring .NET project (folders/naming)
 │  └─ Read: dotnet-project-structure.md
 │
+├─ Implementing NEW complex features
+│  └─ Read: feature-development/AGENTS.md
+│
 ├─ Git workflow (branches/commits/issues)
-│  └─ Read: workflow-guide.md
+│  └─ Read: workflow/workflow.md
 │
 ├─ Code review / refactoring
 │  ├─ General guide → code-review-refactoring-guide.md
@@ -157,7 +160,7 @@ What am I doing?
 ---
 
 ### 7. Git Workflow
-**File:** `workflow-guide.md` (English) / `workflow-guide-cz.md` (Czech)
+**File:** `workflow/workflow.md` (English)
 
 **Read when:**
 - Creating GitHub issues
@@ -165,15 +168,16 @@ What am I doing?
 - Commit messages
 - Sub-issues (NOT checkboxes!)
 
-**Key practices:**
-- Issue = branch (`feature/issue-N-desc`)
-- Commit + push after every step
-- Close issue only after: tests pass + deployed + USER APPROVAL
-- Use native sub-issues (via GitHub MCP)
+### 8. Feature Development
+**Index:** `feature-development/AGENTS.md`
 
----
+**Read when:**
+- Starting a complex new feature
+- Designing architecture
+- Exploring unknown codebase
+- Using 7-phase systematic process
 
-### 8. Code Review & Refactoring (General)
+### 9. Code Review & Refactoring (General)
 **File:** `code-review-refactoring-guide.md` (English) / `code-review-refactoring-guide-cz.md` (Czech)
 
 **Read when:**

@@ -21,7 +21,11 @@
 **Task:** Organize .NET solution, naming conventions  
 **Read:** [development-guidelines/project-structure/CLAUDE.md](development-guidelines/project-structure/CLAUDE.md)
 
-### 🏗️ Repository Setup
+### 🏗️ Feature Development
+**Task:** Systematic 7-phase feature building, `/feature-dev` command  
+**Read:** [development-guidelines/feature-development/CLAUDE.md](development-guidelines/feature-development/CLAUDE.md)
+
+### 🚀 Repository Setup
 **Task:** Create new GitHub repository  
 **Read:** [development-guidelines/repository-setup/CLAUDE.md](development-guidelines/repository-setup/CLAUDE.md)
 

@@ -45,3 +45,42 @@ All 23 classic design patterns with modern usage, real-world examples, and curre
 - **Decline of Manual Implementation**: Patterns like Singleton, Factory, and Proxy are now largely handled by Frameworks (C#/.NET Core DI) or Language Features (Records, Enums).
 - **Functional Paradigm Shift**: Many behavioral patterns (Command, Strategy, Template) are now implemented using Lambdas and Higher-Order Functions, which is highly prevalent in **JavaScript**, **TypeScript**, and **Python**.
 - **Pattern Matching Replacement**: The classic Visitor pattern is rapidly being replaced by modern Pattern Matching features in **C#**, **Python**, and other languages.
+
+---
+
+## 📦 Examples from Olbrasoft Projects
+
+### Strategy Pattern
+**Project:** `VirtualAssistant.PushToTalk`  
+**What it demonstrates:** Runtime selection of mouse button monitoring strategy.
+- **Context:** Different X11 event codes for left/middle/right mouse buttons.
+- **Implementation:** `IMouseButtonMonitor` interface with concrete strategies for each button. A factory chooses the right strategy based on configuration.
+
+### Factory Pattern (via DI)
+**Project:** `NotificationAudio`  
+**What it demonstrates:** Decoupling the player from specific audio tools.
+- **Context:** Using `Paplay` or `Ffplay` depending on availability.
+- **Implementation:** Providers are registered in the DI container. The `NotificationPlayer` receives a collection of `IPlaybackProvider` and picks the best one at runtime.
+
+### Decorator Pattern (Middleware)
+**Project:** `VirtualAssistant` (Web API part)  
+**What it demonstrates:** Adding cross-cutting concerns without modifying controllers.
+- **Implementation:** Using ASP.NET Core Middleware for logging, authentication, and exception handling.
+
+---
+
+## ✅ Before You Start - Design Patterns
+
+- [ ] I've identified the core problem I'm trying to solve (e.g., "I need interchangeable algorithms").
+- [ ] I've checked if a built-in language feature (like Lambdas or Pattern Matching) can solve it more simply.
+- [ ] I've looked at `VirtualAssistant` or `TextToSpeech` to see if we've already used this pattern.
+- [ ] I understand the trade-off (e.g., a pattern might introduce more classes but reduce coupling).
+- [ ] I've verified that my pattern choice aligns with the project's architecture (check `CLAUDE.md`).
+
+---
+
+## Related Topics
+
+- 🏗️ [Architecture Design](../development-guidelines/feature-development/architecture-design.md) - Choosing the right pattern for the approach
+- 🧱 [SOLID Principles](../solid-principles/solid-principles-2025.md) - The foundation for clean patterns
+- 🔍 [Code Review](../development-guidelines/code-review-refactoring-guide.md) - Evaluating pattern implementation

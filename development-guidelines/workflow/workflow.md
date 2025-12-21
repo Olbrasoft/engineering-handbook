@@ -197,13 +197,65 @@ public void Test_WithData_Works(int value)
 
 **Example:** [SystemTray.Linux.Tests](https://github.com/Olbrasoft/SystemTray/blob/main/tests/SystemTray.Linux.Tests/TrayIconManagerTests.cs)
 
-## Deployment
+## 📦 Examples from Olbrasoft Projects
 
-1. Check `CLAUDE.md`
-2. `dotnet test` (all pass)
-3. `dotnet publish -c Release -o ~/target`
 
-## Secrets
+
+### Feature Branch & Sub-issues Workflow
+
+**Project:** `VirtualAssistant`  
+
+**Recent Case:** Implementing GitHub search.
+
+- **Branch:** `feature/issue-38-github-search`
+
+- **Sub-issues:** Created for Ollama integration, pgvector setup, and API endpoint.
+
+- **Commits:** Atomic commits like `Add: Ollama embeddings service` with passing tests.
+
+
+
+**Why this is good:** It allows parallel development on sub-tasks and ensures each piece is tested before merging to the feature branch.
+
+
+
+---
+
+
+
+## ✅ Before You Start - Git Workflow
+
+
+
+- [ ] I know the branch naming convention (`fix/issue-N-desc`, `feature/issue-N-desc`).
+
+- [ ] I understand when to create sub-issues (complex tasks) vs. when to commit directly.
+
+- [ ] I will run `dotnet test` (if applicable) before pushing.
+
+- [ ] I understand the commit message format with optional Claude attribution.
+
+- [ ] I know NOT to close an issue without user approval.
+
+- [ ] I've verified I'm working in the correct repository.
+
+
+
+---
+
+
+
+## Related Topics
+
+
+
+- 🚀 [Feature Development](../feature-development/feature-workflow.md) - For complex multi-phase tasks
+
+- 🔍 [Code Review](../code-review-refactoring-guide.md) - Before you create a PR
+
+- 🏗️ [Project Structure](../dotnet-project-structure.md) - Where to put your code
+
+
 
 **🚨 NEVER in Git:** passwords, API keys, tokens
 

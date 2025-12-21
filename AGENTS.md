@@ -39,24 +39,24 @@ What am I doing?
 ## Directory Index
 
 ### 1. `development-guidelines/`
-**Topics:** Repository setup, CI/CD, Git workflow, project structure
+**Topics:** Repository setup, CI/CD, Git workflow, project structure, feature development
 
 **Read when:**
 - Creating GitHub repository
 - Setting up CI/CD (NuGet/Web/Desktop)
 - Structuring .NET project
-- Managing secrets
+- **Implementing complex features (7-phase workflow)**
 - Git workflow (branches, commits, issues)
 
 **Index:** [development-guidelines/AGENTS.md](development-guidelines/AGENTS.md)
 
 **Key documents:**
+- `feature-development/AGENTS.md` - 7-phase feature workflow
 - `github-repository-setup.md` - Repo configuration
 - `ci-cd-overview.md` - Which CI/CD type?
 - `ci-cd-nuget-packages.md` - NuGet publishing
-- `ci-cd-web-services.md` - Web service deployment
 - `dotnet-project-structure.md` - Folder/naming conventions
-- `workflow-guide.md` - Git workflow, issues, branches
+- `workflow/workflow.md` - Git workflow, issues, branches
 
 ---
 
