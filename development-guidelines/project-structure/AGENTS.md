@@ -1,7 +1,3 @@
 # Project Structure - OpenCode Guide
 
-**You are:** OpenCode
-
-**Read:** [dotnet-project-structure.md](dotnet-project-structure.md)
-
-.NET solution organization and naming conventions.
+Read [structure.md](structure.md) for .NET solution structure, naming conventions, and test project patterns.

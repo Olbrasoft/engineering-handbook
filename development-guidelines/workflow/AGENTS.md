@@ -1,19 +1,30 @@
-# Git Workflow - OpenCode Guide
+# Git Workflow - OpenCode
 
 **You are:** OpenCode  
 **Topic:** Git workflow, GitHub issues, branches
 
 ---
 
-## What You Need
+## Read This First
 
-**Read:** [git-workflow.md](git-workflow.md)
+**Main guide:** [workflow.md](workflow.md)
 
-**Key for OpenCode:**
-- Create GitHub issues for tasks
-- Create sub-issues for multi-step tasks
-- Branch per issue
-- Track progress via issues
-- Wait for user approval before closing
+This file contains complete Git workflow with:
+- Creating GitHub issues for tasks
+- Creating sub-issues for multi-step tasks
+- Branch per issue workflow
+- Commit and push practices
+- Pull request process
+- Testing before closing
+- User approval requirement
 
-**Next step:** Read [git-workflow.md](git-workflow.md)
+---
+
+**Key for You:**
+- Create GitHub issues to track work
+- Create sub-issues for complex tasks
+- Wait for user approval before closing issues
+
+---
+
+**Next:** Read [workflow.md](workflow.md)

@@ -1,35 +1,16 @@
-# Code Review - Gemini Guide
+# Code Review - Gemini
 
 **You are:** Gemini  
-**Tool:** Manual checklist
+**Task:** Manual code review
 
 ---
 
-## What You Need
+## Read This First
 
-### 📋 Code Review Checklist
-**Read:** [manual-guide.md](manual-guide.md)
+**Main guide:** [manual-review.md](manual-review.md)
 
-**Why this file:**
-- Manual review process (no `/code-review` automation for Gemini)
-- SOLID principles checklist
-- Code smells identification
-- Refactoring patterns
-- Modern C# (12+) features
-
-**After review:**
-- Create GitHub issues for problems found
-- Use issue template in `manual-guide.md` lines 203-223
+This file contains manual code review checklist with SOLID principles, code smells, and refactoring patterns for .NET projects.
 
 ---
 
-## Files Available
-
-| File | For You? | Purpose |
-|------|----------|---------|
-| `manual-guide.md` | ✅ Yes | Your primary guide |
-| `claude-review.md` | ❌ No | Claude Code `/code-review` only |
-
----
-
-**Next step:** Read [manual-guide.md](manual-guide.md)
+**Next:** Read [manual-review.md](manual-review.md)

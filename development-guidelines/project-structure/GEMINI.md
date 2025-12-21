@@ -1,5 +1,3 @@
 # Project Structure - Gemini Guide
 
-**You are:** Gemini
-
-**Read:** [dotnet-project-structure.md](dotnet-project-structure.md)
+Read [structure.md](structure.md) for .NET solution structure and naming conventions.

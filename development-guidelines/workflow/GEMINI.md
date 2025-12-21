@@ -1,10 +1,16 @@
-# Git Workflow - Gemini Guide
+# Git Workflow - Gemini
 
 **You are:** Gemini  
 **Topic:** Git workflow
 
 ---
 
-**Read:** [git-workflow.md](git-workflow.md)
+## Read This First
 
-Standard Git workflow with GitHub issues, branches, and PRs.
+**Main guide:** [workflow.md](workflow.md)
+
+Standard Git workflow with GitHub issues, branches, commits, and pull requests.
+
+---
+
+**Next:** Read [workflow.md](workflow.md)

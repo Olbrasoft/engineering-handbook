@@ -1,5 +1,3 @@
 # Design Patterns - Gemini Guide
 
-**You are:** Gemini
-
-**Read:** [gof-design-patterns-2025.md](gof-design-patterns-2025.md)
+Read [gof-design-patterns-2025.md](gof-design-patterns-2025.md) for design patterns reference.

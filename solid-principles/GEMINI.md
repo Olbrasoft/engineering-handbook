@@ -1,5 +1,3 @@
 # SOLID Principles - Gemini Guide
 
-**You are:** Gemini
-
-**Read:** [solid-principles-2025.md](solid-principles-2025.md)
+Read [solid-principles-2025.md](solid-principles-2025.md) for SOLID principles reference.
