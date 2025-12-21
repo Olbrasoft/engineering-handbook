@@ -1,6 +1,7 @@
-# Engineering Handbook - Agent Guide
+# Development Guidelines - Agent Index
 
-**Purpose:** Index for AI agents to quickly find relevant documentation without loading everything.
+**Area:** Repository setup, CI/CD, Git workflow, project structure  
+**Parent:** [../AGENTS.md](../AGENTS.md)
 
 ---
 
