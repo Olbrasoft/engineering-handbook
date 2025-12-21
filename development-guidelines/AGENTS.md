@@ -39,7 +39,9 @@ What am I doing?
 │  └─ Read: workflow-guide.md
 │
 ├─ Code review / refactoring
-│  └─ Read: code-review-refactoring-guide.md
+│  ├─ General guide → code-review-refactoring-guide.md
+│  ├─ Claude Code (automated /code-review) → code-review-claude.md
+│  └─ OpenCode/Gemini (manual) → code-review-refactoring-guide.md
 │
 ├─ Learning SOLID principles
 │  └─ Read: ../solid-principles/solid-principles-2025.md
@@ -171,17 +173,40 @@ What am I doing?
 
 ---
 
-### 8. Code Review & Refactoring
+### 8. Code Review & Refactoring (General)
 **File:** `code-review-refactoring-guide.md` (English) / `code-review-refactoring-guide-cz.md` (Czech)
 
 **Read when:**
-- Reviewing code
+- Reviewing code manually
 - Refactoring existing code
 - Identifying code smells
+- Using OpenCode or Gemini (no automated review)
 
 ---
 
-### 9. SOLID Principles
+### 9. Code Review with Claude Code (Automated)
+**File:** `code-review-claude.md` (English) / `code-review-claude-cz.md` (Czech)
+
+**Read when:**
+- Using Claude Code `/code-review` command
+- Setting up CLAUDE.md for automated PR reviews
+- Configuring review agents
+- Integrating with GitHub PR workflow
+
+**Key info:**
+- 4 parallel agents (2x Sonnet, 2x Opus)
+- Confidence scoring (threshold 80)
+- .NET-specific CLAUDE.md template
+- Integration with engineering-handbook standards
+
+**Prerequisites:**
+- Claude Code installed
+- GitHub CLI (`gh`) authenticated
+- CLAUDE.md in project root
+
+---
+
+### 10. SOLID Principles
 **File:** `../solid-principles/solid-principles-2025.md` (English)
 
 **Read when:**
@@ -191,7 +216,7 @@ What am I doing?
 
 ---
 
-### 10. Design Patterns
+### 11. Design Patterns
 **File:** `../design-patterns/gof-design-patterns-2025.md` (English)
 
 **Read when:**
@@ -270,7 +295,8 @@ What am I doing?
 | github-repository-setup | ✅ Complete | - |
 | dotnet-project-structure | ✅ Complete | - |
 | workflow-guide | ✅ Complete | - |
-| code-review-refactoring-guide | ✅ Complete | - |
+| code-review-refactoring-guide | ✅ Complete | Manual review |
+| code-review-claude | ✅ Complete | Claude Code /code-review |
 
 ---
 
