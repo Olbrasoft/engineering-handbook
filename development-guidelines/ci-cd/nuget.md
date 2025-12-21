@@ -176,6 +176,56 @@ Publish only when pushing tags: `git tag v1.2.3 && git push --tags`
 - [ ] Demo/test projects have `<IsPackable>false</IsPackable>`
 - [ ] Tests pass locally: `dotnet test`
 
+## Verifying Version After Publish
+
+⚠️ **CRITICAL:** After pushing to GitHub, always verify the published version is correct.
+
+### Post-Publish Verification Steps
+
+1. **Check GitHub Actions:**
+   - Go to repository → Actions tab
+   - Find the latest "Publish NuGet" workflow run
+   - Check the logs for "Publishing version: X.Y.Z"
+   - Note the version number that was published
+
+2. **Check NuGet.org:**
+   - Go to https://www.nuget.org/packages/YourPackageName/
+   - Look at "Latest version" shown on the page
+   - **CRITICAL:** If the version on NuGet.org is HIGHER than what GitHub Actions just published, your versioning is BROKEN
+
+3. **If NuGet version > Published version:**
+   ```
+   Example:
+   - GitHub Actions published: 1.0.5
+   - NuGet.org shows: 1.1.0 (HIGHER!)
+   ❌ PROBLEM: Floating versions (1.*) will download 1.1.0, NOT your new 1.0.5
+   ```
+
+   **Fix:**
+   - Update `VERSION_PREFIX` in `.github/workflows/publish-nuget.yml`
+   - Set it HIGHER than the existing NuGet.org version
+   - Example: If NuGet has 1.1.0, set `VERSION_PREFIX: "1.2"`
+   - Push the change to trigger new publish
+   - Next version will be 1.2.X (higher than 1.1.0) ✅
+
+### Why This Matters
+
+With floating versions (`Version="1.*"`), NuGet always downloads the **highest** version in the 1.x range:
+- If NuGet has 1.1.0 and you publish 1.0.5, consumers get 1.1.0 (wrong!)
+- If NuGet has 1.1.0 and you publish 1.2.6, consumers get 1.2.6 (correct!)
+
+### Example Verification
+
+```bash
+# 1. Check published version in GitHub Actions logs
+gh run view <run-id> --log | grep "Publishing version"
+# Output: Publishing version: 1.2.6
+
+# 2. Check NuGet.org (wait 5-10 minutes for indexing)
+# Visit: https://www.nuget.org/packages/Olbrasoft.YourPackage/
+# Latest version: 1.2.6 ✅ (matches or is new highest version)
+```
+
 ## Common Issues
 
 | Problem | Cause | Fix |
