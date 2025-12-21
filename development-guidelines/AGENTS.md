@@ -22,6 +22,15 @@
 ```
 What am I doing?
 │
+├─ Using GitHub CLI (issues, PRs, sub-issues, API)
+│  └─ Read: github-operations/AGENTS.md
+│
+├─ Searching internet / researching solutions
+│  └─ Read: research-guide/AGENTS.md
+│
+├─ Running terminal commands (OpenCode - bash disabled)
+│  └─ Read: ht-mcp-terminal/AGENTS.md
+│
 ├─ Setting up NEW GitHub repository
 │  └─ Read: github-repository-setup.md
 │
@@ -227,6 +236,55 @@ What am I doing?
 - Implementing common patterns
 - Learning Gang of Four patterns
 - Modern pattern usage (2025 update)
+
+---
+
+### 12. GitHub Operations (OpenCode)
+**File:** `github-operations/AGENTS.md`
+
+**Read when:**
+- Using GitHub CLI (`gh`)
+- Managing issues, PRs
+- Creating sub-issues
+- GitHub API operations
+
+**Key info:**
+- `gh` CLI commands
+- Sub-issue naming: "Issue #57 - part of #56"
+- Why sub-issues > checkboxes
+- API access via `gh api`
+
+---
+
+### 13. Web Search & Research (OpenCode)
+**File:** `research-guide/AGENTS.md`
+
+**Read when:**
+- Searching internet for solutions
+- Using SearXNG
+- Reading documentation/articles
+- Research methodology
+
+**Key info:**
+- SearXNG usage (`searxng_web_search`)
+- URL reading tools (web_url_read, webfetch, curl)
+- Research sequence: handbook → internet → Stack Overflow
+
+---
+
+### 14. ht-mcp Terminal (OpenCode)
+**File:** `ht-mcp-terminal/AGENTS.md`
+
+**Read when:**
+- Running commands in OpenCode
+- Bash is hanging/disabled
+- Long-running commands
+- Need live progress output
+
+**Key info:**
+- Why ht-mcp instead of bash
+- Basic workflow (list → create → execute)
+- When to use ht-mcp vs bash exceptions
 
 ---
 
