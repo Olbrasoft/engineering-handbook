@@ -8,11 +8,115 @@
 
 ## What is `/code-review`?
 
-Automated PR review using 4 parallel agents:
-- **2x Sonnet agents:** CLAUDE.md compliance checking
-- **2x Opus agents:** Bug detection and logic analysis
-- **Confidence scoring:** 0-100, threshold 80 (filters false positives)
-- **Output:** Terminal or GitHub PR comment (`--comment` flag)
+Automated PR review using multiple specialized agents with confidence-based scoring to filter false positives.
+
+### How It Works (Technical Workflow)
+
+**Step 1: Pre-flight Checks**
+- Launch haiku agent to check if review is needed
+- Skip if: PR is closed, draft, trivial, or already reviewed by Claude
+- Check `gh pr view <PR> --comments` for existing Claude comments
+
+**Step 2: Gather CLAUDE.md Files**
+- Launch haiku agent to find all relevant CLAUDE.md files
+- Root CLAUDE.md (if exists)
+- CLAUDE.md files in directories containing modified files
+
+**Step 3: Summarize Changes**
+- Launch sonnet agent to view PR and summarize changes
+- Provides context for review agents
+
+**Step 4: Parallel Review (4 Agents)**
+
+**Agents #1 & #2: CLAUDE.md Compliance (Sonnet)**
+- Audit changes for CLAUDE.md compliance in parallel
+- Only consider CLAUDE.md files in same path or parent directories
+- Must quote exact rule being violated
+- **HIGH SIGNAL ONLY:** Clear, unambiguous violations
+
+**Agent #3: Bug Detection (Opus)**
+- Scan for obvious bugs in diff only (no extra context)
+- Focus on changed code only
+- Flag significant bugs, ignore nitpicks
+- Only flag issues validatable from git diff
+
+**Agent #4: Logic Analysis (Opus)**
+- Look for security issues, incorrect logic in changed code
+- Only issues within changed code
+- **HIGH SIGNAL ONLY:** Objective bugs causing runtime errors
+
+**CRITICAL: High Signal Issues Only**
+- ✅ Objective bugs with incorrect behavior
+- ✅ Clear CLAUDE.md violations (exact rule quotable)
+- ❌ Subjective suggestions
+- ❌ Style preferences not in CLAUDE.md
+- ❌ "Might be" issues
+- ❌ Anything requiring interpretation
+
+**Step 5: Validation (Parallel Subagents)**
+- For each issue from agents #3 & #4, launch validation subagent
+- Opus for bugs, Sonnet for CLAUDE.md violations
+- Validate issue is truly a problem with high confidence
+- Example: If "variable not defined" → verify actually undefined
+- For CLAUDE.md: verify rule is scoped for this file and truly violated
+
+**Step 6: Filter Low-Confidence Issues**
+- Remove issues not validated in step 5
+- Threshold: 80+ confidence only
+- Result: High signal issues for review
+
+**Step 7: Post Review**
+- If issues found → post inline comments (step 8)
+- If NO issues → post summary comment using `gh pr comment`:
+  ```markdown
+  ## Code review
+  
+  No issues found. Checked for bugs and CLAUDE.md compliance.
+  ```
+
+**Step 8: Post Inline Comments**
+- Use `mcp__github_inline_comment__create_inline_comment`
+- **One comment per unique issue** (no duplicates)
+- Format:
+  - `path`: file path
+  - `line` (and `startLine` for ranges): buggy lines
+  - `body`: Brief description (no "Bug:" prefix)
+  
+**For small fixes (≤5 lines):**
+```suggestion
+corrected code here
+```
+- Must be COMPLETE (user clicks "Commit suggestion" and it works)
+- If fix needs changes elsewhere (e.g., rename all usages) → NO suggestion
+
+**For larger fixes (6+ lines, structural, multiple locations):**
+1. Describe issue
+2. Explain fix at high level
+3. Copyable prompt for Claude Code:
+```
+Fix [file:line]: [brief description of issue and suggested fix]
+```
+
+### Confidence Scoring
+
+- **0**: Not confident, false positive
+- **25**: Somewhat confident, might be real
+- **50**: Moderately confident, real but minor
+- **75**: Highly confident, real and important
+- **100**: Absolutely certain, definitely real
+
+**Threshold:** 80 (default, configurable)
+
+### False Positives Filtered (Do NOT Flag)
+
+- Pre-existing issues (not introduced in PR)
+- Code that looks like bug but is correct
+- Pedantic nitpicks senior engineer wouldn't flag
+- Issues linters will catch
+- General quality issues (unless in CLAUDE.md)
+- Issues with lint ignore comments
+- Subjective concerns or suggestions
+- Potential issues that "might" be problems
 
 ---
 
@@ -369,9 +473,43 @@ jobs:
 ```
 https://github.com/owner/repo/blob/[FULL-SHA]/path/file.ext#L[start]-L[end]
 ```
-- Must use **full SHA** (not abbreviated)
-- Must use `#L` notation
-- Must include line range with context
+
+**Requirements:**
+- Must use **full SHA** (not abbreviated, e.g., `c21d3c10bc8e898b7ac1a2d745bdc9bc4e423afe`)
+- Must use `#L` notation (NOT `#`)
+- Must include line range: `L[start]-L[end]` format
+- Must provide at least 1 line of context before and after the issue
+  - Example: Commenting on lines 5-6 → link to `#L4-L7`
+- Repository name must match the repository being reviewed
+- **NO shell commands in URLs** - Markdown preview won't render:
+  - ❌ `blob/$(git rev-parse HEAD)/file.ext` (won't work)
+  - ✅ `blob/c21d3c10bc8e898b7ac1a2d745bdc9bc4e423afe/file.ext`
+
+**Example:**
+```
+https://github.com/anthropics/claude-code/blob/c21d3c10bc8e898b7ac1a2d745bdc9bc4e423afe/package.json#L10-L15
+```
+
+### GitHub CLI not working
+
+**Issue**: `gh` commands fail
+
+**Solution:**
+- Install GitHub CLI: `brew install gh` (macOS/Linux) or see [GitHub CLI installation](https://cli.github.com/)
+- Authenticate: `gh auth login`
+- Verify repository has GitHub remote: `git remote -v`
+
+**CRITICAL:** Agents MUST use `gh` CLI for ALL GitHub operations:
+- ✅ `gh pr view <PR>`, `gh pr diff <PR>`, `gh pr list`
+- ✅ `gh issue view <N>`, `gh issue list`
+- ✅ `gh pr comment <PR> --body "..."`
+- ❌ NEVER use web fetch/API directly (no authentication context)
+
+**Citation Requirement:**
+- Every inline comment MUST cite and link to the source
+- CLAUDE.md violations → link to specific CLAUDE.md file
+- Bug reports → link to relevant code context
+- Format: `See [CLAUDE.md](path/to/CLAUDE.md#L10-L15) for rule`
 
 ---
 
