@@ -110,12 +110,17 @@ Publishes when:
 
 ## Versioning Strategies
 
-### 1. Manual (in .csproj)
-```xml
-<Version>1.0.0</Version>
-```
+⚠️ **REQUIRED: Use automatic versioning for all NuGet packages**
 
-### 2. Auto-increment (TextToSpeech pattern)
+Manual versioning leads to:
+- ❌ Forgotten version bumps
+- ❌ Build failures on NuGet (409 Conflict)
+- ❌ Wasted CI/CD time
+- ❌ Human error
+
+**Choose one automatic strategy:**
+
+### 1. Auto-increment (RECOMMENDED) ✅
 ```yaml
 env:
   VERSION_PREFIX: "1.1"
@@ -129,22 +134,45 @@ steps:
 
 - name: Build with version
   run: dotnet build -p:Version=${{ steps.version.outputs.version }}
+- name: Pack with version
+  run: dotnet pack -p:Version=${{ steps.version.outputs.version }}
 ```
-Result: `1.1.42`, `1.1.43`, ...
 
-### 3. Git tag-based
+**.csproj fallback for local builds:**
+```xml
+<!-- Version is auto-calculated in CI/CD as 1.1.${{ github.run_number }} -->
+<!-- This is fallback for local builds only -->
+<Version>1.1.0-local</Version>
+```
+
+Result: `1.1.11`, `1.1.12`, `1.1.13`, ... (auto-increments on every CI run)
+
+Examples: [SystemTray](https://github.com/Olbrasoft/SystemTray), [TextToSpeech](https://github.com/Olbrasoft/TextToSpeech)
+
+### 2. Git tag-based (Alternative) ✅
 ```yaml
 - name: Extract version from tag
   run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
 - run: dotnet pack -p:Version=${{ env.VERSION }}
 ```
 
+Publish only when pushing tags: `git tag v1.2.3 && git push --tags`
+
+### 3. Manual (DEPRECATED) ❌
+```xml
+<Version>1.0.0</Version>
+```
+
+**DO NOT USE** - requires manual editing, causes build failures.
+
 ## Checklist
 
 - [ ] `.github/workflows/build.yml` exists
 - [ ] `.github/workflows/publish-nuget.yml` exists
 - [ ] `NUGET_API_KEY` secret configured
-- [ ] `.csproj` has NuGet metadata (`PackageId`, `Version`, etc.)
+- [ ] ⚠️ **REQUIRED:** Automatic versioning configured (auto-increment or git tag-based)
+- [ ] `.csproj` has fallback version for local builds (e.g., `1.1.0-local`)
+- [ ] `.csproj` has NuGet metadata (`PackageId`, `Authors`, `Description`, etc.)
 - [ ] Demo/test projects have `<IsPackable>false</IsPackable>`
 - [ ] Tests pass locally: `dotnet test`
 

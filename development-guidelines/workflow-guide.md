@@ -146,6 +146,47 @@ Types: `Add` | `Fix` | `Update` | `Refactor` | `Remove` | `Docs`
 
 Examples: `GetCustomer_ValidId_Returns`, `CreateOrder_EmptyCart_Throws`
 
+### Skipping Tests on CI
+
+**Use Olbrasoft.Testing.Xunit.Attributes for CI-specific test skipping**
+
+When tests require local resources unavailable on CI (D-Bus, GPU, specific hardware):
+
+```bash
+dotnet add package Olbrasoft.Testing.Xunit.Attributes
+```
+
+```csharp
+using Olbrasoft.Testing.Xunit.Attributes;
+
+[SkipOnCIFact]  // For [Fact] tests
+public void Test_RequiringDBus_Works()
+{
+    // Runs locally, skips on GitHub Actions, Azure DevOps, etc.
+}
+
+[SkipOnCITheory]  // For [Theory] tests
+[InlineData(1)]
+[InlineData(2)]
+public void Test_WithData_Works(int value)
+{
+    // Skips on CI, runs locally
+}
+```
+
+**Benefits:**
+- ✅ Test runs locally (where resources are available)
+- ✅ Test automatically skips on CI (GitHub Actions, Azure DevOps, GitLab CI, etc.)
+- ✅ Cleaner than hardcoded `Skip` messages
+- ✅ Centralized CI detection logic
+
+**DO NOT use:**
+```csharp
+[Fact(Skip = "Requires D-Bus")]  // ❌ Skips everywhere, even locally
+```
+
+**Example:** [SystemTray.Linux.Tests](https://github.com/Olbrasoft/SystemTray/blob/main/tests/SystemTray.Linux.Tests/TrayIconManagerTests.cs)
+
 ## Deployment
 
 1. Check `CLAUDE.md`
