@@ -14,11 +14,15 @@
 **Read:** [development-guidelines/ci-cd/CLAUDE.md](development-guidelines/ci-cd/CLAUDE.md)
 
 ### 🌿 Git Workflow
-**Task:** Branches, commits, issues, pull requests  
+**Task:** Branches, commits, issues, pull requests
 **Read:** [development-guidelines/workflow/CLAUDE.md](development-guidelines/workflow/CLAUDE.md)
 
+### 📦 Package Management
+**Task:** Add/upgrade NuGet packages, manage dependencies, update configuration
+**Read:** [development-guidelines/package-management.md](development-guidelines/package-management.md)
+
 ### 📁 Project Structure
-**Task:** Organize .NET solution, naming conventions  
+**Task:** Organize .NET solution, naming conventions
 **Read:** [development-guidelines/project-structure/CLAUDE.md](development-guidelines/project-structure/CLAUDE.md)
 
 ### 🏗️ Feature Development
