@@ -281,6 +281,65 @@ gh run view <run-id> --log | grep "Publishing version"
 # Latest version: 1.2.6 ✅ (matches or is new highest version)
 ```
 
+## Adding New Projects to Solution
+
+⚠️ **CRITICAL: Always add new projects to .sln file immediately after creation**
+
+### Real-world mistake (Text repository, 2025-12-25)
+
+**What happened:**
+- Created `Olbrasoft.Text.Translation.Bing` project
+- Created `Olbrasoft.Text.Translation.Bing.Tests` project
+- **Forgot to add them to Olbrasoft.Text.sln**
+- Workflow failed with `NETSDK1004: Assets file 'project.assets.json' not found`
+
+**Why it failed:**
+```yaml
+# Workflow steps:
+- dotnet restore          # ✅ Restores ONLY projects in .sln (Bing NOT included)
+- dotnet build           # ✅ Builds ONLY projects in .sln
+- dotnet pack src/*/*.csproj  # ❌ Tries to pack ALL .csproj (including Bing)
+# Result: Bing has NO project.assets.json → ERROR
+```
+
+**Root cause:** Workflow's automatic project discovery (loop) packs ALL .csproj files, but `dotnet restore` only restores projects listed in .sln.
+
+### ✅ CORRECT: Always add to solution immediately
+
+**After creating ANY new project:**
+
+```bash
+# 1. Create project
+dotnet new classlib -n Olbrasoft.YourProject -o src/Olbrasoft.YourProject
+
+# 2. IMMEDIATELY add to solution
+dotnet sln add src/Olbrasoft.YourProject/Olbrasoft.YourProject.csproj
+
+# 3. Verify it's in solution
+dotnet sln list | grep YourProject
+
+# 4. Test locally
+dotnet restore
+dotnet build
+dotnet test
+```
+
+### Checklist: Creating New Projects
+
+- [ ] Create .csproj file (`dotnet new classlib` or manually)
+- [ ] ⚠️ **IMMEDIATELY run:** `dotnet sln add <path-to-csproj>`
+- [ ] Verify: `dotnet sln list` shows the new project
+- [ ] Test locally: `dotnet build && dotnet test` (all pass)
+- [ ] Commit solution file (.sln) along with new project
+- [ ] Push and verify workflow succeeds
+
+### Why This Matters
+
+- `dotnet restore` only restores projects in .sln
+- Workflow loops pack **all** .csproj files (not just .sln)
+- Missing from .sln = no restore = no build artifacts = pack fails
+- **Always add to .sln immediately** to avoid workflow failures
+
 ## Common Issues
 
 | Problem | Cause | Fix |
@@ -289,6 +348,7 @@ gh run view <run-id> --log | grep "Publishing version"
 | 401 Unauthorized | Invalid API key | Check `NUGET_API_KEY` secret |
 | No .nupkg found | Missing metadata | Add `<PackageId>` to .csproj |
 | Demo app published | Missing `<IsPackable>false</IsPackable>` | Add to demo .csproj |
+| NETSDK1004 Assets file not found | Project not in .sln | `dotnet sln add <project.csproj>` |
 
 ## Consuming Olbrasoft Packages
 
