@@ -72,6 +72,203 @@ jobs:
 </PropertyGroup>
 ```
 
+## Testing Packages Locally Before Publishing
+
+⚠️ **CRITICAL: Always test new packages locally before publishing to NuGet.org**
+
+### Why Test Locally First?
+
+When creating new NuGet packages, **ALWAYS** test them locally in your consuming project **BEFORE** publishing to NuGet.org:
+
+- ✅ Catch bugs immediately without waiting for NuGet.org indexing (5-15 minutes)
+- ✅ Avoid publishing broken packages that require version bumps to fix
+- ✅ Test integration with consuming projects in realistic conditions
+- ✅ Save CI/CD time and avoid wasted workflow runs
+- ❌ If you publish first and find a bug, you must wait for new NuGet.org publish cycle
+
+### Workflow: Local Testing → NuGet Publishing
+
+**1. Create and pack packages locally:**
+```bash
+cd ~/Olbrasoft/YourPackageRepo
+dotnet restore
+dotnet build -c Release
+dotnet pack -c Release --no-build -o ./artifacts
+
+# Verify packages created
+ls -lh ./artifacts/*.nupkg
+```
+
+**2. Add local NuGet source to consuming project:**
+```bash
+cd ~/Olbrasoft/YourConsumingProject
+
+# Add local package source (one-time setup)
+dotnet nuget add source ~/Olbrasoft/YourPackageRepo/artifacts \
+  --name "LocalPackages"
+
+# Verify source added
+dotnet nuget list source
+```
+
+**3. Reference local packages in consuming project:**
+```xml
+<!-- YourConsumingProject.csproj -->
+<ItemGroup>
+  <!-- Use exact version from local build -->
+  <PackageReference Include="Olbrasoft.YourPackage" Version="1.0.5" />
+</ItemGroup>
+```
+
+**4. Test the consuming project:**
+```bash
+# Clear NuGet cache to force using local packages
+dotnet nuget locals all --clear
+
+# Restore from local source
+dotnet restore
+
+# Build and test
+dotnet build
+dotnet test
+dotnet run  # Or deploy and test
+
+# Verify local package was used
+dotnet list package | grep YourPackage
+```
+
+**5. If bugs found - fix and rebuild:**
+```bash
+cd ~/Olbrasoft/YourPackageRepo
+# Fix the bug
+dotnet build -c Release
+dotnet pack -c Release --no-build -o ./artifacts
+
+cd ~/Olbrasoft/YourConsumingProject
+dotnet nuget locals all --clear
+dotnet restore  # Gets updated local package
+dotnet test     # Re-test
+```
+
+**6. Once local testing passes - publish to NuGet.org:**
+```bash
+cd ~/Olbrasoft/YourPackageRepo
+git add .
+git commit -m "feat: Add YourPackage (tested locally)"
+git push  # Triggers workflow → publishes to NuGet.org
+```
+
+**7. Switch consuming project to NuGet.org packages:**
+```xml
+<!-- YourConsumingProject.csproj -->
+<ItemGroup>
+  <!-- Change to floating version for NuGet.org -->
+  <PackageReference Include="Olbrasoft.YourPackage" Version="1.*" />
+</ItemGroup>
+```
+
+```bash
+cd ~/Olbrasoft/YourConsumingProject
+dotnet nuget locals all --clear
+dotnet restore  # Now uses NuGet.org
+dotnet build
+dotnet test
+
+# Optional: Remove local source after testing
+dotnet nuget remove source LocalPackages
+```
+
+### Local Package Source Management
+
+**Add local source (persistent):**
+```bash
+# Add to global NuGet config (~/.nuget/NuGet/NuGet.Config)
+dotnet nuget add source ~/Olbrasoft/Text/artifacts --name "TextLocal"
+dotnet nuget add source ~/Olbrasoft/Data/artifacts --name "DataLocal"
+```
+
+**List all sources:**
+```bash
+dotnet nuget list source
+# Shows: nuget.org, TextLocal, DataLocal, etc.
+```
+
+**Remove local source:**
+```bash
+dotnet nuget remove source TextLocal
+```
+
+**Clear all cached packages:**
+```bash
+# Clear all NuGet caches (http-cache, temp, global-packages)
+dotnet nuget locals all --clear
+```
+
+### Best Practices
+
+1. **Always test locally first** - Never publish untested packages
+2. **Use exact versions** during local testing (e.g., `Version="1.0.5"`)
+3. **Clear NuGet cache** before testing (`dotnet nuget locals all --clear`)
+4. **Switch to floating versions** after NuGet.org publish (`Version="1.*"`)
+5. **Remove local sources** after testing to avoid confusion
+6. **Verify package source** using `dotnet list package` or restore logs
+
+### Example: Complete Local Testing Workflow
+
+```bash
+# 1. Create new translation package
+cd ~/Olbrasoft/Text
+# ... write code ...
+dotnet pack -c Release -o ./artifacts
+
+# 2. Test in VirtualAssistant locally
+cd ~/Olbrasoft/VirtualAssistant
+dotnet nuget add source ~/Olbrasoft/Text/artifacts --name "TextLocal"
+
+# Edit VirtualAssistant.csproj:
+# <PackageReference Include="Olbrasoft.Text.Translation.Bing" Version="10.0.3" />
+
+dotnet nuget locals all --clear
+dotnet restore
+dotnet build
+dotnet test
+./deploy/deploy.sh  # Test deployed app
+
+# 3. Found bug? Fix it immediately
+cd ~/Olbrasoft/Text
+# ... fix bug ...
+dotnet pack -c Release -o ./artifacts
+
+cd ~/Olbrasoft/VirtualAssistant
+dotnet nuget locals all --clear
+dotnet restore  # Gets updated package
+dotnet test     # Re-test
+
+# 4. All tests pass? Publish to NuGet.org
+cd ~/Olbrasoft/Text
+git add .
+git commit -m "feat: Add Bing translator (tested locally in VirtualAssistant)"
+git push  # → GitHub Actions → NuGet.org
+
+# 5. Switch VirtualAssistant to NuGet.org
+cd ~/Olbrasoft/VirtualAssistant
+# Edit VirtualAssistant.csproj:
+# <PackageReference Include="Olbrasoft.Text.Translation.Bing" Version="10.*" />
+
+dotnet nuget remove source TextLocal
+dotnet nuget locals all --clear
+dotnet restore  # Now uses NuGet.org
+```
+
+### Troubleshooting
+
+| Problem | Solution |
+|---------|----------|
+| Old package version used | `dotnet nuget locals all --clear` |
+| Can't find local package | Check source: `dotnet nuget list source` |
+| Wrong version installed | Use exact version during testing: `Version="1.0.5"` |
+| Mixed local/remote packages | Clear cache and verify sources |
+
 ## Multi-Package Repositories
 
 ⚠️ **CRITICAL: Use automatic project discovery to avoid missing new packages**
