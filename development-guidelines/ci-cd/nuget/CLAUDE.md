@@ -74,33 +74,88 @@ jobs:
 
 ## Multi-Package Repositories
 
-**Auto-detection:** `dotnet pack` finds ALL projects with NuGet metadata.
+⚠️ **CRITICAL: Use automatic project discovery to avoid missing new packages**
 
-**Example:** TextToSpeech publishes 5 packages simultaneously:
-```
-src/
-  ├─ TextToSpeech.Core/              → .nupkg
-  ├─ TextToSpeech.Providers/         → .nupkg
-  ├─ TextToSpeech.Providers.EdgeTTS/ → .nupkg
-  ├─ TextToSpeech.Providers.Piper/   → .nupkg
-  └─ TextToSpeech.Orchestration/     → .nupkg
-```
+### ❌ WRONG: Hardcoded list of projects
 
-**Exclude projects:**
-```xml
-<IsPackable>false</IsPackable>
-```
+**Problem:** When you add a new project, it won't be published until you manually update the workflow.
 
-**Workflow:**
 ```yaml
-- name: Collect packages
+# ❌ DO NOT DO THIS - requires manual updates for every new project
+- name: Pack all packages
   run: |
     mkdir -p ./artifacts
-    find . -name "*.nupkg" -path "*/bin/Release/*" -exec cp {} ./artifacts/ \;
-
-- name: Publish all
-  run: dotnet nuget push ./artifacts/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
+    dotnet pack src/Project1/Project1.csproj -c Release --no-build -o ./artifacts
+    dotnet pack src/Project2/Project2.csproj -c Release --no-build -o ./artifacts
+    dotnet pack src/Project3/Project3.csproj -c Release --no-build -o ./artifacts
+    # ❌ Forgot to add new Project4! It won't be published.
 ```
+
+**Real-world mistake (Text repository, 2025-12-25):**
+- Added `Olbrasoft.Text.Translation.Google` and `Olbrasoft.Text.Translation.Bing` projects
+- Workflow had hardcoded list of 8 projects
+- New projects were NOT published to NuGet.org
+- Auto-version bump changed all versions, but only 8 old packages were published
+- **Result:** Version mismatch, wasted CI time, broken deployment
+
+### ✅ CORRECT: Automatic project discovery
+
+**Use a loop to pack ALL projects in src/ directory:**
+
+```yaml
+- name: Pack all packages
+  run: |
+    mkdir -p ./artifacts
+    # Automatically pack all projects in src/ directory
+    for csproj in src/*/*.csproj; do
+      if [ -f "$csproj" ]; then
+        echo "Packing $csproj..."
+        dotnet pack "$csproj" --configuration Release --no-build --output ./artifacts
+      fi
+    done
+
+    # List generated packages for verification
+    echo "Generated packages:"
+    ls -lh ./artifacts/*.nupkg
+
+- name: Publish to NuGet.org
+  run: |
+    dotnet nuget push ./artifacts/*.nupkg \
+      --source https://api.nuget.org/v3/index.json \
+      --api-key ${{ secrets.NUGET_API_KEY }} \
+      --skip-duplicate
+```
+
+### How It Works
+
+1. **Loop through all `.csproj` files** in `src/*/`
+2. **Pack each project** automatically
+3. **No manual updates needed** when adding new projects
+4. **Verification step** lists all generated packages
+
+### Exclude Projects from Publishing
+
+**For test/demo projects:**
+```xml
+<PropertyGroup>
+  <IsPackable>false</IsPackable>
+</PropertyGroup>
+```
+
+**Example structure:**
+```
+src/
+  ├─ YourLibrary.Core/          → ✅ Publishes (has NuGet metadata)
+  ├─ YourLibrary.Providers/     → ✅ Publishes (has NuGet metadata)
+  └─ YourLibrary.Tests/         → ❌ Excluded (IsPackable=false)
+```
+
+### Benefits
+
+✅ **Scalable** - Add projects without touching workflow
+✅ **No forgotten packages** - Everything in src/ is packed
+✅ **Verification** - Logs show what was packaged
+✅ **Maintainable** - One workflow rule for all projects
 
 ## Publishing Triggers
 

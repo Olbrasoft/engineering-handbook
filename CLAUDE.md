@@ -45,8 +45,10 @@
 |--------------|-----------|
 | Run `/code-review` | `development-guidelines/code-review/CLAUDE.md` |
 | Create CLAUDE.md for project | `development-guidelines/code-review/claude-review.md` |
-| Setup NuGet CI/CD | `development-guidelines/ci-cd/nuget-packages.md` |
-| Deploy web service | `development-guidelines/ci-cd/web-services.md` |
+| Setup NuGet CI/CD | `development-guidelines/ci-cd/nuget/CLAUDE.md` |
+| Deploy local app | `development-guidelines/ci-cd/local-apps/CLAUDE.md` |
+| Deploy web service | `development-guidelines/ci-cd/web/CLAUDE.md` |
+| Deploy desktop app | `development-guidelines/ci-cd/desktop/CLAUDE.md` |
 | Learn Git workflow | `development-guidelines/workflow/git-workflow.md` |
 
 ---

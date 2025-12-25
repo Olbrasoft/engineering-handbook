@@ -8,22 +8,25 @@ Quick reference for determining project type and CI/CD strategy.
 .NET Project
 │
 ├─ Has GUI? (WinForms/WPF/Avalonia/MAUI)
-│  └─ YES → Desktop App → ci-cd-desktop-apps.md
+│  ├─ Deploy to local server? → Local App → local-apps/CLAUDE.md
+│  └─ Public release? → Desktop App → desktop/CLAUDE.md
 │
 ├─ Has ASP.NET Core? (API/Web/SignalR)
-│  └─ YES → Web Service → ci-cd-web-services.md
+│  ├─ Deploy to local server? → Local App → local-apps/CLAUDE.md
+│  └─ Deploy to cloud? → Web Service → web/CLAUDE.md
 │
 └─ Is Class Library?
-   └─ YES → NuGet Package → ci-cd-nuget-packages.md
+   └─ YES → NuGet Package → nuget/CLAUDE.md
 ```
 
 ## Quick Reference
 
 | Type | Deploy Target | Workflow Trigger | Doc |
 |------|---------------|------------------|-----|
-| NuGet packages | NuGet.org | Push to `main` or tag `v*` | [nuget](ci-cd-nuget-packages.md) |
-| Web services | `/opt/olbrasoft/<app>/` | Self-hosted runner | [web](ci-cd-web-services.md) |
-| Desktop apps | GitHub Releases | Tag `v*` | [desktop](ci-cd-desktop-apps.md) |
+| NuGet packages | NuGet.org | Push to `main` or tag `v*` | [nuget](nuget/CLAUDE.md) |
+| Local apps | `/opt/olbrasoft/<app>/` | After successful build (self-hosted) | [local-apps](local-apps/CLAUDE.md) |
+| Web services | `/opt/olbrasoft/<app>/` | Self-hosted runner | [web](web/CLAUDE.md) |
+| Desktop apps | GitHub Releases | Tag `v*` | [desktop](desktop/CLAUDE.md) |
 
 ## Project Type Indicators
 
@@ -36,6 +39,18 @@ Quick reference for determining project type and CI/CD strategy.
 - Multi-targeting common
 - No `<OutputType>Exe</OutputType>`
 - Has NuGet metadata
+
+### Local App
+```xml
+<!-- .csproj indicators -->
+<OutputType>Exe</OutputType>
+<TargetFramework>net10.0</TargetFramework>
+<Version>1.0.0-local</Version>  <!-- Fallback, auto-versioned in CI/CD -->
+```
+- Has `.github/workflows/deploy.yml` with `workflow_run` trigger
+- Has `scripts/install-runner.sh`
+- Deploys to `/opt/olbrasoft/<app>/`
+- Uses self-hosted runner
 
 ### Web Service
 ```xml
@@ -84,5 +99,6 @@ steps:
 
 ### Publish (Type-Specific)
 - **NuGet:** `dotnet pack` → `dotnet nuget push`
+- **Local:** `dotnet publish` → `/opt/olbrasoft/<app>/` → `systemctl restart` (self-hosted)
 - **Web:** `./deploy/deploy.sh /opt/olbrasoft/<app>` → `systemctl restart`
 - **Desktop:** `dotnet publish -r <rid>` → `gh release create`
