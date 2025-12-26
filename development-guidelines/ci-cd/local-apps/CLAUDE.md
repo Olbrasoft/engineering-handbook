@@ -472,6 +472,99 @@ Example with systemd service restart:
     sudo systemctl status virtual-assistant.service
 ```
 
+## CI Verification Before Reporting Completion
+
+**CRITICAL RULE:** Before informing the user that implementation is complete and deployed, you **MUST** verify that GitHub Actions CI passed successfully.
+
+### Required Steps
+
+1. **After pushing changes to `main`:**
+   ```bash
+   # Wait for CI to start (20-30 seconds)
+   sleep 30
+
+   # Check latest run status
+   gh run list --limit 1
+   ```
+
+2. **Verify status is `completed success`:**
+   ```bash
+   completed	success	Your commit message	Deploy GitHub.Issues (Local)	main	push	...
+   ```
+
+3. **If CI failed:**
+   - ❌ DO NOT report "deployment completed" to user
+   - ✅ View failed logs: `gh run view <run-id> --log-failed`
+   - ✅ Fix the issue
+   - ✅ Push fix and verify again
+
+4. **Only after CI passes:**
+   - ✅ Report to user: "Implementation complete, CI passed, deployed successfully"
+   - ✅ Send notification with issue IDs
+
+### Why This Matters
+
+Local builds can succeed while CI fails due to:
+- Missing NuGet packages
+- Project references to local repos (not available on CI)
+- Environment-specific dependencies
+- File lock issues (local only)
+
+**Example failure:**
+```
+error CS0234: Type or namespace Google does not exist in namespace Olbrasoft.Text.Translation
+```
+
+**Root cause:** Project referenced `../../../Text/src/Olbrasoft.Text.Translation.Google/` which exists locally but NOT on GitHub-hosted runner.
+
+**Fix:** Replace ProjectReference with PackageReference.
+
+### GitHub CLI Commands
+
+```bash
+# List recent runs
+gh run list --limit 5
+
+# View specific run
+gh run view <run-id>
+
+# View failed logs only
+gh run view <run-id> --log-failed
+
+# Watch run in progress
+gh run watch <run-id>
+```
+
+### Integration with Notifications
+
+**Before notification:**
+```bash
+# 1. Push changes
+git push origin main
+
+# 2. Wait for CI
+sleep 30
+
+# 3. Verify CI passed
+gh run list --limit 1 | grep "completed.*success"
+```
+
+**After verification passed:**
+```javascript
+mcp__notify__notify({
+  text: "Implementace dokončena, CI prošlo, aplikace nasazena.",
+  issueIds: [278, 279, 280]
+})
+```
+
+**If CI failed:**
+```javascript
+mcp__notify__notify({
+  text: "Build selhal na CI, opravuji chyby.",
+  issueIds: [278, 279, 280]
+})
+```
+
 ## Reference
 
 - [GitHub Actions - workflow_run trigger](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_run)
