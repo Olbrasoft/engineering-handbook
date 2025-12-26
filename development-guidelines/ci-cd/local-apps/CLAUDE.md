@@ -565,6 +565,156 @@ mcp__notify__notify({
 })
 ```
 
+## Web Application Verification Before Reporting Completion
+
+**CRITICAL RULE:** If the application is a web application running at a specific address (e.g., `http://localhost:5156`), you **MUST** verify that the application is actually running and responding before informing the user that deployment is complete.
+
+### Why This Matters
+
+CI can pass and deployment can succeed, but the application may NOT be running:
+- Deployment copied files successfully
+- All tests passed
+- BUT: Application process not started
+- User receives "deployment completed" but application is inaccessible
+
+**Example scenario:**
+```
+✅ CI passed
+✅ Files deployed to /opt/olbrasoft/app/
+✅ You reported: "Deployment successful, application running"
+❌ Reality: Application NOT started, port NOT listening
+❌ User tries to access: Connection refused
+```
+
+### Required Steps for Web Applications
+
+**1. After deployment completes:**
+
+```bash
+# Start the application (use project-specific startup command)
+# Example for GitHub.Issues:
+/home/jirka/.local/bin/github-start.sh
+
+# Or for systemd services:
+sudo systemctl restart your-service.service
+```
+
+**2. Verify port is listening:**
+
+```bash
+# Check if application port is listening
+ss -tulpn | grep <PORT>
+
+# Example for port 5156:
+ss -tulpn | grep 5156
+
+# Expected output:
+# tcp   LISTEN 0  512  127.0.0.1:5156  0.0.0.0:*  users:(("dotnet",pid=123,fd=4))
+```
+
+**3. Verify HTTP 200 OK response:**
+
+```bash
+# Test HTTP response
+curl -I http://localhost:<PORT>
+
+# Example for port 5156:
+curl -I http://localhost:5156
+
+# Expected output:
+# HTTP/1.1 200 OK
+# Content-Type: text/html; charset=utf-8
+# ...
+```
+
+**4. Test with Playwright (homepage loads):**
+
+Use `mcp__playwright__browser_navigate` to verify homepage loads successfully:
+
+```javascript
+// Navigate to application
+mcp__playwright__browser_navigate({
+  url: "http://localhost:<PORT>"
+})
+
+// Verify page loaded successfully (check title or key elements)
+// If Playwright can load the page → application is functional
+```
+
+**5. ONLY after all verifications pass:**
+
+```javascript
+mcp__notify__notify({
+  text: "Implementace dokončena, CI prošlo, aplikace běží a je funkční.",
+  issueIds: [278, 279, 280]
+})
+```
+
+### Common Web Application Issues
+
+| Problem | Detection | Fix |
+|---------|-----------|-----|
+| Process not started | `ss -tulpn` shows no listening port | Start application with startup script |
+| Wrong port | Port listening but different from expected | Check ASPNETCORE_URLS or config |
+| Application crashed | Port was listening, then stopped | Check logs: journalctl or application log file |
+| Returns error page | HTTP 200 but error content | Check application logs for exceptions |
+
+### Integration with CI Verification
+
+**Complete verification workflow:**
+
+```bash
+# 1. Push changes
+git push origin main
+
+# 2. Wait for CI
+sleep 30
+
+# 3. Verify CI passed
+gh run list --limit 1 | grep "completed.*success"
+
+# 4. Start application (if not auto-started)
+/path/to/startup-script.sh
+
+# 5. Verify port listening
+ss -tulpn | grep <PORT>
+
+# 6. Verify HTTP response
+curl -I http://localhost:<PORT>
+
+# 7. Test with Playwright
+mcp__playwright__browser_navigate({ url: "http://localhost:<PORT>" })
+
+# 8. ONLY if ALL steps passed → report to user
+mcp__notify__notify({
+  text: "Implementace dokončena, CI prošlo, aplikace běží.",
+  issueIds: [...]
+})
+```
+
+### Project-Specific Examples
+
+**GitHub.Issues (ASP.NET Razor Pages):**
+```bash
+# Start
+/home/jirka/.local/bin/github-start.sh
+
+# Verify
+ss -tulpn | grep 5156
+curl -I http://localhost:5156
+mcp__playwright__browser_navigate({ url: "http://localhost:5156" })
+```
+
+**VirtualAssistant (systemd service):**
+```bash
+# Start
+sudo systemctl restart virtual-assistant.service
+
+# Verify
+ss -tulpn | grep 5055
+curl http://localhost:5055/health
+```
+
 ## Reference
 
 - [GitHub Actions - workflow_run trigger](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_run)
