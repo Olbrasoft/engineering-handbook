@@ -1,44 +1,65 @@
 # Engineering Handbook
 
-A comprehensive collection of development standards and reference guides for software engineering teams. This repository serves as a centralized knowledge base for coding best practices, architectural patterns, and development workflows.
+C# / .NET development standards and reference guides for Olbrasoft projects.
 
-## Why This Repository Exists
+## Quick Start
 
-This handbook provides a single source of truth for:
+**New to the handbook?** Start here:
+- [Workflow Guide](development-guidelines/workflow.md) - Git, branches, PRs, sub-issues
+- [SOLID Principles](solid-principles/solid-principles-2025.md) - Modern interpretation
+- [Testing Guide](development-guidelines/testing.md) - Unit tests, mocking, xUnit
 
-- **Consistent coding standards** across projects and teams
-- **Quick reference guides** for common patterns and principles
-- **Onboarding materials** for new team members
-- **Best practices** based on industry standards and real-world experience
+## Development Guidelines
 
-## Repository Structure
+### Workflow & Process
+- **[Workflow Guide](development-guidelines/workflow.md)** - Git workflow, GitHub issues, branches, commits, sub-issues
+- **[Feature Workflow](development-guidelines/feature-workflow.md)** - 7-phase systematic feature implementation
+- **[Architecture Design](development-guidelines/architecture-design.md)** - Design trade-offs and decisions
+- **[Code Exploration](development-guidelines/code-exploration.md)** - Codebase navigation techniques
+- **[Code Review](development-guidelines/code-review/)** - Automated and manual review processes
+  - [General Guidelines](development-guidelines/code-review/code-review.md)
+  - [Manual Review Checklist](development-guidelines/code-review/manual-review.md)
+  - [Claude Code: /code-review command](development-guidelines/code-review/CLAUDE.md)
 
-```
-├── README.md                     ← Introduction and overview
-├── dotnet-development/           ← C# and .NET development guides
-├── design-patterns/              ← GoF Design Patterns cheat sheet
-├── solid-principles/             ← SOLID principles documentation
-├── github-issues/                ← Issue writing guide and sub-issues best practices
-```
+### Testing
+- **[Testing Guide](development-guidelines/testing.md)** - xUnit, Moq, test structure, CI integration
 
-## Contents
+### CI/CD & Deployment
+- **[CI/CD Overview](development-guidelines/ci-cd-overview.md)** - Decision tree for deployment strategy
+- **[CI/CD Pipeline Setup](development-guidelines/ci-cd-pipeline-setup.md)** - General pipeline configuration
+- **[NuGet Packages](development-guidelines/ci-cd-nuget.md)** - Multi-package repos, publishing workflow
+- **[Web Services](development-guidelines/ci-cd-web.md)** - ASP.NET Core, systemd, secrets
+- **[Local Applications](development-guidelines/ci-cd-local-apps.md)** - Self-hosted runner, systemd services
+- **[Desktop Apps](development-guidelines/ci-cd-desktop.md)** - GitHub Releases, installers
 
-### [.NET Development](./dotnet-development/)
+### Project Setup
+- **[Repository Setup](development-guidelines/repository-setup.md)** - GitHub repo creation, branch protection, webhooks
+- **[Project Structure](development-guidelines/project-structure.md)** - Naming conventions, folders, test organization
+- **[Package Management](development-guidelines/package-management.md)** - NuGet workflow, local testing, configuration
 
-Everything related to C# and .NET development, including deployment guides, coding standards, and best practices.
+### Tools & Operations
+- **[GitHub Operations](development-guidelines/github-operations.md)** - gh CLI, issues, PRs, sub-issues
+- **[Research Guide](development-guidelines/research-guide.md)** - SearXNG, web search workflow
+- **[ht-mcp Terminal](development-guidelines/ht-mcp-terminal.md)** - Terminal operations for restricted environments
 
-### [Design Patterns](./design-patterns/)
+## Design & Architecture
 
-Gang of Four (GoF) Design Patterns cheat sheet and reference materials for commonly used software design patterns.
+- **[SOLID Principles (2025)](solid-principles/solid-principles-2025.md)** - Modern interpretation with Olbrasoft examples
+- **[GoF Design Patterns (2025)](design-patterns/gof-design-patterns-2025.md)** - All 23 patterns with current best practices
 
-### [SOLID Principles](./solid-principles/)
+## For AI Agents
 
-Documentation on SOLID principles for object-oriented design, with examples and practical applications.
+This handbook is optimized for AI agent consumption:
+- **Claude Code:** Read [CLAUDE.md](CLAUDE.md) for navigation
+- **OpenCode/Agents:** Read [AGENTS.md](AGENTS.md) for navigation
+- **Gemini:** Read [GEMINI.md](GEMINI.md) for navigation
 
-### [GitHub Issues](./github-issues/)
+Each guide follows consistent structure and includes practical examples from real Olbrasoft projects.
 
-Issue writing guide - how to create well-defined GitHub issues. Includes critical information about properly linking sub-issues using GitHub's native feature (not text references).
+## Contributing
+
+See [Workflow Guide](development-guidelines/workflow.md) for contribution process.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT License - see [LICENSE](LICENSE)
