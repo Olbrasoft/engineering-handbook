@@ -2,36 +2,269 @@
 
 Managing NuGet packages, dependencies, and their configuration in .NET projects.
 
-## Adding or Upgrading Packages
+## Two-Phase Deployment Process
 
-When adding new packages or upgrading existing ones, follow this checklist to ensure proper integration.
+Package deployment follows a **two-phase approach** to ensure stability:
 
-### 1. Install Package
+1. **Phase 1: Local Package Testing** - Test with locally packed packages before publishing
+2. **Phase 2: Production Deployment** - Deploy published NuGet packages to production
+
+⚠️ **CRITICAL:** Configuration must be verified in **BOTH phases** - local settings may differ from production!
+
+---
+
+## Phase 1: Local Package Testing
+
+Test new/updated packages locally BEFORE publishing to NuGet.org to catch bugs early and avoid indexing delays.
+
+### Step 1: Pack Packages Locally
 
 ```bash
-dotnet add package PackageName --version X.Y.Z
+cd ~/Olbrasoft/PackageProject
+dotnet pack -c Release -o ./artifacts
 ```
 
-**During development/testing:**
-- Use local packages first (see [Local Package Testing](#local-package-testing))
-- Use exact versions during testing: `Version="10.0.2"` (not floating `10.*`)
+**Output:** `./artifacts/PackageName.10.0.2.nupkg`
 
-**After testing:**
-- Publish to NuGet.org
-- Update project references to use published packages
+### Step 2: Add Local NuGet Source
 
-### 2. Configuration Review Checklist
+```bash
+cd ~/Olbrasoft/TargetProject
+dotnet nuget add source ~/Olbrasoft/PackageProject/artifacts --name "LocalSource"
+```
 
-⚠️ **CRITICAL:** After adding/upgrading packages, **ALWAYS review ALL configuration files**
+### Step 3: Install Local Package
 
-| File | Check | Example |
-|------|-------|---------|
-| `appsettings.json` | New settings for package features | Translation provider config |
-| `appsettings.Production.json` | Production-specific overrides | Different API endpoints |
-| Startup scripts | Environment variables for API keys | `~/.local/bin/app-start.sh` |
-| User Secrets | Development API keys | `dotnet user-secrets list` |
-| `Program.cs` / `Startup.cs` | Service registration | `services.AddTranslator(...)` |
-| `.csproj` files | Version alignment across projects | All projects use same version |
+```bash
+dotnet add package PackageName --version 10.0.2
+```
+
+⚠️ **Use exact versions** during testing: `Version="10.0.2"` (NOT floating `10.*`)
+
+### Step 4: Clear Cache and Restore
+
+```bash
+dotnet nuget locals all --clear
+dotnet restore --verbosity detailed | grep "LocalSource"
+```
+
+**Verify:** Should show `Installed PackageName 10.0.2 from LocalSource`
+
+### Step 5: Configuration Review - Phase 1 (Local Testing)
+
+⚠️ **CRITICAL:** Review ALL configuration files for local testing:
+
+| File | Action | Example |
+|------|--------|---------|
+| `appsettings.json` | Add/update package settings | `"GoogleEnabled": true` |
+| `appsettings.Development.json` | Local-specific overrides | Development API endpoints |
+| User Secrets | Add development API keys | `dotnet user-secrets set "Google:ApiKey" "test123"` |
+| `Program.cs` / `Startup.cs` | Register services | `services.AddGoogleTranslator()` |
+| `.csproj` files | Align versions across projects | All use same version |
+
+**Checklist - Phase 1:**
+- [ ] Package added to .csproj with exact version
+- [ ] appsettings.json updated with new settings
+- [ ] appsettings.Development.json checked
+- [ ] User secrets configured (if needed)
+- [ ] Service registration added to Program.cs
+- [ ] All dependent projects use same version
+- [ ] NuGet cache cleared
+- [ ] Build succeeds
+- [ ] Tests pass
+- [ ] **Application runs with local package**
+- [ ] **Functionality verified in running app**
+
+### Step 6: Test Application
+
+```bash
+dotnet build
+dotnet test
+dotnet run
+```
+
+**Verify:**
+1. Application starts without errors
+2. New package functionality works as expected
+3. Check logs for initialization messages
+4. Test the specific feature added by package
+
+---
+
+## Phase 2: Production Deployment
+
+After successful local testing, deploy published packages to production.
+
+### Step 1: Publish to NuGet.org
+
+```bash
+cd ~/Olbrasoft/PackageProject
+dotnet pack -c Release
+dotnet nuget push artifacts/*.nupkg --source https://api.nuget.org/v3/index.json --api-key YOUR_API_KEY
+```
+
+**Wait:** NuGet indexing takes 5-15 minutes
+
+### Step 2: Remove Local Source
+
+```bash
+cd ~/Olbrasoft/TargetProject
+dotnet nuget remove source LocalSource
+```
+
+### Step 3: Update to Published Package
+
+```bash
+dotnet nuget locals all --clear
+dotnet restore
+```
+
+**Verify:** Should now restore from `nuget.org`
+
+```bash
+dotnet restore --verbosity detailed | grep "nuget.org"
+# Should show: Installed PackageName 10.0.2 from nuget.org
+```
+
+### Step 4: Configuration Review - Phase 2 (Production)
+
+⚠️ **CRITICAL:** Production configuration may DIFFER from local testing!
+
+**Re-check ALL configuration files:**
+
+| File | Action | Difference from Local |
+|------|--------|----------------------|
+| `appsettings.json` | Verify settings | ✅ Usually same |
+| `appsettings.Production.json` | Update production overrides | ⚠️ **May differ!** |
+| Startup scripts (`app-start.sh`) | Update environment variables | ⚠️ **May differ!** |
+| User Secrets | N/A (production doesn't use) | Production uses env vars |
+| Service registration | Verify same as Phase 1 | ✅ Should be same |
+
+**Common Differences Between Local and Production:**
+
+| Configuration | Local (Phase 1) | Production (Phase 2) |
+|---------------|-----------------|---------------------|
+| API Keys | User Secrets | Environment variables in startup script |
+| Endpoints | Development URLs | Production URLs |
+| Provider Order | All providers enabled | Subset enabled (e.g., only Google) |
+| Timeouts | Short (5s) | Longer (30s) |
+| Logging | Verbose | Warning/Error only |
+
+### Step 5: Update Startup Scripts
+
+**Example:** Production startup script may need updates
+
+**Before (local testing used Azure + Google):**
+```bash
+# ~/.local/bin/app-start.sh
+nohup env \
+    AzureTranslator__ApiKey="xxx" \
+    GoogleTranslator__ApiKey="yyy" \
+    dotnet App.dll &
+```
+
+**After (production uses only Google):**
+```bash
+# ~/.local/bin/app-start.sh
+nohup env \
+    GoogleTranslator__ApiKey="yyy" \
+    dotnet App.dll &
+```
+
+⚠️ **Why this matters:** Environment variables override appsettings.json!
+
+### Step 6: Deploy and Verify Production
+
+```bash
+# Rebuild with published packages
+dotnet build -c Release
+
+# Deploy (example)
+dotnet publish -c Release -o /opt/app
+sudo systemctl restart myapp.service
+```
+
+**Checklist - Phase 2:**
+- [ ] Published package available on NuGet.org
+- [ ] Local NuGet source removed
+- [ ] Restored from nuget.org (verified in logs)
+- [ ] appsettings.Production.json updated
+- [ ] Startup scripts updated (environment variables)
+- [ ] Build succeeds with published package
+- [ ] Tests pass with published package
+- [ ] Application deployed to production
+- [ ] **Production application started successfully**
+- [ ] **Logs verified - no configuration errors**
+- [ ] **Functionality tested in production environment**
+
+### Step 7: Verify Production Configuration
+
+```bash
+# Check application logs
+tail -100 /var/log/myapp.log | grep -i "package\|config\|error"
+
+# Look for initialization messages
+grep "TranslatorPool\|Google\|initialized" /var/log/myapp.log
+```
+
+**Expected:**
+- ✅ No "configuration missing" errors
+- ✅ Package initialized correctly
+- ✅ Using published package version (check logs)
+- ✅ Production settings applied (e.g., "Google only")
+
+---
+
+## Configuration Differences: Local vs Production
+
+### Example: Google Translator
+
+**Phase 1 (Local Testing):**
+
+```json
+// appsettings.Development.json
+{
+  "TranslatorPool": {
+    "ProviderOrder": ["Google", "Azure", "DeepL"],  // Test all providers
+    "GoogleTimeoutSeconds": 5  // Short timeout for dev
+  }
+}
+```
+
+```bash
+# User Secrets (local)
+dotnet user-secrets set "GoogleTranslator:ApiKey" "dev-key-123"
+```
+
+**Phase 2 (Production):**
+
+```json
+// appsettings.Production.json
+{
+  "TranslatorPool": {
+    "ProviderOrder": ["Google"],  // Only Google in production
+    "GoogleTimeoutSeconds": 30  // Longer timeout for stability
+  }
+}
+```
+
+```bash
+# Startup script (production)
+nohup env \
+    GoogleTranslator__ApiKey="prod-key-xyz" \
+    ASPNETCORE_ENVIRONMENT=Production \
+    dotnet App.dll &
+```
+
+### Why Configuration Differs
+
+| Reason | Local | Production |
+|--------|-------|------------|
+| **Testing** | Test all providers to verify fallback | Use only validated provider |
+| **Performance** | Shorter timeouts (fail fast) | Longer timeouts (reliability) |
+| **Secrets** | User Secrets (convenient) | Environment variables (secure) |
+| **Endpoints** | Development APIs | Production APIs |
+| **Logging** | Verbose (debug) | Minimal (performance) |
 
 ### 3. Version Alignment
 

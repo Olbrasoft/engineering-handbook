@@ -17,6 +17,10 @@
 **Task:** Branches, commits, issues, pull requests
 **Read:** [development-guidelines/workflow/CLAUDE.md](development-guidelines/workflow/CLAUDE.md)
 
+### 🧪 Testing
+**Task:** Unit testing, in-memory databases, mocking, testing best practices
+**Read:** [development-guidelines/testing/CLAUDE.md](development-guidelines/testing/CLAUDE.md)
+
 ### 📦 Package Management
 **Task:** Add/upgrade NuGet packages, manage dependencies, update configuration
 **Read:** [development-guidelines/package-management.md](development-guidelines/package-management.md)
@@ -54,6 +58,8 @@
 | Deploy web service | `development-guidelines/ci-cd/web/CLAUDE.md` |
 | Deploy desktop app | `development-guidelines/ci-cd/desktop/CLAUDE.md` |
 | Learn Git workflow | `development-guidelines/workflow/git-workflow.md` |
+| Write unit tests | `development-guidelines/testing/unit-testing-guide.md` |
+| Test with database | `development-guidelines/testing/unit-testing-guide.md` |
 
 ---
 
