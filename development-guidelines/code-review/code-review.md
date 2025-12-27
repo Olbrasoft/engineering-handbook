@@ -291,7 +291,7 @@ Missing Repository pattern for data access (see design-patterns/gof-design-patte
 
 ## See Also
 
-- **Engineering Handbook:** [AGENTS.md](../../AGENTS.md)
+- **Engineering Handbook:** [README.md](../../README.md)
 - **SOLID Principles:** [solid-principles.md](../../solid-principles/solid-principles.md)
 - **Design Patterns:** [gof-design-patterns.md](../../design-patterns/gof-design-patterns.md)
 - **Git Workflow:** [workflow.md](../workflow.md)

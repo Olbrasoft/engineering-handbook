@@ -1,6 +1,6 @@
 # Web Search & Research Guide
 
-**Parent:** [../AGENTS.md](../AGENTS.md)
+**Index:** [INDEX.md](INDEX.md)
 
 ---
 

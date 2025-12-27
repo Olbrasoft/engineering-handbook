@@ -44,17 +44,8 @@ C# / .NET development standards and reference guides for Olbrasoft projects.
 
 ## Design & Architecture
 
-- **[SOLID Principles (2025)](solid-principles/solid-principles.md)** - Modern interpretation with Olbrasoft examples
-- **[GoF Design Patterns (2025)](design-patterns/gof-design-patterns.md)** - All 23 patterns with current best practices
-
-## For AI Agents
-
-This handbook is optimized for AI agent consumption:
-- **Claude Code:** Read [AGENTS.md](AGENTS.md) for navigation (unique: `/code-review` in [development-guidelines/code-review/CLAUDE.md](development-guidelines/code-review/CLAUDE.md))
-- **OpenCode/Agents:** Read [AGENTS.md](AGENTS.md) for navigation
-- **Gemini:** Read [GEMINI.md](GEMINI.md) for navigation
-
-Each guide follows consistent structure and includes practical examples from real Olbrasoft projects.
+- **[SOLID Principles](solid-principles/solid-principles.md)** - Modern interpretation with Olbrasoft examples
+- **[GoF Design Patterns](design-patterns/gof-design-patterns.md)** - All 23 patterns with current best practices
 
 ## Repository Structure
 

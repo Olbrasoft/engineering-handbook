@@ -1,6 +1,6 @@
 # GitHub Operations
 
-**Parent:** [../AGENTS.md](../AGENTS.md)
+**Index:** [INDEX.md](INDEX.md)
 
 ---
 

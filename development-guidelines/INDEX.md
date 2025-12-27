@@ -1,7 +1,6 @@
-# Development Guidelines - Agent Index
+# Development Guidelines
 
-**Area:** Repository setup, CI/CD, Git workflow, project structure  
-**Parent:** [../AGENTS.md](../AGENTS.md)
+Repository setup, CI/CD, Git workflow, project structure, testing, and development tools.
 
 ---
 
