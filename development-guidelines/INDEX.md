@@ -33,13 +33,13 @@ What am I doing?
 ├─ Setting up NEW GitHub repository
 │  └─ Read: repository-setup.md
 │
-├─ Setting up CI/CD for .NET project
+├─ Setting up Continuous Integration/Deployment for .NET project
 │  ├─ What type?
-│  │  ├─ NuGet package (library) → ci-cd-nuget.md
-│  │  ├─ Web service (API/webapp) → ci-cd-web.md
-│  │  ├─ Local app → ci-cd-local-apps.md
-│  │  └─ Desktop app (GUI) → ci-cd-desktop.md
-│  └─ Not sure? → ci-cd-overview.md (then pick specific doc)
+│  │  ├─ NuGet package (library) → continuous-integration-deployment/nuget.md
+│  │  ├─ Web service (API/webapp) → continuous-integration-deployment/web.md
+│  │  ├─ Local app → continuous-integration-deployment/local-apps.md
+│  │  └─ Desktop app (GUI) → continuous-integration-deployment/desktop.md
+│  └─ Not sure? → continuous-integration-deployment/overview.md (then pick specific doc)
 │
 ├─ Structuring .NET project (folders/naming)
 │  └─ Read: project-structure.md
@@ -84,20 +84,20 @@ What am I doing?
 
 ---
 
-### 2. CI/CD: Which Type?
-**File:** `ci-cd-overview.md` (English) / `ci-cd-overview-cz.md` (Czech)
+### 2. Continuous Integration/Deployment: Which Type?
+**File:** `continuous-integration-deployment/overview.md`
 
 **Read when:**
-- Not sure which CI/CD strategy to use
+- Not sure which deployment strategy to use
 - Project has mixed types (library + demo app)
 - Need quick decision tree
 
-**Outcome:** Determines which specific CI/CD doc to read next.
+**Outcome:** Determines which specific deployment doc to read next.
 
 ---
 
-### 3. CI/CD: NuGet Packages
-**File:** `ci-cd-nuget.md`
+### 3. Continuous Integration/Deployment: NuGet Packages
+**File:** `continuous-integration-deployment/nuget.md`
 
 **Read when:**
 - Publishing class library to NuGet.org
@@ -118,8 +118,8 @@ What am I doing?
 
 ---
 
-### 4. CI/CD: Web Services
-**File:** `ci-cd-web.md`
+### 4. Continuous Integration/Deployment: Web Services
+**File:** `continuous-integration-deployment/web.md`
 
 **Read when:**
 - Deploying ASP.NET Core application to Linux server
@@ -137,8 +137,8 @@ What am I doing?
 
 ---
 
-### 5. CI/CD: Desktop Apps
-**File:** `ci-cd-desktop.md`
+### 5. Continuous Integration/Deployment: Desktop Apps
+**File:** `continuous-integration-deployment/desktop.md`
 
 **Read when:**
 - Building GUI application (WinForms/WPF/Avalonia/MAUI)
@@ -294,20 +294,20 @@ What am I doing?
 ### "I need to create a new NuGet package repository"
 1. Read: `repository-setup.md` (create repo)
 2. Read: `project-structure.md` (organize code)
-3. Read: `ci-cd-nuget.md` (setup CI/CD)
-4. Read: `workflow-guide.md` (issues/branches)
+3. Read: `continuous-integration-deployment/nuget.md` (setup deployment)
+4. Read: `workflow.md` (issues/branches)
 
 ### "I need to deploy a web service"
-1. Read: `ci-cd-web.md` (deployment process)
+1. Read: `continuous-integration-deployment/web.md` (deployment process)
 2. Check: `/opt/olbrasoft/<app>/` structure
 3. Verify: systemd EnvironmentFile has ALL secrets
 4. Test: ALL features work (100% functional rule)
 
 ### "I'm starting a new .NET project"
-1. Read: `ci-cd-overview.md` (determine type)
+1. Read: `continuous-integration-deployment/overview.md` (determine type)
 2. Read: `project-structure.md` (structure)
-3. Read: specific CI/CD doc based on type
-4. Read: `workflow-guide.md` (Git workflow)
+3. Read: specific deployment doc based on type
+4. Read: `workflow.md` (Git workflow)
 
 ---
 

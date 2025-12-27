@@ -24,13 +24,13 @@ C# / .NET development standards and reference guides for Olbrasoft projects.
 ### Testing
 - **[Testing Guide](development-guidelines/testing.md)** - xUnit, Moq, test structure, CI integration
 
-### CI/CD & Deployment
-- **[CI/CD Overview](development-guidelines/ci-cd-overview.md)** - Decision tree for deployment strategy
-- **[CI/CD Pipeline Setup](development-guidelines/ci-cd-pipeline-setup.md)** - General pipeline configuration
-- **[NuGet Packages](development-guidelines/ci-cd-nuget.md)** - Multi-package repos, publishing workflow
-- **[Web Services](development-guidelines/ci-cd-web.md)** - ASP.NET Core, systemd, secrets
-- **[Local Applications](development-guidelines/ci-cd-local-apps.md)** - Self-hosted runner, systemd services
-- **[Desktop Apps](development-guidelines/ci-cd-desktop.md)** - GitHub Releases, installers
+### Continuous Integration & Deployment
+- **[Overview](development-guidelines/continuous-integration-deployment/overview.md)** - Decision tree for deployment strategy
+- **[Pipeline Setup](development-guidelines/continuous-integration-deployment/pipeline-setup.md)** - General pipeline configuration
+- **[NuGet Packages](development-guidelines/continuous-integration-deployment/nuget.md)** - Multi-package repos, publishing workflow
+- **[Web Services](development-guidelines/continuous-integration-deployment/web.md)** - ASP.NET Core, systemd, secrets
+- **[Local Applications](development-guidelines/continuous-integration-deployment/local-apps.md)** - Self-hosted runner, systemd services
+- **[Desktop Apps](development-guidelines/continuous-integration-deployment/desktop.md)** - GitHub Releases, installers
 
 ### Project Setup
 - **[Repository Setup](development-guidelines/repository-setup.md)** - GitHub repo creation, branch protection, webhooks
