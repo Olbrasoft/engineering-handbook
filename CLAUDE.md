@@ -10,16 +10,16 @@
 **Read:** [development-guidelines/code-review/CLAUDE.md](development-guidelines/code-review/CLAUDE.md)
 
 ### 🚀 CI/CD Setup
-**Task:** Setup GitHub Actions, NuGet publishing, deployment  
-**Read:** [development-guidelines/ci-cd/CLAUDE.md](development-guidelines/ci-cd/CLAUDE.md)
+**Task:** Setup GitHub Actions, NuGet publishing, deployment
+**Read:** [development-guidelines/ci-cd-overview.md](development-guidelines/ci-cd-overview.md)
 
 ### 🌿 Git Workflow
 **Task:** Branches, commits, issues, pull requests
-**Read:** [development-guidelines/workflow/CLAUDE.md](development-guidelines/workflow/CLAUDE.md)
+**Read:** [development-guidelines/workflow.md](development-guidelines/workflow.md)
 
 ### 🧪 Testing
 **Task:** Unit testing, in-memory databases, mocking, testing best practices
-**Read:** [development-guidelines/testing/CLAUDE.md](development-guidelines/testing/CLAUDE.md)
+**Read:** [development-guidelines/testing.md](development-guidelines/testing.md)
 
 ### 📦 Package Management
 **Task:** Add/upgrade NuGet packages, manage dependencies, update configuration
@@ -27,23 +27,23 @@
 
 ### 📁 Project Structure
 **Task:** Organize .NET solution, naming conventions
-**Read:** [development-guidelines/project-structure/CLAUDE.md](development-guidelines/project-structure/CLAUDE.md)
+**Read:** [development-guidelines/project-structure.md](development-guidelines/project-structure.md)
 
 ### 🏗️ Feature Development
-**Task:** Systematic 7-phase feature building, `/feature-dev` command  
-**Read:** [development-guidelines/feature-development/CLAUDE.md](development-guidelines/feature-development/CLAUDE.md)
+**Task:** Systematic 7-phase feature building, `/feature-dev` command
+**Read:** [development-guidelines/feature-workflow.md](development-guidelines/feature-workflow.md)
 
 ### 🚀 Repository Setup
-**Task:** Create new GitHub repository  
-**Read:** [development-guidelines/repository-setup/CLAUDE.md](development-guidelines/repository-setup/CLAUDE.md)
+**Task:** Create new GitHub repository
+**Read:** [development-guidelines/repository-setup.md](development-guidelines/repository-setup.md)
 
 ### 🎯 SOLID Principles
-**Task:** Apply modern SOLID principles  
-**Read:** [solid-principles/CLAUDE.md](solid-principles/CLAUDE.md)
+**Task:** Apply modern SOLID principles
+**Read:** [solid-principles/solid-principles-2025.md](solid-principles/solid-principles-2025.md)
 
 ### 🧩 Design Patterns
-**Task:** Implement Gang of Four patterns  
-**Read:** [design-patterns/CLAUDE.md](design-patterns/CLAUDE.md)
+**Task:** Implement Gang of Four patterns
+**Read:** [design-patterns/gof-design-patterns-2025.md](design-patterns/gof-design-patterns-2025.md)
 
 ---
 
@@ -52,14 +52,14 @@
 | I need to... | Read this |
 |--------------|-----------|
 | Run `/code-review` | `development-guidelines/code-review/CLAUDE.md` |
-| Create CLAUDE.md for project | `development-guidelines/code-review/claude-review.md` |
-| Setup NuGet CI/CD | `development-guidelines/ci-cd/nuget/CLAUDE.md` |
-| Deploy local app | `development-guidelines/ci-cd/local-apps/CLAUDE.md` |
-| Deploy web service | `development-guidelines/ci-cd/web/CLAUDE.md` |
-| Deploy desktop app | `development-guidelines/ci-cd/desktop/CLAUDE.md` |
-| Learn Git workflow | `development-guidelines/workflow/git-workflow.md` |
-| Write unit tests | `development-guidelines/testing/unit-testing-guide.md` |
-| Test with database | `development-guidelines/testing/unit-testing-guide.md` |
+| Create CLAUDE.md for project | `development-guidelines/code-review/code-review.md` |
+| Setup NuGet CI/CD | `development-guidelines/ci-cd-nuget.md` |
+| Deploy local app | `development-guidelines/ci-cd-local-apps.md` |
+| Deploy web service | `development-guidelines/ci-cd-web.md` |
+| Deploy desktop app | `development-guidelines/ci-cd-desktop.md` |
+| Learn Git workflow | `development-guidelines/workflow.md` |
+| Write unit tests | `development-guidelines/testing.md` |
+| Test with database | `development-guidelines/testing.md` |
 
 ---
 

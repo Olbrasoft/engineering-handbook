@@ -249,11 +249,11 @@ public void Test_WithData_Works(int value)
 
 
 
-- 🚀 [Feature Development](../feature-development/feature-workflow.md) - For complex multi-phase tasks
+- 🚀 [Feature Development](feature-workflow.md) - For complex multi-phase tasks
 
-- 🔍 [Code Review](../code-review-refactoring-guide.md) - Before you create a PR
+- 🔍 [Code Review](code-review/code-review.md) - Before you create a PR
 
-- 🏗️ [Project Structure](../dotnet-project-structure.md) - Where to put your code
+- 🏗️ [Project Structure](project-structure.md) - Where to put your code
 
 
 

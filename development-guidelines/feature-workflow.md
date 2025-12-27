@@ -71,4 +71,4 @@ This guide describes the systematic 7-phase process for building new features. F
 
 - 🏗️ [Architecture Design](./architecture-design.md) - Deep dive into Phase 4
 - 🔍 [Code Exploration](./code-exploration.md) - Techniques for Phase 2
-- 🌿 [Git Workflow](../workflow/workflow.md) - Committing and PRs
+- 🌿 [Git Workflow](workflow.md) - Committing and PRs

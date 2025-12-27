@@ -8,9 +8,9 @@
 
 | Topic | Index |
 |-------|-------|
-| Code Review | [code-review/GEMINI.md](code-review/GEMINI.md) |
-| CI/CD | [ci-cd/GEMINI.md](ci-cd/GEMINI.md) |
-| Git Workflow | [workflow/GEMINI.md](workflow/GEMINI.md) |
-| Feature Development | [feature-development/GEMINI.md](feature-development/GEMINI.md) |
-| Project Structure | [project-structure/GEMINI.md](project-structure/GEMINI.md) |
-| Repository Setup | [repository-setup/GEMINI.md](repository-setup/GEMINI.md) |
+| Code Review | [code-review/code-review.md](code-review/code-review.md) |
+| CI/CD | [ci-cd-overview.md](ci-cd-overview.md) |
+| Git Workflow | [workflow.md](workflow.md) |
+| Feature Development | [feature-workflow.md](feature-workflow.md) |
+| Project Structure | [project-structure.md](project-structure.md) |
+| Repository Setup | [repository-setup.md](repository-setup.md) |

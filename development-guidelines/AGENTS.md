@@ -23,37 +23,39 @@
 What am I doing?
 │
 ├─ Using GitHub CLI (issues, PRs, sub-issues, API)
-│  └─ Read: github-operations/AGENTS.md
+│  └─ Read: github-operations.md
 │
 ├─ Searching internet / researching solutions
-│  └─ Read: research-guide/AGENTS.md
+│  └─ Read: research-guide.md
 │
 ├─ Running terminal commands (OpenCode - bash disabled)
-│  └─ Read: ht-mcp-terminal/AGENTS.md
+│  └─ Read: ht-mcp-terminal.md
 │
 ├─ Setting up NEW GitHub repository
-│  └─ Read: github-repository-setup.md
+│  └─ Read: repository-setup.md
 │
 ├─ Setting up CI/CD for .NET project
 │  ├─ What type?
-│  │  ├─ NuGet package (library) → ci-cd-nuget-packages.md
-│  │  ├─ Web service (API/webapp) → ci-cd-web-services.md
-│  │  └─ Desktop app (GUI) → ci-cd-desktop-apps.md
+│  │  ├─ NuGet package (library) → ci-cd-nuget.md
+│  │  ├─ Web service (API/webapp) → ci-cd-web.md
+│  │  ├─ Local app → ci-cd-local-apps.md
+│  │  └─ Desktop app (GUI) → ci-cd-desktop.md
 │  └─ Not sure? → ci-cd-overview.md (then pick specific doc)
 │
 ├─ Structuring .NET project (folders/naming)
-│  └─ Read: dotnet-project-structure.md
+│  └─ Read: project-structure.md
 │
 ├─ Implementing NEW complex features
-│  └─ Read: feature-development/AGENTS.md
+│  └─ Read: feature-workflow.md
 │
 ├─ Git workflow (branches/commits/issues)
-│  └─ Read: workflow/workflow.md
+│  └─ Read: workflow.md
 │
 ├─ Code review / refactoring
-│  ├─ General guide → code-review-refactoring-guide.md
-│  ├─ Claude Code (automated /code-review) → code-review-claude.md
-│  └─ OpenCode/Gemini (manual) → code-review-refactoring-guide.md
+│  ├─ General guide → code-review/code-review.md
+│  ├─ Manual review → code-review/manual-review.md
+│  ├─ Claude Code (automated /code-review) → code-review/CLAUDE.md
+│  └─ OpenCode (manual) → code-review/AGENTS.md
 │
 ├─ Learning SOLID principles
 │  └─ Read: ../solid-principles/solid-principles-2025.md
@@ -67,7 +69,7 @@ What am I doing?
 ## Document Index
 
 ### 1. Repository Setup
-**File:** `github-repository-setup.md` (English) / `github-repository-setup-cz.md` (Czech)
+**File:** `repository-setup.md`
 
 **Read when:**
 - Creating new GitHub repository
@@ -96,7 +98,7 @@ What am I doing?
 ---
 
 ### 3. CI/CD: NuGet Packages
-**File:** `ci-cd-nuget-packages.md` (English) / `ci-cd-nuget-packages-cz.md` (Czech)
+**File:** `ci-cd-nuget.md`
 
 **Read when:**
 - Publishing class library to NuGet.org
@@ -118,7 +120,7 @@ What am I doing?
 ---
 
 ### 4. CI/CD: Web Services
-**File:** `ci-cd-web-services.md` (English) / `ci-cd-web-services-cz.md` (Czech)
+**File:** `ci-cd-web.md`
 
 **Read when:**
 - Deploying ASP.NET Core application to Linux server
@@ -137,7 +139,7 @@ What am I doing?
 ---
 
 ### 5. CI/CD: Desktop Apps
-**File:** `ci-cd-desktop-apps.md` (English) / `ci-cd-desktop-apps-cz.md` (Czech)
+**File:** `ci-cd-desktop.md`
 
 **Read when:**
 - Building GUI application (WinForms/WPF/Avalonia/MAUI)
@@ -154,7 +156,7 @@ What am I doing?
 ---
 
 ### 6. .NET Project Structure
-**File:** `dotnet-project-structure.md` (English) / `dotnet-project-structure-cz.md` (Czech)
+**File:** `project-structure.md`
 
 **Read when:**
 - Creating new .NET solution
@@ -169,7 +171,7 @@ What am I doing?
 ---
 
 ### 7. Git Workflow
-**File:** `workflow/workflow.md` (English)
+**File:** `workflow.md` (English)
 
 **Read when:**
 - Creating GitHub issues
@@ -178,7 +180,7 @@ What am I doing?
 - Sub-issues (NOT checkboxes!)
 
 ### 8. Feature Development
-**Index:** `feature-development/AGENTS.md`
+**File:** `feature-workflow.md`
 
 **Read when:**
 - Starting a complex new feature
@@ -257,7 +259,7 @@ What am I doing?
 ---
 
 ### 13. Web Search & Research (OpenCode)
-**File:** `research-guide/AGENTS.md`
+**File:** `research-guide.md`
 
 **Read when:**
 - Searching internet for solutions
@@ -273,7 +275,7 @@ What am I doing?
 ---
 
 ### 14. ht-mcp Terminal (OpenCode)
-**File:** `ht-mcp-terminal/AGENTS.md`
+**File:** `ht-mcp-terminal.md`
 
 **Read when:**
 - Running commands in OpenCode
@@ -291,20 +293,20 @@ What am I doing?
 ## Common Scenarios
 
 ### "I need to create a new NuGet package repository"
-1. Read: `github-repository-setup.md` (create repo)
-2. Read: `dotnet-project-structure.md` (organize code)
-3. Read: `ci-cd-nuget-packages.md` (setup CI/CD)
+1. Read: `repository-setup.md` (create repo)
+2. Read: `project-structure.md` (organize code)
+3. Read: `ci-cd-nuget.md` (setup CI/CD)
 4. Read: `workflow-guide.md` (issues/branches)
 
 ### "I need to deploy a web service"
-1. Read: `ci-cd-web-services.md` (deployment process)
+1. Read: `ci-cd-web.md` (deployment process)
 2. Check: `/opt/olbrasoft/<app>/` structure
 3. Verify: systemd EnvironmentFile has ALL secrets
 4. Test: ALL features work (100% functional rule)
 
 ### "I'm starting a new .NET project"
 1. Read: `ci-cd-overview.md` (determine type)
-2. Read: `dotnet-project-structure.md` (structure)
+2. Read: `project-structure.md` (structure)
 3. Read: specific CI/CD doc based on type
 4. Read: `workflow-guide.md` (Git workflow)
 
@@ -351,11 +353,11 @@ What am I doing?
 | Document | Status | Notes |
 |----------|--------|-------|
 | ci-cd-overview | ✅ Complete | Decision tree |
-| ci-cd-nuget-packages | ✅ Complete | Multi-package examples |
-| ci-cd-web-services | ✅ Complete | systemd, secrets |
-| ci-cd-desktop-apps | ⚠️ Incomplete | TODO: AppImage, .deb |
-| github-repository-setup | ✅ Complete | - |
-| dotnet-project-structure | ✅ Complete | - |
+| ci-cd-nuget | ✅ Complete | Multi-package examples |
+| ci-cd-web | ✅ Complete | systemd, secrets |
+| ci-cd-desktop | ⚠️ Incomplete | TODO: AppImage, .deb |
+| repository-setup | ✅ Complete | - |
+| project-structure | ✅ Complete | - |
 | workflow-guide | ✅ Complete | - |
 | code-review-refactoring-guide | ✅ Complete | Manual review |
 | code-review-claude | ✅ Complete | Claude Code /code-review |
@@ -395,7 +397,7 @@ When adding new documents:
 ls ~/GitHub/Olbrasoft/engineering-handbook/development-guidelines/
 
 # Read specific doc (example)
-cat ~/GitHub/Olbrasoft/engineering-handbook/development-guidelines/ci-cd-nuget-packages.md
+cat ~/GitHub/Olbrasoft/engineering-handbook/development-guidelines/ci-cd-nuget.md
 
 # Find specific topic
 grep -r "NuGet API key" ~/GitHub/Olbrasoft/engineering-handbook/

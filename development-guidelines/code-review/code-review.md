@@ -61,7 +61,7 @@ Reference: [gof-design-patterns-2025.md](../../design-patterns/gof-design-patter
 
 ### Testing Standards
 
-Reference: [workflow.md](../workflow/workflow.md)
+Reference: [workflow.md](../workflow.md)
 
 **Framework:** xUnit + Moq (NOT NUnit/NSubstitute)
 
@@ -127,7 +127,7 @@ Reference: [workflow.md](../workflow/workflow.md)
 
 ### File Organization
 
-Reference: [structure.md](../project-structure/structure.md)
+Reference: [structure.md](../project-structure.md)
 
 ```
 src/
@@ -267,9 +267,9 @@ When documenting issues, reference relevant handbook sections:
 |------------|-----------|
 | SOLID violations | [solid-principles-2025.md](../../solid-principles/solid-principles-2025.md) |
 | Design patterns | [gof-design-patterns-2025.md](../../design-patterns/gof-design-patterns-2025.md) |
-| Testing | [workflow.md](../workflow/workflow.md) |
-| Project structure | [structure.md](../project-structure/structure.md) |
-| CI/CD | [overview.md](../ci-cd/overview.md) |
+| Testing | [workflow.md](../workflow.md) |
+| Project structure | [structure.md](../project-structure.md) |
+| CI/CD | [overview.md](../ci-cd-overview.md) |
 
 **Example:**
 ```
@@ -294,8 +294,8 @@ Missing Repository pattern for data access (see design-patterns/gof-design-patte
 - **Engineering Handbook:** [AGENTS.md](../../AGENTS.md)
 - **SOLID Principles:** [solid-principles-2025.md](../../solid-principles/solid-principles-2025.md)
 - **Design Patterns:** [gof-design-patterns-2025.md](../../design-patterns/gof-design-patterns-2025.md)
-- **Git Workflow:** [workflow.md](../workflow/workflow.md)
-- **Project Structure:** [structure.md](../project-structure/structure.md)
+- **Git Workflow:** [workflow.md](../workflow.md)
+- **Project Structure:** [structure.md](../project-structure.md)
 
 ---
 

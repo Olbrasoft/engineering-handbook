@@ -636,9 +636,8 @@ error NU1605: Package downgrade detected
 
 ## Related Topics
 
-- [CI/CD - NuGet Publishing](ci-cd/nuget/CLAUDE.md)
-- [Secrets Management](workflow/workflow.md#secrets-management)
-- [Local Package Testing](ci-cd/nuget/local-testing.md)
+- [CI/CD - NuGet Publishing](ci-cd-nuget.md)
+- [Secrets Management](workflow.md#secrets-management)
 
 ---
 

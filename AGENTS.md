@@ -26,9 +26,9 @@ What am I doing?
 │
 ├─ Repository/CI/CD work (setup, deployment, workflows)
 │  └─ Read: development-guidelines/AGENTS.md
-│     ├─ GitHub operations → github-operations/AGENTS.md
-│     ├─ Internet research → research-guide/AGENTS.md
-│     └─ Terminal (OpenCode) → ht-mcp-terminal/AGENTS.md
+│     ├─ GitHub operations → github-operations.md
+│     ├─ Internet research → research-guide.md
+│     └─ Terminal (OpenCode) → ht-mcp-terminal.md
 │
 ├─ Learning/applying SOLID principles
 │  └─ Read: solid-principles/AGENTS.md
@@ -54,15 +54,15 @@ What am I doing?
 **Index:** [development-guidelines/AGENTS.md](development-guidelines/AGENTS.md)
 
 **Key documents:**
-- `feature-development/AGENTS.md` - 7-phase feature workflow
-- `github-operations/AGENTS.md` - GitHub CLI, issues, sub-issues, API
-- `research-guide/AGENTS.md` - Internet search, SearXNG, research workflow
-- `ht-mcp-terminal/AGENTS.md` - Terminal for OpenCode (bash disabled)
+- `feature-workflow.md` - 7-phase feature workflow
+- `github-operations.md` - GitHub CLI, issues, sub-issues, API
+- `research-guide.md` - Internet search, SearXNG, research workflow
+- `ht-mcp-terminal.md` - Terminal for OpenCode (bash disabled)
 - `github-repository-setup.md` - Repo configuration
 - `ci-cd-overview.md` - Which CI/CD type?
 - `ci-cd-nuget-packages.md` - NuGet publishing
 - `dotnet-project-structure.md` - Folder/naming conventions
-- `workflow/workflow.md` - Git workflow, issues, branches
+- `workflow.md` - Git workflow, issues, branches
 
 ---
 
