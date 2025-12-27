@@ -56,6 +56,27 @@ This handbook is optimized for AI agent consumption:
 
 Each guide follows consistent structure and includes practical examples from real Olbrasoft projects.
 
+## Repository Structure
+
+This handbook uses **self-descriptive filenames** instead of nested directories:
+
+### General Rule
+- **Default:** Single file with descriptive name (e.g., `workflow.md`, `testing.md`)
+- Clear, self-documenting filenames
+- Flat structure for easy navigation
+
+### Exception: Tool-Specific Capabilities
+When a specific tool has **unique capabilities** others don't support, create a directory:
+- Main content in `<topic>.md` (applies to all tools)
+- Tool-specific instructions in `<TOOL>.md`
+
+**Example:** `code-review/`
+- `code-review.md` - General guidelines (all tools)
+- `CLAUDE.md` - Claude Code specific: background agents workflow for `/code-review` command
+- `manual-review.md` - Manual review checklist
+
+**Rationale:** Claude Code can run parallel background agents for code review, other tools cannot.
+
 ## Contributing
 
 See [Workflow Guide](development-guidelines/workflow.md) for contribution process.
