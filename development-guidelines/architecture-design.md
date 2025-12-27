@@ -1,6 +1,6 @@
 # Architecture Design & Trade-offs
 
-During Phase 4 of the [Feature Workflow](./feature-workflow.md), you must evaluate different technical approaches. Use this framework to compare trade-offs.
+During Phase 4 of the [Feature Development Workflow](./workflow/feature-development-workflow.md), you must evaluate different technical approaches. Use this framework to compare trade-offs.
 
 ---
 

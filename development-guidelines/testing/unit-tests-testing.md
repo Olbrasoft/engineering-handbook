@@ -67,6 +67,8 @@ How to write isolated unit tests for .NET projects using xUnit and Moq.
 
 ### Directory Structure
 
+**When project has ONLY unit tests:**
+
 ```
 src/
   PushToTalk.Core/
@@ -82,6 +84,23 @@ tests/
     Services/
       LlmCorrectionServiceTests.cs
 ```
+
+**When project has BOTH unit tests AND integration tests:**
+
+```
+src/
+  VirtualAssistant.LlmChain/
+    ILlmChainClient.cs
+    LlmChainClient.cs
+
+tests/
+  VirtualAssistant.LlmChain.Tests/              # Unit tests (mocked)
+    LlmChainClientTests.cs
+  VirtualAssistant.LlmChain.IntegrationTests/   # Integration tests (real APIs)
+    LlmChainIntegrationTests.cs
+```
+
+**CRITICAL:** Unit tests and integration tests MUST be in separate projects!
 
 ### Test Method Naming
 

@@ -5,15 +5,17 @@ C# / .NET development standards and reference guides for Olbrasoft projects.
 ## Quick Start
 
 **New to the handbook?** Start here:
-- [Workflow Guide](development-guidelines/workflow.md) - Git, branches, PRs, sub-issues
+- [Workflow Guide](development-guidelines/workflow/index-workflow.md) - Git, branches, PRs, sub-issues
 - [SOLID Principles](solid-principles/solid-principles.md) - Modern interpretation
 - [Testing Guide](development-guidelines/testing/index-testing.md) - Unit tests, integration tests, xUnit
 
 ## Development Guidelines
 
 ### Workflow & Process
-- **[Workflow Guide](development-guidelines/workflow.md)** - Git workflow, GitHub issues, branches, commits, sub-issues
-- **[Feature Workflow](development-guidelines/feature-workflow.md)** - 7-phase systematic feature implementation
+- **[Workflow Index](development-guidelines/workflow/index-workflow.md)** - Overview and quick start
+- **[Git Workflow](development-guidelines/workflow/git-workflow-workflow.md)** - Git workflow, GitHub issues, branches, commits, sub-issues
+- **[Feature Development](development-guidelines/workflow/feature-development-workflow.md)** - 7-phase systematic feature implementation
+- **[GitHub Operations](development-guidelines/workflow/github-operations-workflow.md)** - GitHub API operations, pagination
 - **[Architecture Design](development-guidelines/architecture-design.md)** - Design trade-offs and decisions
 - **[Code Exploration](development-guidelines/code-exploration.md)** - Codebase navigation techniques
 - **[Code Review](development-guidelines/code-review/)** - Automated and manual review processes
@@ -81,7 +83,7 @@ When a specific tool has **unique capabilities** others don't support, create a 
 
 ## Contributing
 
-See [Workflow Guide](development-guidelines/workflow.md) for contribution process.
+See [Workflow Guide](development-guidelines/workflow/index-workflow.md) for contribution process.
 
 ## License
 

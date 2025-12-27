@@ -136,4 +136,4 @@ After tests pass:
 - [Testing Guide](../testing/index-testing.md) - Full testing documentation
 - [Unit Tests](../testing/unit-tests-testing.md) - Isolated tests with mocking
 - [Integration Tests](../testing/integration-tests-testing.md) - Tests with real services
-- [Workflow](../workflow.md) - Git workflow with tests
+- [Workflow](../workflow/index-workflow.md) - Git workflow with tests

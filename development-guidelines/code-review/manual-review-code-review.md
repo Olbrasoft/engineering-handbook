@@ -1,6 +1,6 @@
 # Code Review & Refactoring Guide (.NET/C#)
 
-Use after code works. For workflow/branches see [workflow.md](../workflow.md).
+Use after code works. For workflow/branches see [Git Workflow](../workflow/git-workflow-workflow.md).
 
 ## When to Review/Refactor
 

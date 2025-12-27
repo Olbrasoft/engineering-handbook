@@ -50,10 +50,10 @@ What am I doing?
 │  └─ Read: project-structure.md
 │
 ├─ Implementing NEW complex features
-│  └─ Read: feature-workflow.md
+│  └─ Read: workflow/feature-development-workflow.md
 │
 ├─ Git workflow (branches/commits/issues)
-│  └─ Read: workflow.md
+│  └─ Read: workflow/git-workflow-workflow.md
 │
 ├─ Code review / refactoring
 │  ├─ General guide → code-review/code-review.md
@@ -192,7 +192,7 @@ What am I doing?
 ---
 
 ### 8. Git Workflow
-**File:** `workflow.md` (English)
+**File:** `workflow/git-workflow-workflow.md` (English)
 
 **Read when:**
 - Creating GitHub issues
@@ -201,7 +201,7 @@ What am I doing?
 - Sub-issues (NOT checkboxes!)
 
 ### 9. Feature Development
-**File:** `feature-workflow.md`
+**File:** `workflow/feature-development-workflow.md`
 
 **Read when:**
 - Starting a complex new feature
@@ -319,7 +319,7 @@ What am I doing?
 3. Read: `continuous-integration/build-continuous-integration.md` (setup build)
 4. Read: `continuous-integration/test-continuous-integration.md` (setup tests)
 5. Read: `continuous-deployment/nuget-publish-continuous-deployment.md` (setup publishing)
-6. Read: `workflow.md` (issues/branches)
+6. Read: `workflow/git-workflow-workflow.md` (issues/branches)
 
 ### "I need to deploy a web service"
 1. Read: `continuous-deployment/web-deploy-continuous-deployment.md` (deployment process)
@@ -332,7 +332,7 @@ What am I doing?
 2. Read: `project-structure.md` (structure)
 3. Read: `continuous-integration/build-continuous-integration.md` and `test.md` (CI setup)
 4. Read: specific deployment doc based on type
-5. Read: `workflow.md` (Git workflow)
+5. Read: `workflow/git-workflow-workflow.md` (Git workflow)
 
 ---
 

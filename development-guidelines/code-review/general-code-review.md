@@ -61,7 +61,7 @@ Reference: [gof-design-patterns.md](../../design-patterns/gof-design-patterns.md
 
 ### Testing Standards
 
-Reference: [workflow.md](../workflow.md)
+Reference: [Git Workflow](../workflow/git-workflow-workflow.md)
 
 **Framework:** xUnit + Moq (NOT NUnit/NSubstitute)
 
@@ -267,9 +267,9 @@ When documenting issues, reference relevant handbook sections:
 |------------|-----------|
 | SOLID violations | [solid-principles.md](../../solid-principles/solid-principles.md) |
 | Design patterns | [gof-design-patterns.md](../../design-patterns/gof-design-patterns.md) |
-| Testing | [workflow.md](../workflow.md) |
+| Testing | [Testing Guide](../testing/index-testing.md) |
 | Project structure | [structure.md](../project-structure.md) |
-| CI/CD | [overview.md](../ci-cd-overview.md) |
+| CI/CD | [Continuous Integration](../continuous-integration/index-continuous-integration.md) |
 
 **Example:**
 ```
@@ -294,7 +294,7 @@ Missing Repository pattern for data access (see design-patterns/gof-design-patte
 - **Engineering Handbook:** [README.md](../../README.md)
 - **SOLID Principles:** [solid-principles.md](../../solid-principles/solid-principles.md)
 - **Design Patterns:** [gof-design-patterns.md](../../design-patterns/gof-design-patterns.md)
-- **Git Workflow:** [workflow.md](../workflow.md)
+- **Git Workflow:** [Git Workflow](../workflow/git-workflow-workflow.md)
 - **Project Structure:** [structure.md](../project-structure.md)
 
 ---

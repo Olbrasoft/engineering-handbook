@@ -166,7 +166,7 @@ Code review references:
 - **[SOLID Principles](../../solid-principles/solid-principles.md)** - What to check
 - **[Design Patterns](../../design-patterns/gof-design-patterns.md)** - Pattern usage
 - **[Testing Guide](../testing/index-testing.md)** - Test coverage requirements
-- **[Workflow Guide](../workflow.md)** - Git workflow with reviews
+- **[Workflow Guide](../workflow/index-workflow.md)** - Git workflow with reviews
 
 ## Best Practices
 
@@ -220,5 +220,5 @@ Skip code review for:
 - [General Standards](general-code-review.md) - What to check
 - [Manual Review](manual-review-code-review.md) - How to review manually
 - [Claude Code](claude-code-review.md) - Automated review setup
-- [Workflow Guide](../workflow.md) - Git workflow with PR reviews
+- [Workflow Guide](../workflow/index-workflow.md) - Git workflow with PR reviews
 - [Testing Guide](../testing/index-testing.md) - Test requirements

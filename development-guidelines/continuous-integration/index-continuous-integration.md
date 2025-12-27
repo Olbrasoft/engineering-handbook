@@ -82,4 +82,4 @@ Test (dotnet test)
 - [Unit Tests](../testing/unit-tests-testing.md) - Isolated tests with mocking
 - [Integration Tests](../testing/integration-tests-testing.md) - Tests with real services
 - [Continuous Deployment](../continuous-deployment/) - Deploy after CI succeeds
-- [Workflow Guide](../workflow.md) - Git workflow with CI
+- [Workflow Guide](../workflow/index-workflow.md) - Git workflow with CI
