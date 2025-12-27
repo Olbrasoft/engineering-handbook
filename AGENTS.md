@@ -78,8 +78,7 @@ What am I doing?
 **Index:** [solid-principles/solid-principles.md](solid-principles/solid-principles.md)
 
 **Key documents:**
-- `solid-principles.md` - Modern SOLID (2025 update)
-- `solid-principles-2025-cz.md` - Czech version (detailed)
+- `solid-principles.md` - Modern SOLID principles with Olbrasoft examples
 
 ---
 
@@ -94,8 +93,7 @@ What am I doing?
 **Index:** [design-patterns/gof-design-patterns.md](design-patterns/gof-design-patterns.md)
 
 **Key documents:**
-- `gof-design-patterns.md` - GoF patterns (2025 update)
-- `gof-design-patterns-2025-cz.md` - Czech version (detailed)
+- `gof-design-patterns.md` - All 23 GoF patterns with modern usage and Olbrasoft examples
 
 ---
 
