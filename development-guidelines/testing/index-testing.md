@@ -193,7 +193,25 @@ Tests run automatically in GitHub Actions:
 
 **Pattern:** Each source project MUST have its own test project.
 
-### When Project Has ONLY Unit Tests
+### Decision Tree: Directory Structure
+
+```
+How many unit test projects?
+│
+├─ 1 project → tests/{Project}.Tests/
+│
+└─ 2+ projects → tests/UnitTests/{Project}.Tests/
+
+How many integration test projects?
+│
+├─ 1 project → tests/{Project}.IntegrationTests/
+│
+└─ 2+ projects → tests/IntegrationTests/{Project}.IntegrationTests/
+```
+
+### Example 1: Single Unit Test Project (No Integration Tests)
+
+Most common for small projects.
 
 ```
 src/
@@ -207,32 +225,78 @@ tests/
       MyServiceTests.cs
 ```
 
-### When Project Has BOTH Unit Tests AND Integration Tests
+### Example 2: Multiple Unit Test Projects (No Integration Tests)
 
 ```
 src/
   MyProject.Core/
-    Services/
-      MyService.cs
   MyProject.Data/
-    Repositories/
-      MyRepository.cs
+  MyProject.Api/
 
 tests/
   UnitTests/
     MyProject.Core.Tests/
-      Services/
-        MyServiceTests.cs
     MyProject.Data.Tests/
-      Repositories/
-        MyRepositoryTests.cs
-  IntegrationTests/
-    MyProject.Core.IntegrationTests/
-      Services/
-        MyServiceIntegrationTests.cs
+    MyProject.Api.Tests/
 ```
 
-**CRITICAL:** When application has BOTH types of tests, use `UnitTests/` and `IntegrationTests/` directories to separate them!
+### Example 3: Multiple Unit Tests + Single Integration Test
+
+```
+src/
+  MyProject.Core/
+  MyProject.Data/
+  MyProject.Api/
+
+tests/
+  UnitTests/
+    MyProject.Core.Tests/
+    MyProject.Data.Tests/
+    MyProject.Api.Tests/
+  MyProject.Api.IntegrationTests/
+```
+
+### Example 4: Multiple Unit Tests + Multiple Integration Tests
+
+```
+src/
+  MyProject.Core/
+  MyProject.Data/
+  MyProject.Api/
+
+tests/
+  UnitTests/
+    MyProject.Core.Tests/
+    MyProject.Data.Tests/
+    MyProject.Api.Tests/
+  IntegrationTests/
+    MyProject.Core.IntegrationTests/
+    MyProject.Api.IntegrationTests/
+```
+
+### Example 5: Single Unit Test + Single Integration Test
+
+Rare case - small project with external API dependency.
+
+```
+src/
+  MyProject.Core/
+
+tests/
+  MyProject.Core.Tests/
+  MyProject.Core.IntegrationTests/
+```
+
+### Summary Table
+
+| Unit Test Projects | Integration Test Projects | Structure |
+|--------------------|---------------------------|-----------|
+| 1 | 0 | `tests/{Project}.Tests/` |
+| 2+ | 0 | `tests/UnitTests/{Project}.Tests/` |
+| 1 | 1 | `tests/{Project}.Tests/` + `tests/{Project}.IntegrationTests/` |
+| 2+ | 1 | `tests/UnitTests/...` + `tests/{Project}.IntegrationTests/` |
+| 1 | 2+ | `tests/{Project}.Tests/` + `tests/IntegrationTests/...` |
+| 2+ | 2+ | `tests/UnitTests/...` + `tests/IntegrationTests/...` |
 
 **Naming:**
 - Test project: `{SourceProject}.Tests` or `{SourceProject}.IntegrationTests`

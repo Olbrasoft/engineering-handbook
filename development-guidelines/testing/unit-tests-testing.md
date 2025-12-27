@@ -67,7 +67,18 @@ How to write isolated unit tests for .NET projects using xUnit and Moq.
 
 ### Directory Structure
 
-**When project has ONLY unit tests:**
+The directory structure depends on **how many test projects** your application has.
+
+**See:** [Project Structure](index-testing.md#project-structure) for complete decision tree and all examples.
+
+#### Quick Reference
+
+| Unit Test Projects | Directory Structure |
+|--------------------|---------------------|
+| 1 project | `tests/{Project}.Tests/` |
+| 2+ projects | `tests/UnitTests/{Project}.Tests/` |
+
+#### Example: Single Unit Test Project
 
 ```
 src/
@@ -85,19 +96,19 @@ tests/
       LlmCorrectionServiceTests.cs
 ```
 
-**When project has BOTH unit tests AND integration tests:**
+#### Example: Multiple Unit Test Projects
 
 ```
 src/
-  VirtualAssistant.LlmChain/
-    ILlmChainClient.cs
-    LlmChainClient.cs
+  VirtualAssistant.Core/
+  VirtualAssistant.Voice/
+  VirtualAssistant.Data/
 
 tests/
-  VirtualAssistant.LlmChain.Tests/              # Unit tests (mocked)
-    LlmChainClientTests.cs
-  VirtualAssistant.LlmChain.IntegrationTests/   # Integration tests (real APIs)
-    LlmChainIntegrationTests.cs
+  UnitTests/
+    VirtualAssistant.Core.Tests/
+    VirtualAssistant.Voice.Tests/
+    VirtualAssistant.Data.Tests/
 ```
 
 **CRITICAL:** Unit tests and integration tests MUST be in separate projects!
