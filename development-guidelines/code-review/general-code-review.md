@@ -49,7 +49,7 @@ Reference: [solid-principles.md](../../solid-principles/solid-principles.md)
 - **Dependency Inversion:** Depend on abstractions, not concretions
 
 **Design Patterns**  
-Reference: [gof-design-patterns.md](../../design-patterns/gof-design-patterns.md)
+Reference: [gof-patterns-design-patterns.md](../../design-patterns/gof-patterns-design-patterns.md)
 
 - **Strategy:** Interchangeable algorithms
 - **Factory:** Object creation with varying types
@@ -236,7 +236,7 @@ Create `CLAUDE.md` in project root to customize review standards:
 Follow standards from:
 - ~/GitHub/Olbrasoft/engineering-handbook/development-guidelines/code-review/code-review.md
 - ~/GitHub/Olbrasoft/engineering-handbook/solid-principles/solid-principles.md
-- ~/GitHub/Olbrasoft/engineering-handbook/design-patterns/gof-design-patterns.md
+- ~/GitHub/Olbrasoft/engineering-handbook/design-patterns/gof-patterns-design-patterns.md
 
 ## Project-Specific Rules
 
@@ -266,14 +266,14 @@ When documenting issues, reference relevant handbook sections:
 | Issue Type | Reference |
 |------------|-----------|
 | SOLID violations | [solid-principles.md](../../solid-principles/solid-principles.md) |
-| Design patterns | [gof-design-patterns.md](../../design-patterns/gof-design-patterns.md) |
+| Design patterns | [gof-patterns-design-patterns.md](../../design-patterns/gof-patterns-design-patterns.md) |
 | Testing | [Testing Guide](../testing/index-testing.md) |
 | Project structure | [structure.md](../project-setup/project-structure-project-setup.md) |
 | CI/CD | [Continuous Integration](../continuous-integration/index-continuous-integration.md) |
 
 **Example:**
 ```
-Missing Repository pattern for data access (see design-patterns/gof-design-patterns.md#repository)
+Missing Repository pattern for data access (see design-patterns/gof-patterns-design-patterns.md#repository)
 ```
 
 ---
@@ -293,7 +293,7 @@ Missing Repository pattern for data access (see design-patterns/gof-design-patte
 
 - **Engineering Handbook:** [README.md](../../README.md)
 - **SOLID Principles:** [solid-principles.md](../../solid-principles/solid-principles.md)
-- **Design Patterns:** [gof-design-patterns.md](../../design-patterns/gof-design-patterns.md)
+- **Design Patterns:** [gof-patterns-design-patterns.md](../../design-patterns/gof-patterns-design-patterns.md)
 - **Git Workflow:** [Git Workflow](../workflow/git-workflow-workflow.md)
 - **Project Structure:** [structure.md](../project-setup/project-structure-project-setup.md)
 

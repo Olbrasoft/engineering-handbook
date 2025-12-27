@@ -65,7 +65,7 @@ What am I doing?
 │  └─ Read: ../solid-principles/solid-principles.md
 │
 └─ Learning design patterns
-   └─ Read: ../design-patterns/gof-design-patterns.md
+   └─ Read: ../design-patterns/gof-patterns-design-patterns.md
 ```
 
 ---
@@ -253,7 +253,7 @@ What am I doing?
 ---
 
 ### 13. Design Patterns
-**File:** `../design-patterns/gof-design-patterns.md` (English)
+**File:** `../design-patterns/gof-patterns-design-patterns.md` (English)
 
 **Read when:**
 - Implementing common patterns

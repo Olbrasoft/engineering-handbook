@@ -171,7 +171,7 @@ cat ~/GitHub/Olbrasoft/engineering-handbook/development-guidelines/ci-cd-nuget-p
 ### Test 3: Find Specific Topic
 ```bash
 # Agent should find pattern/principle
-grep -A 20 "Observer Pattern" ~/GitHub/Olbrasoft/engineering-handbook/design-patterns/gof-design-patterns.md
+grep -A 20 "Observer Pattern" ~/GitHub/Olbrasoft/engineering-handbook/design-patterns/gof-patterns-design-patterns.md
 grep -A 20 "Single Responsibility" ~/GitHub/Olbrasoft/engineering-handbook/solid-principles/solid-principles.md
 ```
 

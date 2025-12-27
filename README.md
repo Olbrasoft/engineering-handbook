@@ -65,8 +65,16 @@ C# / .NET development standards and reference guides for Olbrasoft projects.
 
 ## Design & Architecture
 
+### Design Principles
 - **[SOLID Principles](solid-principles/solid-principles.md)** - Modern interpretation with Olbrasoft examples
-- **[GoF Design Patterns](design-patterns/gof-design-patterns.md)** - All 23 patterns with current best practices
+
+### Design Patterns
+- **[Design Patterns Index](design-patterns/index-design-patterns.md)** - Overview and pattern catalog navigation
+- **[GoF Patterns](design-patterns/gof-patterns-design-patterns.md)** - 23 classic Gang of Four patterns
+- **[Enterprise Patterns](design-patterns/enterprise-patterns-design-patterns.md)** - Martin Fowler's enterprise application patterns
+- **[Microservices Patterns](design-patterns/microservices-patterns-design-patterns.md)** - Saga, CQRS, Event Sourcing, API Gateway
+- **[Cloud Patterns](design-patterns/cloud-patterns-design-patterns.md)** - Retry, Circuit Breaker, Bulkhead, resilience patterns
+- **[Architectural Patterns](design-patterns/architectural-patterns-design-patterns.md)** - Clean Architecture, Hexagonal, Layered, Event-Driven
 
 ## Repository Structure
 

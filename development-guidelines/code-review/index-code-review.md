@@ -164,7 +164,7 @@ Contains:
 Code review references:
 
 - **[SOLID Principles](../../solid-principles/solid-principles.md)** - What to check
-- **[Design Patterns](../../design-patterns/gof-design-patterns.md)** - Pattern usage
+- **[Design Patterns](../../design-patterns/gof-patterns-design-patterns.md)** - Pattern usage
 - **[Testing Guide](../testing/index-testing.md)** - Test coverage requirements
 - **[Workflow Guide](../workflow/index-workflow.md)** - Git workflow with reviews
 

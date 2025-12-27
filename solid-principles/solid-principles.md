@@ -90,5 +90,5 @@ This version is timeless, framework-independent, and perfect for onboarding, pos
 ## Related Topics
 
 - 🚀 [Feature Development](../development-guidelines/workflow/feature-development-workflow.md) - Applying SOLID during design phase
-- 🏛️ [Design Patterns](../design-patterns/gof-design-patterns.md) - SOLID in practice
+- 🏛️ [Design Patterns](../design-patterns/gof-patterns-design-patterns.md) - SOLID in practice
 - 🔍 [Code Review](../development-guidelines/code-review-refactoring-guide.md) - Verifying SOLID during review

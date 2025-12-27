@@ -35,7 +35,7 @@
 **ALL code in this project MUST follow:**
 - Engineering Handbook: `~/GitHub/Olbrasoft/engineering-handbook/AGENTS.md`
 - SOLID Principles: `~/GitHub/Olbrasoft/engineering-handbook/solid-principles/solid-principles.md`
-- Design Patterns: `~/GitHub/Olbrasoft/engineering-handbook/design-patterns/gof-design-patterns.md`
+- Design Patterns: `~/GitHub/Olbrasoft/engineering-handbook/design-patterns/gof-patterns-design-patterns.md`
 - Git Workflow: `~/GitHub/Olbrasoft/engineering-handbook/development-guidelines/workflow-guide.md`
 
 ---
@@ -94,7 +94,7 @@ Reference: `~/GitHub/Olbrasoft/engineering-handbook/solid-principles/solid-princ
 
 ### Design Patterns (Expected)
 
-Reference: `~/GitHub/Olbrasoft/engineering-handbook/design-patterns/gof-design-patterns.md`
+Reference: `~/GitHub/Olbrasoft/engineering-handbook/design-patterns/gof-patterns-design-patterns.md`
 
 **Required patterns in this project:**
 - **Repository Pattern:** For all data access (`IRepository<T>`)
@@ -306,7 +306,7 @@ Example:
 
 - Engineering Handbook: `~/GitHub/Olbrasoft/engineering-handbook/`
 - SOLID Principles: `~/GitHub/Olbrasoft/engineering-handbook/solid-principles/solid-principles.md`
-- Design Patterns: `~/GitHub/Olbrasoft/engineering-handbook/design-patterns/gof-design-patterns.md`
+- Design Patterns: `~/GitHub/Olbrasoft/engineering-handbook/design-patterns/gof-patterns-design-patterns.md`
 - Code Review Guide: `~/GitHub/Olbrasoft/engineering-handbook/development-guidelines/code-review-claude.md`
 ```
 

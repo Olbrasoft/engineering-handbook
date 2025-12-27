@@ -167,7 +167,7 @@ gof-design-patterns-2025.md
 ```
 workflow.md
 solid-principles.md
-gof-design-patterns.md
+gof-patterns-design-patterns.md
 ```
 
 **Rationale:**

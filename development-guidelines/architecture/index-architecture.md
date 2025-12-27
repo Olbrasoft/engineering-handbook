@@ -15,5 +15,5 @@ Software architecture, design decisions, and codebase exploration.
 ## See Also
 
 - [SOLID Principles](../../solid-principles/solid-principles.md) - Design principles
-- [Design Patterns](../../design-patterns/gof-design-patterns.md) - Pattern catalog
+- [Design Patterns](../../design-patterns/gof-patterns-design-patterns.md) - Pattern catalog
 - [Feature Development](../workflow/feature-development-workflow.md) - 7-phase process
