@@ -16,26 +16,26 @@ Automated publishing and deployment after successful build and tests.
 What type of project?
 │
 ├─ Class Library
-│  └─ Publish to NuGet.org → nuget-publish.md
+│  └─ Publish to NuGet.org → nuget-publish-continuous-deployment.md
 │
 ├─ Web Service (ASP.NET Core)
-│  └─ Deploy to server → web-deploy.md
+│  └─ Deploy to server → web-deploy-continuous-deployment.md
 │
 ├─ Local Application
-│  └─ Deploy to /opt/olbrasoft/<app>/ → local-apps-deploy.md
+│  └─ Deploy to /opt/olbrasoft/<app>/ → local-apps-deploy-continuous-deployment.md
 │
 └─ Desktop Application (GUI)
-   └─ Release to GitHub → desktop-release.md
+   └─ Release to GitHub → desktop-release-continuous-deployment.md
 ```
 
 ## Quick Navigation
 
 | Project Type | Deploy Target | File |
 |--------------|---------------|------|
-| NuGet packages | NuGet.org | [nuget-publish.md](nuget-publish.md) |
-| Web services | Local server | [web-deploy.md](web-deploy.md) |
-| Local apps | `/opt/olbrasoft/<app>/` | [local-apps-deploy.md](local-apps-deploy.md) |
-| Desktop apps | GitHub Releases | [desktop-release.md](desktop-release.md) |
+| NuGet packages | NuGet.org | [nuget-publish-continuous-deployment.md](nuget-publish-continuous-deployment.md) |
+| Web services | Local server | [web-deploy-continuous-deployment.md](web-deploy-continuous-deployment.md) |
+| Local apps | `/opt/olbrasoft/<app>/` | [local-apps-deploy-continuous-deployment.md](local-apps-deploy-continuous-deployment.md) |
+| Desktop apps | GitHub Releases | [desktop-release-continuous-deployment.md](desktop-release-continuous-deployment.md) |
 
 ## CD Pipeline Steps
 
@@ -82,10 +82,10 @@ gh release create v1.0.0 MyApp-linux-x64.zip
 
 ## Files in This Directory
 
-- **[nuget-publish.md](nuget-publish.md)** - Publish NuGet packages to NuGet.org
-- **[web-deploy.md](web-deploy.md)** - Deploy ASP.NET Core web services
-- **[local-apps-deploy.md](local-apps-deploy.md)** - Deploy local applications
-- **[desktop-release.md](desktop-release.md)** - Create GitHub Releases for desktop apps
+- **[nuget-publish-continuous-deployment.md](nuget-publish-continuous-deployment.md)** - Publish NuGet packages to NuGet.org
+- **[web-deploy-continuous-deployment.md](web-deploy-continuous-deployment.md)** - Deploy ASP.NET Core web services
+- **[local-apps-deploy-continuous-deployment.md](local-apps-deploy-continuous-deployment.md)** - Deploy local applications
+- **[desktop-release-continuous-deployment.md](desktop-release-continuous-deployment.md)** - Create GitHub Releases for desktop apps
 
 ## Prerequisites
 

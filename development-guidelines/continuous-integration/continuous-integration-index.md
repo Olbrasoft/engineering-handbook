@@ -14,8 +14,8 @@ Automated build and testing for .NET projects.
 
 | Task | File |
 |------|------|
-| Build .NET project | [build.md](build.md) |
-| Run automated tests | [test.md](test.md) |
+| Build .NET project | [build-continuous-integration.md](build-continuous-integration.md) |
+| Run automated tests | [test-continuous-integration.md](test-continuous-integration.md) |
 
 ## Basic CI Workflow
 
@@ -73,8 +73,8 @@ Test (dotnet test)
 
 ## Files in This Directory
 
-- **[build.md](build.md)** - How to build .NET projects in CI
-- **[test.md](test.md)** - How to run tests in CI
+- **[build-continuous-integration.md](build-continuous-integration.md)** - How to build .NET projects in CI
+- **[test-continuous-integration.md](test-continuous-integration.md)** - How to run tests in CI
 
 ## See Also
 

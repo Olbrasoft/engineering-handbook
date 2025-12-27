@@ -5,7 +5,7 @@ How to automatically publish .NET libraries to NuGet.org after successful build 
 ## Prerequisites
 
 Before publishing:
-- ✅ Tests pass (see [../continuous-integration/test.md](../continuous-integration/test.md))
+- ✅ Tests pass (see [../continuous-integration/test-continuous-integration.md](../continuous-integration/test-continuous-integration.md))
 - ✅ Package tested locally (see [../local-package-testing.md](../local-package-testing.md))
 - ✅ NuGet API key configured in GitHub secrets
 
@@ -159,6 +159,6 @@ dotnet restore
 
 ## See Also
 
-- [Build](../continuous-integration/build.md) - Build packages
-- [Test](../continuous-integration/test.md) - Test before publishing
+- [Build](../continuous-integration/build-continuous-integration.md) - Build packages
+- [Test](../continuous-integration/test-continuous-integration.md) - Test before publishing
 - [Local Package Testing](../local-package-testing.md) - Test before CI/CD

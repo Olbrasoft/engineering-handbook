@@ -246,6 +246,6 @@ dotnet nuget remove source TextLocal
 
 ## See Also
 
-- [NuGet Publishing](continuous-deployment/nuget-publish.md) - How to publish after testing
-- [Build](continuous-integration/build.md) - How to build packages
+- [NuGet Publishing](continuous-deployment/nuget-publish-continuous-deployment.md) - How to publish after testing
+- [Build](continuous-integration/build-continuous-integration.md) - How to build packages
 - [Package Management](package-management.md) - NuGet package management

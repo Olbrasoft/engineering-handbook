@@ -88,10 +88,10 @@ dotnet build -c Release
 ## Next Steps
 
 After build succeeds:
-- Run tests: [test.md](test.md)
+- Run tests: [test-continuous-integration.md](test-continuous-integration.md)
 - Package for deployment: See [../continuous-deployment/](../continuous-deployment/)
 
 ## See Also
 
-- [Testing](test.md) - Run tests after build
-- [NuGet Publishing](../continuous-deployment/nuget-publish.md) - Package and publish
+- [Testing](test-continuous-integration.md) - Run tests after build
+- [NuGet Publishing](../continuous-deployment/nuget-publish-continuous-deployment.md) - Package and publish

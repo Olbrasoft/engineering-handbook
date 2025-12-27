@@ -34,16 +34,16 @@ What am I doing?
 │  └─ Read: repository-setup.md
 │
 ├─ Setting up Continuous Integration (Build & Test)
-│  ├─ Build process → continuous-integration/build.md
-│  ├─ Testing → continuous-integration/test.md
+│  ├─ Build process → continuous-integration/build-continuous-integration.md
+│  ├─ Testing → continuous-integration/test-continuous-integration.md
 │  └─ Overview → continuous-integration/continuous-integration-index.md
 │
 ├─ Setting up Continuous Deployment (Publish & Deploy)
 │  ├─ What type?
-│  │  ├─ NuGet package (library) → continuous-deployment/nuget-publish.md
-│  │  ├─ Web service (API/webapp) → continuous-deployment/web-deploy.md
-│  │  ├─ Local app → continuous-deployment/local-apps-deploy.md
-│  │  └─ Desktop app (GUI) → continuous-deployment/desktop-release.md
+│  │  ├─ NuGet package (library) → continuous-deployment/nuget-publish-continuous-deployment.md
+│  │  ├─ Web service (API/webapp) → continuous-deployment/web-deploy-continuous-deployment.md
+│  │  ├─ Local app → continuous-deployment/local-apps-deploy-continuous-deployment.md
+│  │  └─ Desktop app (GUI) → continuous-deployment/desktop-release-continuous-deployment.md
 │  └─ Not sure? → continuous-deployment/continuous-deployment-index.md (decision tree)
 │
 ├─ Structuring .NET project (folders/naming)
@@ -92,8 +92,8 @@ What am I doing?
 ### 2. Continuous Integration: Build & Test
 **Files:**
 - `continuous-integration/continuous-integration-index.md` - Overview
-- `continuous-integration/build.md` - .NET build process
-- `continuous-integration/test.md` - Automated testing
+- `continuous-integration/build-continuous-integration.md` - .NET build process
+- `continuous-integration/test-continuous-integration.md` - Automated testing
 
 **Read when:**
 - Setting up automated builds
@@ -119,7 +119,7 @@ What am I doing?
 ---
 
 ### 4. Continuous Deployment: NuGet Packages
-**File:** `continuous-deployment/nuget-publish.md`
+**File:** `continuous-deployment/nuget-publish-continuous-deployment.md`
 
 **Read when:**
 - Publishing class library to NuGet.org
@@ -141,7 +141,7 @@ What am I doing?
 ---
 
 ### 5. Continuous Deployment: Web Services
-**File:** `continuous-deployment/web-deploy.md`
+**File:** `continuous-deployment/web-deploy-continuous-deployment.md`
 
 **Read when:**
 - Deploying ASP.NET Core application to Linux server
@@ -160,7 +160,7 @@ What am I doing?
 ---
 
 ### 6. Continuous Deployment: Desktop Apps
-**File:** `continuous-deployment/desktop-release.md`
+**File:** `continuous-deployment/desktop-release-continuous-deployment.md`
 
 **Read when:**
 - Building GUI application (WinForms/WPF/Avalonia/MAUI)
@@ -316,13 +316,13 @@ What am I doing?
 ### "I need to create a new NuGet package repository"
 1. Read: `repository-setup.md` (create repo)
 2. Read: `project-structure.md` (organize code)
-3. Read: `continuous-integration/build.md` (setup build)
-4. Read: `continuous-integration/test.md` (setup tests)
-5. Read: `continuous-deployment/nuget-publish.md` (setup publishing)
+3. Read: `continuous-integration/build-continuous-integration.md` (setup build)
+4. Read: `continuous-integration/test-continuous-integration.md` (setup tests)
+5. Read: `continuous-deployment/nuget-publish-continuous-deployment.md` (setup publishing)
 6. Read: `workflow.md` (issues/branches)
 
 ### "I need to deploy a web service"
-1. Read: `continuous-deployment/web-deploy.md` (deployment process)
+1. Read: `continuous-deployment/web-deploy-continuous-deployment.md` (deployment process)
 2. Check: `/opt/olbrasoft/<app>/` structure
 3. Verify: systemd EnvironmentFile has ALL secrets
 4. Test: ALL features work (100% functional rule)
@@ -330,7 +330,7 @@ What am I doing?
 ### "I'm starting a new .NET project"
 1. Read: `continuous-deployment/continuous-deployment-index.md` (determine deployment type)
 2. Read: `project-structure.md` (structure)
-3. Read: `continuous-integration/build.md` and `test.md` (CI setup)
+3. Read: `continuous-integration/build-continuous-integration.md` and `test.md` (CI setup)
 4. Read: specific deployment doc based on type
 5. Read: `workflow.md` (Git workflow)
 

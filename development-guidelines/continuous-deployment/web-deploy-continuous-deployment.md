@@ -11,8 +11,8 @@ How to deploy ASP.NET Core web services to local Linux server with systemd.
 ## Prerequisites
 
 Before deployment:
-- ✅ Build succeeds (see [../continuous-integration/build.md](../continuous-integration/build.md))
-- ✅ Tests pass (see [../continuous-integration/test.md](../continuous-integration/test.md))
+- ✅ Build succeeds (see [../continuous-integration/build-continuous-integration.md](../continuous-integration/build-continuous-integration.md))
+- ✅ Tests pass (see [../continuous-integration/test-continuous-integration.md](../continuous-integration/test-continuous-integration.md))
 - ✅ All secrets configured in production EnvironmentFile
 
 ## Deployment Directory Structure
@@ -213,7 +213,7 @@ journalctl --user -u myapp.service -n 50
 
 ## See Also
 
-- [Build](../continuous-integration/build.md) - Build before deploying
-- [Test](../continuous-integration/test.md) - Test before deploying
+- [Build](../continuous-integration/build-continuous-integration.md) - Build before deploying
+- [Test](../continuous-integration/test-continuous-integration.md) - Test before deploying
 - [Secrets Guide](../secrets-management.md) - Full secrets documentation
 - [VirtualAssistant deploy.sh](https://github.com/Olbrasoft/VirtualAssistant/blob/main/deploy/deploy.sh) - Real example

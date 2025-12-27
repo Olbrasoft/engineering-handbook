@@ -120,6 +120,6 @@ After tests pass:
 
 ## See Also
 
-- [Build](build.md) - Build before testing
+- [Build](build-continuous-integration.md) - Build before testing
 - [Testing Guide](../testing.md) - Full testing documentation
 - [Workflow](../workflow.md) - Git workflow with tests

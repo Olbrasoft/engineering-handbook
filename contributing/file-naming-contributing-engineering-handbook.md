@@ -96,30 +96,37 @@ contributing/
 
 ```
 development-guidelines/
-├── development-guidelines-index.md    ← Index has directory name
-├── workflow.md                         ← Exception: top-level single topic
+├── development-guidelines-index.md                    ← Index
+├── workflow.md                                        ← Top-level single topic
 ├── continuous-integration/
-│   ├── continuous-integration-index.md ← Index has directory name
-│   ├── build.md                        ← Short, unique topic name
-│   └── test.md                         ← Short, unique topic name
+│   ├── continuous-integration-index.md                ← Index with directory postfix
+│   ├── build-continuous-integration.md                ← Topic with directory postfix
+│   └── test-continuous-integration.md                 ← Topic with directory postfix
 └── continuous-deployment/
-    ├── continuous-deployment-index.md  ← Index has directory name
-    ├── nuget-publish.md                ← Descriptive, unique name
-    └── web-deploy.md                   ← Descriptive, unique name
+    ├── continuous-deployment-index.md                 ← Index with directory postfix
+    ├── nuget-publish-continuous-deployment.md         ← Topic with directory postfix
+    ├── web-deploy-continuous-deployment.md            ← Topic with directory postfix
+    ├── local-apps-deploy-continuous-deployment.md     ← Topic with directory postfix
+    └── desktop-release-continuous-deployment.md       ← Topic with directory postfix
 
 contributing/
-├── contributing-engineering-handbook-index.md              ← Index
-├── file-naming-contributing-engineering-handbook.md        ← Full postfix
-├── structure-contributing-engineering-handbook.md          ← Full postfix
-└── style-guide-contributing-engineering-handbook.md        ← Full postfix
+├── contributing-engineering-handbook-index.md         ← Index
+├── file-naming-contributing-engineering-handbook.md   ← Topic with directory postfix
+├── structure-contributing-engineering-handbook.md     ← Topic with directory postfix
+└── style-guide-contributing-engineering-handbook.md   ← Topic with directory postfix
 ```
 
 **When to use postfix:**
+- ✅ **ALWAYS** for ALL files in directories: `{topic}-{directory-name}.md`
 - ✅ **ALWAYS** for index files: `{directory}-index.md`
-- ✅ **RECOMMENDED** for all files in named directories (like `contributing/`)
-- ⚠️ **OPTIONAL** for files in topic directories where names are already unique and descriptive (`nuget-publish.md`, `web-deploy.md`)
 
-**Exception:** Files in topic-specific directories (like `continuous-deployment/`) may omit postfix if the filename is already unique and descriptive enough (`nuget-publish.md` is clear even without `-continuous-deployment` postfix).
+**No exceptions!** Every file in a directory must have the directory name as postfix for consistency and searchability.
+
+**Why ALWAYS:**
+- Instant context when searching globally
+- No ambiguity: `build-continuous-integration.md` vs `build-something-else.md`
+- Consistent pattern across entire handbook
+- Self-descriptive even outside directory context
 
 ### 5. Prefer Single Files with Descriptive Names
 

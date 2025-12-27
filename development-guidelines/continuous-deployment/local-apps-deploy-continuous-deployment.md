@@ -11,8 +11,8 @@ How to deploy .NET desktop/console apps to local server using GitHub Actions sel
 
 ## Prerequisites
 
-- ✅ Build succeeds (see [../continuous-integration/build.md](../continuous-integration/build.md))
-- ✅ Tests pass (see [../continuous-integration/test.md](../continuous-integration/test.md))
+- ✅ Build succeeds (see [../continuous-integration/build-continuous-integration.md](../continuous-integration/build-continuous-integration.md))
+- ✅ Tests pass (see [../continuous-integration/test-continuous-integration.md](../continuous-integration/test-continuous-integration.md))
 - ✅ Self-hosted GitHub Actions runner installed and running
 
 ## GitHub Actions Deploy Workflow
@@ -201,7 +201,7 @@ on:
 
 ## See Also
 
-- [Build](../continuous-integration/build.md) - Build before deploying
-- [Test](../continuous-integration/test.md) - Test before deploying
-- [Web Deploy](web-deploy.md) - Similar but for web services
+- [Build](../continuous-integration/build-continuous-integration.md) - Build before deploying
+- [Test](../continuous-integration/test-continuous-integration.md) - Test before deploying
+- [Web Deploy](web-deploy-continuous-deployment.md) - Similar but for web services
 - [GitHub Self-Hosted Runners](https://docs.github.com/en/actions/hosting-your-own-runners)
