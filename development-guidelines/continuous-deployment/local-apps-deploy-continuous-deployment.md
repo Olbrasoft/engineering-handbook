@@ -148,7 +148,55 @@ systemctl --user status myapp.service
 journalctl --user -u myapp.service -n 50
 ```
 
-### 4. Test Functionality
+### 4. Verify Running Process Uses New Code
+
+**🚨 CRITICAL:** After deployment, running application may still use OLD code if not restarted!
+
+**Check process start time:**
+```bash
+# Find running process PID
+PID=$(pgrep -f "myapp" | head -1)
+
+# Check when process started
+ps -p $PID -o pid,lstart,cmd
+
+# Compare with deploy time - if process started BEFORE deploy, it's using OLD code!
+```
+
+**Check binary modification time:**
+```bash
+# When was binary last updated?
+stat -c '%y' /opt/olbrasoft/myapp/MyApp
+
+# Should be AFTER latest deploy (check GitHub Actions timestamp)
+```
+
+**Restart if needed:**
+```bash
+# Kill old process
+kill $PID
+
+# Or restart systemd service (preferred)
+systemctl --user restart myapp.service
+
+# Verify new process started AFTER deploy
+ps -p $(pgrep -f "myapp" | head -1) -o pid,lstart,cmd
+```
+
+**Why this matters:**
+- GitHub Actions may deploy new binaries successfully
+- But running application continues using old code in memory
+- New code only loads when process restarts
+- Tests pass, deploy succeeds, but users see old behavior!
+
+**Example issue:**
+```
+Deploy: 2025-12-27 04:23:00  ← New code deployed
+Process: Started 2025-12-27 01:38:00  ← Still running old code (3 hours old!)
+Result: Users report "it doesn't work" even though tests pass
+```
+
+### 5. Test Functionality
 
 **Test ALL features before completing deployment:**
 - Run the application
