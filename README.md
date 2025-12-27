@@ -43,13 +43,17 @@ C# / .NET development standards and reference guides for Olbrasoft projects.
 - **[Desktop Apps](development-guidelines/continuous-deployment/desktop-release-continuous-deployment.md)** - GitHub Releases, installers
 
 **Development Workflow**:
-- **[Local Package Testing](development-guidelines/local-package-testing.md)** - Test NuGet packages locally before publishing
+- **[Local Package Testing](development-guidelines/package-management/local-testing-package-management.md)** - Test NuGet packages locally before publishing
 
 ### Project Setup
 - **[Project Setup Index](development-guidelines/project-setup/index-project-setup.md)** - Overview and quick start
 - **[Repository Setup](development-guidelines/project-setup/repository-setup-project-setup.md)** - GitHub repo creation, branch protection, webhooks
 - **[Project Structure](development-guidelines/project-setup/project-structure-project-setup.md)** - Naming conventions, folders, test organization
-- **[Package Management](development-guidelines/package-management.md)** - NuGet workflow, local testing, configuration
+
+### Package Management
+- **[Package Management Index](development-guidelines/package-management/index-package-management.md)** - Overview and quick start
+- **[Local Testing](development-guidelines/package-management/local-testing-package-management.md)** - Test NuGet packages locally before publishing
+- **[Package Overview](development-guidelines/package-management/overview-package-management.md)** - Complete guide: configuration, versioning, deployment
 
 ### Tools & Operations
 - **[GitHub Operations](development-guidelines/github-operations.md)** - gh CLI, issues, PRs, sub-issues

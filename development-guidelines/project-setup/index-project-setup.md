@@ -153,4 +153,4 @@ After setting up project:
 
 - [Workflow Guide](../workflow/index-workflow.md) - Git workflow and issues
 - [Testing Guide](../testing/index-testing.md) - Set up tests
-- [Package Management](../package-management.md) - NuGet packages
+- [Package Management](../package-management/index-package-management.md) - NuGet packages

@@ -97,5 +97,5 @@ Before deployment:
 ## See Also
 
 - [Continuous Integration](../continuous-integration/) - Build and test before deployment
-- [Local Package Testing](../local-package-testing.md) - Test NuGet packages locally before publishing
+- [Local Package Testing](../package-management/local-testing-package-management.md) - Test NuGet packages locally before publishing
 - [Secrets Management](../secrets-management.md) - How to manage production secrets
