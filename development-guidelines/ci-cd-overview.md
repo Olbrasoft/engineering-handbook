@@ -8,25 +8,25 @@ Quick reference for determining project type and CI/CD strategy.
 .NET Project
 │
 ├─ Has GUI? (WinForms/WPF/Avalonia/MAUI)
-│  ├─ Deploy to local server? → Local App → local-apps/CLAUDE.md
-│  └─ Public release? → Desktop App → desktop/CLAUDE.md
+│  ├─ Deploy to local server? → Local App → ci-cd-local-apps.md
+│  └─ Public release? → Desktop App → ci-cd-desktop.md
 │
 ├─ Has ASP.NET Core? (API/Web/SignalR)
-│  ├─ Deploy to local server? → Local App → local-apps/CLAUDE.md
-│  └─ Deploy to cloud? → Web Service → web/CLAUDE.md
+│  ├─ Deploy to local server? → Local App → ci-cd-local-apps.md
+│  └─ Deploy to cloud? → Web Service → ci-cd-web.md
 │
 └─ Is Class Library?
-   └─ YES → NuGet Package → nuget/CLAUDE.md
+   └─ YES → NuGet Package → ci-cd-nuget.md
 ```
 
 ## Quick Reference
 
 | Type | Deploy Target | Workflow Trigger | Doc |
 |------|---------------|------------------|-----|
-| NuGet packages | NuGet.org | Push to `main` or tag `v*` | [nuget](nuget/CLAUDE.md) |
-| Local apps | `/opt/olbrasoft/<app>/` | After successful build (self-hosted) | [local-apps](local-apps/CLAUDE.md) |
-| Web services | `/opt/olbrasoft/<app>/` | Self-hosted runner | [web](web/CLAUDE.md) |
-| Desktop apps | GitHub Releases | Tag `v*` | [desktop](desktop/CLAUDE.md) |
+| NuGet packages | NuGet.org | Push to `main` or tag `v*` | [ci-cd-nuget.md](ci-cd-nuget.md) |
+| Local apps | `/opt/olbrasoft/<app>/` | After successful build (self-hosted) | [ci-cd-local-apps.md](ci-cd-local-apps.md) |
+| Web services | `/opt/olbrasoft/<app>/` | Self-hosted runner | [ci-cd-web.md](ci-cd-web.md) |
+| Desktop apps | GitHub Releases | Tag `v*` | [ci-cd-desktop.md](ci-cd-desktop.md) |
 
 ## Project Type Indicators
 

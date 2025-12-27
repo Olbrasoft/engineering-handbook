@@ -7,7 +7,7 @@ Deploying .NET applications to local server via GitHub Actions and self-hosted r
 - **Project type**: Desktop app, console app, or service running locally
 - **Distribution**: Local deployment to `/opt/olbrasoft/<app>/`
 - **Examples**: VirtualAssistant, PushToTalk
-- **NOT for**: NuGet packages (use [../nuget/CLAUDE.md](../nuget/CLAUDE.md)) or public releases (use [../desktop/CLAUDE.md](../desktop/CLAUDE.md))
+- **NOT for**: NuGet packages (use [ci-cd-nuget.md](ci-cd-nuget.md)) or public releases (use [ci-cd-desktop.md](ci-cd-desktop.md))
 
 ## Key Differences from NuGet Packages
 

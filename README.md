@@ -50,7 +50,7 @@ C# / .NET development standards and reference guides for Olbrasoft projects.
 ## For AI Agents
 
 This handbook is optimized for AI agent consumption:
-- **Claude Code:** Read [CLAUDE.md](CLAUDE.md) for navigation
+- **Claude Code:** Read [AGENTS.md](AGENTS.md) for navigation (unique: `/code-review` in [development-guidelines/code-review/CLAUDE.md](development-guidelines/code-review/CLAUDE.md))
 - **OpenCode/Agents:** Read [AGENTS.md](AGENTS.md) for navigation
 - **Gemini:** Read [GEMINI.md](GEMINI.md) for navigation
 
