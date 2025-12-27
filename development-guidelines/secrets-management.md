@@ -1,0 +1,541 @@
+# Secrets Management
+
+How to securely manage passwords, API keys, tokens, and sensitive configuration in .NET projects.
+
+## What Are Secrets?
+
+**Secrets** = Sensitive data that must NOT be committed to Git:
+- Database passwords
+- API keys (Azure, OpenAI, GitHub tokens, etc.)
+- Encryption keys
+- Connection strings with passwords
+- OAuth client secrets
+- Private certificates
+
+**Public data** (OK in Git):
+- URLs, ports
+- Database names
+- Usernames (without passwords)
+- Feature flags
+
+---
+
+## 🚨 CRITICAL: Never Commit Secrets to Git
+
+**NEVER commit:**
+- ❌ Passwords
+- ❌ API keys
+- ❌ Tokens
+- ❌ Connection strings with passwords
+- ❌ Private keys
+- ❌ `.env` files with production secrets
+
+**Why?**
+- Git history is permanent - even if you delete the file later, it stays in history
+- Public repositories expose secrets to the world
+- Private repositories can be compromised
+- Secrets in Git = security vulnerability
+
+---
+
+## Development Environment - User Secrets
+
+**Use .NET User Secrets** for local development.
+
+### Setup
+
+```bash
+# Initialize User Secrets for project
+cd src/MyProject
+dotnet user-secrets init
+
+# Set secrets
+dotnet user-secrets set "ConnectionStrings:Default" "Server=localhost;Database=dev;User=sa;Password=DevPass123"
+dotnet user-secrets set "GitHub:Token" "ghp_xxxxxxxxxxxxx"
+dotnet user-secrets set "AzureTTS:SubscriptionKey" "abc123def456"
+dotnet user-secrets set "OpenAI:ApiKey" "sk-xxxxxxxxxxxxx"
+
+# List all secrets
+dotnet user-secrets list
+
+# Remove secret
+dotnet user-secrets remove "GitHub:Token"
+
+# Clear all secrets
+dotnet user-secrets clear
+```
+
+### Where Are Secrets Stored?
+
+**Windows:**
+```
+%APPDATA%\Microsoft\UserSecrets\<user_secrets_id>\secrets.json
+```
+
+**Linux/macOS:**
+```
+~/.microsoft/usersecrets/<user_secrets_id>/secrets.json
+```
+
+**File format** (`secrets.json`):
+```json
+{
+  "ConnectionStrings:Default": "Server=localhost;Database=dev;Password=DevPass123",
+  "GitHub:Token": "ghp_xxxxxxxxxxxxx",
+  "AzureTTS": {
+    "SubscriptionKey": "abc123def456"
+  }
+}
+```
+
+### Access in Code
+
+```csharp
+// ASP.NET Core automatically loads User Secrets in Development
+public class MyService
+{
+    private readonly IConfiguration _config;
+
+    public MyService(IConfiguration config)
+    {
+        _config = config;
+    }
+
+    public void DoWork()
+    {
+        var dbPassword = _config["ConnectionStrings:Default"];
+        var githubToken = _config["GitHub:Token"];
+        var azureKey = _config["AzureTTS:SubscriptionKey"];
+    }
+}
+```
+
+**Configuration load order:**
+1. `appsettings.json`
+2. `appsettings.Development.json` (if Development)
+3. **User Secrets** (if Development)
+4. Environment variables
+5. Command-line arguments
+
+---
+
+## Production Environment - Environment Variables
+
+**Use Environment Variables** for production deployments.
+
+### Option 1: systemd EnvironmentFile (Recommended for Linux Services)
+
+**1. Create secrets file:**
+
+**File:** `~/.config/systemd/user/myapp.env`
+
+```bash
+# Database
+ConnectionStrings__DefaultConnection=Server=localhost;Database=prod;User=produser;Password=ProdPass123
+
+# GitHub API
+GitHub__Token=ghp_prodtoken123
+
+# Azure TTS
+AzureTTS__SubscriptionKey=prodkey456
+AZURE_SPEECH_REGION=westeurope
+
+# OpenAI
+OpenAI__ApiKey=sk-prodkey789
+```
+
+**Important:**
+- Use **double underscore `__`** to replace `:` in config hierarchy
+- `ConnectionStrings__Default` maps to `ConnectionStrings:Default` in config
+
+**2. Reference in systemd service:**
+
+**File:** `~/.config/systemd/user/myapp.service`
+
+```ini
+[Unit]
+Description=MyApp Service
+
+[Service]
+WorkingDirectory=/opt/olbrasoft/myapp/app
+ExecStart=/usr/bin/dotnet /opt/olbrasoft/myapp/app/MyApp.dll
+EnvironmentFile=%h/.config/systemd/user/myapp.env
+Environment="ASPNETCORE_ENVIRONMENT=Production"
+Environment="PATH=/home/user/.dotnet:/usr/local/bin:/usr/bin:/bin"
+
+[Install]
+WantedBy=default.target
+```
+
+**3. Reload and restart:**
+
+```bash
+systemctl --user daemon-reload
+systemctl --user restart myapp.service
+
+# Verify environment variables loaded
+systemctl --user show myapp.service | grep Environment
+```
+
+### Option 2: Direct Environment Variables
+
+**Set in shell:**
+
+```bash
+export ConnectionStrings__Default="Server=localhost;Database=prod;Password=ProdPass123"
+export GitHub__Token="ghp_prodtoken123"
+
+# Run application
+dotnet run
+```
+
+**Set in Docker:**
+
+```dockerfile
+ENV ConnectionStrings__Default="Server=db;Database=prod;User=app;Password=ProdPass123"
+ENV GitHub__Token="ghp_prodtoken123"
+```
+
+---
+
+## GitHub Actions Secrets
+
+**Use GitHub Secrets** for CI/CD workflows.
+
+### Setup
+
+1. **Go to repository → Settings → Secrets and variables → Actions**
+2. **Click "New repository secret"**
+3. **Add secrets:**
+   - Name: `NUGET_API_KEY`, Value: `oy2abc...`
+   - Name: `AZURE_TTS_KEY`, Value: `abc123...`
+   - Name: `DB_PASSWORD`, Value: `ProdPass123`
+
+### Use in Workflow
+
+**File:** `.github/workflows/deploy.yml`
+
+```yaml
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Publish to NuGet
+        run: |
+          dotnet pack -c Release
+          dotnet nuget push *.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+
+      - name: Deploy with secrets
+        env:
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          AZURE_TTS_KEY: ${{ secrets.AZURE_TTS_KEY }}
+        run: |
+          ./deploy.sh
+```
+
+**Access in script:**
+
+```bash
+#!/bin/bash
+# deploy.sh
+
+echo "Deploying with DB password: ${DB_PASSWORD}"
+echo "Azure TTS key configured: ${AZURE_TTS_KEY}"
+
+# Use in connection string
+export ConnectionStrings__Default="Server=db;Database=prod;Password=${DB_PASSWORD}"
+dotnet MyApp.dll
+```
+
+---
+
+## appsettings.json - What to Commit
+
+**DO commit** to Git:
+
+**File:** `appsettings.json`
+
+```json
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information"
+    }
+  },
+  "ConnectionStrings": {
+    "Default": "Server=localhost;Database=myapp"
+  },
+  "GitHub": {
+    "ApiUrl": "https://api.github.com"
+  },
+  "AzureTTS": {
+    "Region": "westeurope"
+  }
+}
+```
+
+**DO NOT commit:**
+
+```json
+{
+  "ConnectionStrings": {
+    "Default": "Server=localhost;Database=myapp;Password=secret123"  // ❌ NO!
+  },
+  "GitHub": {
+    "Token": "ghp_xxxxxxxxxxxxx"  // ❌ NO!
+  },
+  "AzureTTS": {
+    "SubscriptionKey": "abc123def456"  // ❌ NO!
+  }
+}
+```
+
+**Best practice:** Separate public config from secrets
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultTemplate": "Server=localhost;Database=myapp"
+  },
+  "GitHub": {
+    "ApiUrl": "https://api.github.com"
+  }
+}
+```
+
+Then in code, combine with secrets:
+
+```csharp
+var connTemplate = _config["ConnectionStrings:DefaultTemplate"];
+var password = _config["DbPassword"]; // From User Secrets or env vars
+var fullConn = $"{connTemplate};Password={password}";
+```
+
+---
+
+## Best Practices
+
+### ✅ DO
+
+1. **Use User Secrets for development**
+   ```bash
+   dotnet user-secrets set "GitHub:Token" "ghp_dev123"
+   ```
+
+2. **Use Environment Variables for production**
+   ```bash
+   export GitHub__Token="ghp_prod456"
+   ```
+
+3. **Use GitHub Secrets for CI/CD**
+   ```yaml
+   env:
+     NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+   ```
+
+4. **Add `.env` to `.gitignore`**
+   ```gitignore
+   .env
+   .env.local
+   .env.production
+   *.env
+   secrets.json
+   ```
+
+5. **Rotate secrets regularly**
+   - Change passwords every 90 days
+   - Regenerate API keys periodically
+
+6. **Use strong passwords**
+   - Min 16 characters
+   - Mix of letters, numbers, symbols
+   - Use password manager
+
+7. **Principle of least privilege**
+   - Give minimum permissions needed
+   - Separate dev/prod credentials
+
+### ❌ DON'T
+
+1. **Commit secrets to Git**
+   ```bash
+   # ❌ NEVER DO THIS:
+   git add appsettings.Production.json  # Contains passwords
+   git commit -m "Add prod config"
+   ```
+
+2. **Share secrets via chat/email**
+   - Use secure password managers instead
+
+3. **Hardcode secrets**
+   ```csharp
+   // ❌ NEVER DO THIS:
+   var apiKey = "abc123def456";
+   var password = "MyPassword123";
+   ```
+
+4. **Log secrets**
+   ```csharp
+   // ❌ NEVER DO THIS:
+   _logger.LogInformation("API Key: {Key}", apiKey);
+   _logger.LogInformation("Password: {Pwd}", password);
+   ```
+
+5. **Include secrets in error messages**
+   ```csharp
+   // ❌ NEVER DO THIS:
+   throw new Exception($"Failed to connect with password: {password}");
+   ```
+
+---
+
+## Checking for Leaked Secrets
+
+### Before Commit
+
+**Pre-commit checklist:**
+```bash
+# Search for potential secrets
+git diff --cached | grep -i "password\|secret\|token\|api.*key"
+
+# Check staged files
+git diff --cached --name-only | xargs grep -i "password\|secret\|token"
+```
+
+### Leaked Secret? Fix Immediately!
+
+**If you accidentally committed a secret:**
+
+```bash
+# 1. IMMEDIATELY rotate the secret
+# - Change password
+# - Regenerate API key
+# - Revoke token
+
+# 2. Remove from Git history (if just committed)
+git reset HEAD~1  # Undo last commit
+git commit -m "..."  # Commit without secret
+
+# 3. If pushed to remote - contact admin to rotate secret
+# - Cannot reliably remove from public Git history
+# - Anyone could have copied it
+```
+
+---
+
+## Platform-Specific Guides
+
+### Azure
+
+**Use Azure Key Vault** for production secrets:
+
+```csharp
+// Add NuGet: Azure.Extensions.AspNetCore.Configuration.Secrets
+
+public static IHostBuilder CreateHostBuilder(string[] args) =>
+    Host.CreateDefaultBuilder(args)
+        .ConfigureAppConfiguration((context, config) =>
+        {
+            if (context.HostingEnvironment.IsProduction())
+            {
+                var keyVaultUrl = new Uri("https://mykeyvault.vault.azure.net/");
+                config.AddAzureKeyVault(keyVaultUrl, new DefaultAzureCredential());
+            }
+        });
+```
+
+### AWS
+
+**Use AWS Secrets Manager:**
+
+```bash
+# Install AWS CLI
+aws secretsmanager get-secret-value --secret-id prod/myapp/db-password
+```
+
+### Google Cloud
+
+**Use Secret Manager:**
+
+```bash
+# Install gcloud CLI
+gcloud secrets versions access latest --secret="db-password"
+```
+
+---
+
+## Common Scenarios
+
+### Database Connection String
+
+**Development** (User Secrets):
+```bash
+dotnet user-secrets set "ConnectionStrings:Default" "Server=localhost;Database=dev;User=dev;Password=DevPass123"
+```
+
+**Production** (Environment Variable):
+```bash
+export ConnectionStrings__Default="Server=prod-db;Database=prod;User=produser;Password=ProdPass456"
+```
+
+### API Keys
+
+**Development:**
+```bash
+dotnet user-secrets set "OpenAI:ApiKey" "sk-dev123"
+dotnet user-secrets set "GitHub:Token" "ghp_dev456"
+```
+
+**Production:**
+```bash
+export OpenAI__ApiKey="sk-prod789"
+export GitHub__Token="ghp_prod012"
+```
+
+### Multiple Environments
+
+**Use environment-specific config files (without secrets):**
+
+- `appsettings.json` - Shared config
+- `appsettings.Development.json` - Dev overrides (no secrets)
+- `appsettings.Production.json` - Prod overrides (no secrets)
+
+**Secrets always via User Secrets (dev) or Environment Variables (prod).**
+
+---
+
+## Verification Checklist
+
+Before deploying:
+
+- [ ] No secrets in `appsettings.json`
+- [ ] No secrets in `appsettings.Production.json`
+- [ ] `.env` files in `.gitignore`
+- [ ] User Secrets configured for development
+- [ ] Environment variables configured for production
+- [ ] systemd `EnvironmentFile` set (if Linux service)
+- [ ] GitHub Secrets configured (if CI/CD)
+- [ ] No hardcoded secrets in code
+- [ ] No secrets in logs or error messages
+
+---
+
+## See Also
+
+- [Git Workflow](workflow/git-workflow-workflow.md) - Git best practices, commit checklist
+- [Web Deployment](continuous-deployment/web-deploy-continuous-deployment.md) - Deploying with secrets
+- [NuGet Publishing](continuous-deployment/nuget-publish-continuous-deployment.md) - Publishing with API keys
+- [GitHub Operations](workflow/github-operations-workflow.md) - GitHub API authentication

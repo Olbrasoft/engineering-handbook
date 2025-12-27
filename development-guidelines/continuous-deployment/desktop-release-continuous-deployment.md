@@ -136,12 +136,16 @@ dotnet publish \
 - [ ] Version extracted from Git tag
 - [ ] Release notes in GitHub Release
 
-## TODO
+## Advanced Topics (Future Documentation)
 
-- AppImage creation guide
-- .deb package creation
-- MSI installer for Windows
-- Code signing
+The following topics will be covered in future updates:
+
+- **AppImage creation** - Creating single-file Linux executables
+- **.deb package creation** - Building Debian/Ubuntu packages
+- **MSI installer for Windows** - Creating Windows installers
+- **Code signing** - Signing binaries for Windows and macOS
+
+For now, use `.zip` portable binaries for distribution. See [.NET Publish Docs](https://learn.microsoft.com/en-us/dotnet/core/deploying/) for platform-specific publishing.
 
 ## Reference
 

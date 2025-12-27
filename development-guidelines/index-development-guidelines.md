@@ -210,7 +210,7 @@ What am I doing?
 - Using 7-phase systematic process
 
 ### 10. Code Review & Refactoring (General)
-**File:** `code-review-refactoring-guide.md` (English) / `code-review-refactoring-guide-cz.md` (Czech)
+**File:** `code-review/general-code-review.md` (English) / `code-review-refactoring-guide-cz.md` (Czech)
 
 **Read when:**
 - Reviewing code manually

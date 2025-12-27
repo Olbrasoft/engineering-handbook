@@ -21,8 +21,8 @@ C# / .NET development standards and reference guides for Olbrasoft projects.
 - **[Architecture Design](development-guidelines/architecture/architecture-design-architecture.md)** - Design trade-offs and decisions
 - **[Code Exploration](development-guidelines/architecture/code-exploration-architecture.md)** - Codebase navigation techniques
 - **[Code Review](development-guidelines/code-review/)** - Automated and manual review processes
-  - [General Guidelines](development-guidelines/code-review/code-review.md)
-  - [Manual Review Checklist](development-guidelines/code-review/manual-review.md)
+  - [General Guidelines](development-guidelines/code-review/general-code-review.md)
+  - [Manual Review Checklist](development-guidelines/code-review/manual-review-code-review.md)
   - [Claude Code: /code-review command](development-guidelines/code-review/CLAUDE.md)
 
 ### Testing
@@ -91,9 +91,9 @@ When a specific tool has **unique capabilities** others don't support, create a 
 - Tool-specific instructions in `<TOOL>.md`
 
 **Example:** `code-review/`
-- `code-review.md` - General guidelines (all tools)
+- `general-code-review.md` - General guidelines (all tools)
 - `CLAUDE.md` - Claude Code specific: background agents workflow for `/code-review` command
-- `manual-review.md` - Manual review checklist
+- `manual-review-code-review.md` - Manual review checklist
 
 **Rationale:** Claude Code can run parallel background agents for code review, other tools cannot.
 

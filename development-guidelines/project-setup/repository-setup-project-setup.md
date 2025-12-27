@@ -377,4 +377,4 @@ template-dotnet/
 
 - [Workflow Guide](workflow-guide.md) - Git workflow, commits, branches
 - [CI/CD Pipeline Setup](ci-cd-pipeline-setup.md) - Detailed CI/CD configuration
-- [Code Review Guide](code-review-refactoring-guide.md) - Code review practices
+- [Code Review Guide](code-review/general-code-review.md) - Code review practices

@@ -81,6 +81,6 @@ All 23 classic design patterns with modern usage, real-world examples, and curre
 
 ## Related Topics
 
-- 🏗️ [Architecture Design](../development-guidelines/architecture-design.md) - Choosing the right pattern for the approach
+- 🏗️ [Architecture Design](../development-guidelines/architecture/architecture-design-architecture.md) - Choosing the right pattern for the approach
 - 🧱 [SOLID Principles](../solid-principles/solid-principles.md) - The foundation for clean patterns
-- 🔍 [Code Review](../development-guidelines/code-review-refactoring-guide.md) - Evaluating pattern implementation
+- 🔍 [Code Review](../development-guidelines/code-review/general-code-review.md) - Evaluating pattern implementation
