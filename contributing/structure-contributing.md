@@ -405,6 +405,6 @@ From actual handbook restructure:
 
 ## See Also
 
-- [File Naming](file-naming-contributing-engineering-handbook.md) - How to name files and directories
-- [Style Guide](style-guide-contributing-engineering-handbook.md) - Writing style and formatting
-- [Contributing Index](index-contributing-engineering-handbook.md) - Overview
+- [File Naming](file-naming-contributing.md) - How to name files and directories
+- [Style Guide](style-guide-contributing.md) - Writing style and formatting
+- [Contributing Index](index-contributing.md) - Overview

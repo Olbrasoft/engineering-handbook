@@ -16,9 +16,9 @@ This directory contains **meta-documentation** - guides for creating the handboo
 
 | Topic | File | What You'll Learn |
 |-------|------|-------------------|
-| **File Naming** | [file-naming-contributing-engineering-handbook.md](file-naming-contributing-engineering-handbook.md) | How to name files and directories |
-| **Content Structure** | [structure-contributing-engineering-handbook.md](structure-contributing-engineering-handbook.md) | How to organize content within files |
-| **Writing Style** | [style-guide-contributing-engineering-handbook.md](style-guide-contributing-engineering-handbook.md) | Writing style, formatting, examples |
+| **File Naming** | [file-naming-contributing.md](file-naming-contributing.md) | How to name files and directories |
+| **Content Structure** | [structure-contributing.md](structure-contributing.md) | How to organize content within files |
+| **Writing Style** | [style-guide-contributing.md](style-guide-contributing.md) | Writing style, formatting, examples |
 
 ## Decision Tree
 
@@ -26,13 +26,13 @@ This directory contains **meta-documentation** - guides for creating the handboo
 What do I need to know?
 │
 ├─ "How should I name this file/directory?"
-│  └─ Read: file-naming-contributing-engineering-handbook.md
+│  └─ Read: file-naming-contributing.md
 │
 ├─ "How should I structure the content?"
-│  └─ Read: structure-contributing-engineering-handbook.md
+│  └─ Read: structure-contributing.md
 │
 ├─ "What writing style should I use?"
-│  └─ Read: style-guide-contributing-engineering-handbook.md
+│  └─ Read: style-guide-contributing.md
 │
 └─ "General overview of handbook standards"
    └─ Read this file (index)
@@ -118,10 +118,10 @@ All files in `contributing/` directory follow this pattern:
 ```
 
 **Examples:**
-- `file-naming-contributing-engineering-handbook.md`
-- `structure-contributing-engineering-handbook.md`
-- `style-guide-contributing-engineering-handbook.md`
-- `index-contributing-engineering-handbook.md` (this file)
+- `file-naming-contributing.md`
+- `structure-contributing.md`
+- `style-guide-contributing.md`
+- `index-contributing.md` (this file)
 
 **Why this pattern:**
 - Postfix matches directory name
@@ -150,10 +150,10 @@ engineering-handbook/
 │       ├── index-continuous-deployment.md
 │       └── nuget-publish.md
 ├── contributing/
-│   ├── index-contributing-engineering-handbook.md
-│   ├── file-naming-contributing-engineering-handbook.md
-│   ├── structure-contributing-engineering-handbook.md
-│   └── style-guide-contributing-engineering-handbook.md
+│   ├── index-contributing.md
+│   ├── file-naming-contributing.md
+│   ├── structure-contributing.md
+│   └── style-guide-contributing.md
 └── solid-principles/
     └── solid-principles.md
 ```
@@ -247,11 +247,11 @@ development-guidelines/
 
 ### 4. Use Standard Template
 
-See [structure-contributing-engineering-handbook.md](structure-contributing-engineering-handbook.md) for templates.
+See [structure-contributing.md](structure-contributing.md) for templates.
 
 ### 5. Write Following Style Guide
 
-See [style-guide-contributing-engineering-handbook.md](style-guide-contributing-engineering-handbook.md) for writing guidelines.
+See [style-guide-contributing.md](style-guide-contributing.md) for writing guidelines.
 
 ### 6. Update Navigation
 
@@ -291,10 +291,10 @@ Before committing new content:
 
 | File | Lines | Description |
 |------|-------|-------------|
-| index-contributing-engineering-handbook.md | ~250 | This file - overview |
-| file-naming-contributing-engineering-handbook.md | ~250 | Naming conventions |
-| structure-contributing-engineering-handbook.md | ~350 | Content organization |
-| style-guide-contributing-engineering-handbook.md | ~350 | Writing style |
+| index-contributing.md | ~250 | This file - overview |
+| file-naming-contributing.md | ~250 | Naming conventions |
+| structure-contributing.md | ~350 | Content organization |
+| style-guide-contributing.md | ~350 | Writing style |
 
 ## See Also
 
@@ -305,9 +305,9 @@ Before committing new content:
 
 ### Contributing Files
 
-- [File Naming](file-naming-contributing-engineering-handbook.md) - How to name files
-- [Structure](structure-contributing-engineering-handbook.md) - How to organize content
-- [Style Guide](style-guide-contributing-engineering-handbook.md) - How to write
+- [File Naming](file-naming-contributing.md) - How to name files
+- [Structure](structure-contributing.md) - How to organize content
+- [Style Guide](style-guide-contributing.md) - How to write
 
 ## Questions?
 

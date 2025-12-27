@@ -545,6 +545,6 @@ Group related commands/configs in same section:
 
 ## See Also
 
-- [File Naming](file-naming-contributing-engineering-handbook.md) - Naming conventions
-- [Structure](structure-contributing-engineering-handbook.md) - Content organization
-- [Contributing Index](index-contributing-engineering-handbook.md) - Overview
+- [File Naming](file-naming-contributing.md) - Naming conventions
+- [Structure](structure-contributing.md) - Content organization
+- [Contributing Index](index-contributing.md) - Overview

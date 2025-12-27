@@ -92,16 +92,16 @@ contributing/
 ✅ **CORRECT:**
 ```
 contributing/
-├── file-naming-contributing-engineering-handbook.md
-├── structure-contributing-engineering-handbook.md
-└── style-guide-contributing-engineering-handbook.md
+├── file-naming-contributing.md
+├── structure-contributing.md
+└── style-guide-contributing.md
 ```
 
 **Pattern:** `{topic}-{directory-name}.md`
 
 **Rationale:**
 - When searching globally, you instantly see which directory the file belongs to
-- No ambiguity: `file-naming.md` vs `file-naming-contributing-engineering-handbook.md`
+- No ambiguity: `file-naming.md` vs `file-naming-contributing.md`
 - Consistent with index file pattern: `index-{directory-name}.md`
 - Self-descriptive even outside directory context
 
@@ -123,10 +123,10 @@ development-guidelines/
     └── desktop-release-continuous-deployment.md       ← Topic with directory postfix
 
 contributing/
-├── index-contributing-engineering-handbook.md         ← Index (starts with "index")
-├── file-naming-contributing-engineering-handbook.md   ← Topic with directory postfix
-├── structure-contributing-engineering-handbook.md     ← Topic with directory postfix
-└── style-guide-contributing-engineering-handbook.md   ← Topic with directory postfix
+├── index-contributing.md         ← Index (starts with "index")
+├── file-naming-contributing.md   ← Topic with directory postfix
+├── structure-contributing.md     ← Topic with directory postfix
+└── style-guide-contributing.md   ← Topic with directory postfix
 ```
 
 **When to use postfix:**
@@ -427,6 +427,6 @@ If you answer "no" to any question, improve the name.
 
 ## See Also
 
-- [Structure Guide](structure-contributing-engineering-handbook.md) - How to organize content within files
-- [Style Guide](style-guide-contributing-engineering-handbook.md) - Writing style and formatting
-- [Contributing Index](index-contributing-engineering-handbook.md) - Overview of all contributing guides
+- [Structure Guide](structure-contributing.md) - How to organize content within files
+- [Style Guide](style-guide-contributing.md) - Writing style and formatting
+- [Contributing Index](index-contributing.md) - Overview of all contributing guides
