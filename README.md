@@ -16,8 +16,10 @@ C# / .NET development standards and reference guides for Olbrasoft projects.
 - **[Git Workflow](development-guidelines/workflow/git-workflow-workflow.md)** - Git workflow, GitHub issues, branches, commits, sub-issues
 - **[Feature Development](development-guidelines/workflow/feature-development-workflow.md)** - 7-phase systematic feature implementation
 - **[GitHub Operations](development-guidelines/workflow/github-operations-workflow.md)** - GitHub API operations, pagination
-- **[Architecture Design](development-guidelines/architecture-design.md)** - Design trade-offs and decisions
-- **[Code Exploration](development-guidelines/code-exploration.md)** - Codebase navigation techniques
+### Architecture
+- **[Architecture Index](development-guidelines/architecture/index-architecture.md)** - Overview
+- **[Architecture Design](development-guidelines/architecture/architecture-design-architecture.md)** - Design trade-offs and decisions
+- **[Code Exploration](development-guidelines/architecture/code-exploration-architecture.md)** - Codebase navigation techniques
 - **[Code Review](development-guidelines/code-review/)** - Automated and manual review processes
   - [General Guidelines](development-guidelines/code-review/code-review.md)
   - [Manual Review Checklist](development-guidelines/code-review/manual-review.md)
@@ -55,10 +57,11 @@ C# / .NET development standards and reference guides for Olbrasoft projects.
 - **[Local Testing](development-guidelines/package-management/local-testing-package-management.md)** - Test NuGet packages locally before publishing
 - **[Package Overview](development-guidelines/package-management/overview-package-management.md)** - Complete guide: configuration, versioning, deployment
 
-### Tools & Operations
-- **[GitHub Operations](development-guidelines/github-operations.md)** - gh CLI, issues, PRs, sub-issues
-- **[Research Guide](development-guidelines/research-guide.md)** - SearXNG, web search workflow
-- **[ht-mcp Terminal](development-guidelines/ht-mcp-terminal.md)** - Terminal operations for restricted environments
+### Tools
+- **[Tools Index](development-guidelines/tools/index-tools.md)** - Overview
+- **[Research Guide](development-guidelines/tools/research-guide-tools.md)** - SearXNG, web search workflow
+- **[HT Terminal](development-guidelines/tools/ht-terminal-tools.md)** - Terminal operations for restricted environments
+- **[CLAUDE.md Template](development-guidelines/tools/claude-template-tools.md)** - Project configuration template
 
 ## Design & Architecture
 
