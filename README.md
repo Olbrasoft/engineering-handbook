@@ -46,8 +46,9 @@ C# / .NET development standards and reference guides for Olbrasoft projects.
 - **[Local Package Testing](development-guidelines/local-package-testing.md)** - Test NuGet packages locally before publishing
 
 ### Project Setup
-- **[Repository Setup](development-guidelines/repository-setup.md)** - GitHub repo creation, branch protection, webhooks
-- **[Project Structure](development-guidelines/project-structure.md)** - Naming conventions, folders, test organization
+- **[Project Setup Index](development-guidelines/project-setup/index-project-setup.md)** - Overview and quick start
+- **[Repository Setup](development-guidelines/project-setup/repository-setup-project-setup.md)** - GitHub repo creation, branch protection, webhooks
+- **[Project Structure](development-guidelines/project-setup/project-structure-project-setup.md)** - Naming conventions, folders, test organization
 - **[Package Management](development-guidelines/package-management.md)** - NuGet workflow, local testing, configuration
 
 ### Tools & Operations

@@ -127,7 +127,7 @@ Reference: [Git Workflow](../workflow/git-workflow-workflow.md)
 
 ### File Organization
 
-Reference: [structure.md](../project-structure.md)
+Reference: [structure.md](../project-setup/project-structure-project-setup.md)
 
 ```
 src/
@@ -268,7 +268,7 @@ When documenting issues, reference relevant handbook sections:
 | SOLID violations | [solid-principles.md](../../solid-principles/solid-principles.md) |
 | Design patterns | [gof-design-patterns.md](../../design-patterns/gof-design-patterns.md) |
 | Testing | [Testing Guide](../testing/index-testing.md) |
-| Project structure | [structure.md](../project-structure.md) |
+| Project structure | [structure.md](../project-setup/project-structure-project-setup.md) |
 | CI/CD | [Continuous Integration](../continuous-integration/index-continuous-integration.md) |
 
 **Example:**
@@ -295,7 +295,7 @@ Missing Repository pattern for data access (see design-patterns/gof-design-patte
 - **SOLID Principles:** [solid-principles.md](../../solid-principles/solid-principles.md)
 - **Design Patterns:** [gof-design-patterns.md](../../design-patterns/gof-design-patterns.md)
 - **Git Workflow:** [Git Workflow](../workflow/git-workflow-workflow.md)
-- **Project Structure:** [structure.md](../project-structure.md)
+- **Project Structure:** [structure.md](../project-setup/project-structure-project-setup.md)
 
 ---
 

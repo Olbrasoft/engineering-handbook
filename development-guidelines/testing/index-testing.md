@@ -193,6 +193,22 @@ Tests run automatically in GitHub Actions:
 
 **Pattern:** Each source project MUST have its own test project.
 
+### When Project Has ONLY Unit Tests
+
+```
+src/
+  MyProject.Core/
+    Services/
+      MyService.cs
+
+tests/
+  MyProject.Core.Tests/
+    Services/
+      MyServiceTests.cs
+```
+
+### When Project Has BOTH Unit Tests AND Integration Tests
+
 ```
 src/
   MyProject.Core/
@@ -203,13 +219,20 @@ src/
       MyRepository.cs
 
 tests/
-  MyProject.Core.Tests/            # Unit tests
-    Services/
-      MyServiceTests.cs
-  MyProject.Core.IntegrationTests/ # Integration tests (if needed)
-    Services/
-      MyServiceIntegrationTests.cs
+  UnitTests/
+    MyProject.Core.Tests/
+      Services/
+        MyServiceTests.cs
+    MyProject.Data.Tests/
+      Repositories/
+        MyRepositoryTests.cs
+  IntegrationTests/
+    MyProject.Core.IntegrationTests/
+      Services/
+        MyServiceIntegrationTests.cs
 ```
+
+**CRITICAL:** When application has BOTH types of tests, use `UnitTests/` and `IntegrationTests/` directories to separate them!
 
 **Naming:**
 - Test project: `{SourceProject}.Tests` or `{SourceProject}.IntegrationTests`

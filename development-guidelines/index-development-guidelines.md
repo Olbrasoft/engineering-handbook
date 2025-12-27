@@ -31,7 +31,7 @@ What am I doing?
 │  └─ Read: ht-mcp-terminal.md
 │
 ├─ Setting up NEW GitHub repository
-│  └─ Read: repository-setup.md
+│  └─ Read: project-setup/repository-setup-project-setup.md
 │
 ├─ Setting up Continuous Integration (Build & Test)
 │  ├─ Build process → continuous-integration/build-continuous-integration.md
@@ -47,7 +47,7 @@ What am I doing?
 │  └─ Not sure? → continuous-deployment/index-continuous-deployment.md (decision tree)
 │
 ├─ Structuring .NET project (folders/naming)
-│  └─ Read: project-structure.md
+│  └─ Read: project-setup/project-structure-project-setup.md
 │
 ├─ Implementing NEW complex features
 │  └─ Read: workflow/feature-development-workflow.md
@@ -73,7 +73,7 @@ What am I doing?
 ## Document Index
 
 ### 1. Repository Setup
-**File:** `repository-setup.md`
+**File:** `project-setup/repository-setup-project-setup.md`
 
 **Read when:**
 - Creating new GitHub repository
@@ -177,7 +177,7 @@ What am I doing?
 ---
 
 ### 7. .NET Project Structure
-**File:** `project-structure.md`
+**File:** `project-setup/project-structure-project-setup.md`
 
 **Read when:**
 - Creating new .NET solution
@@ -314,8 +314,8 @@ What am I doing?
 ## Common Scenarios
 
 ### "I need to create a new NuGet package repository"
-1. Read: `repository-setup.md` (create repo)
-2. Read: `project-structure.md` (organize code)
+1. Read: `project-setup/repository-setup-project-setup.md` (create repo)
+2. Read: `project-setup/project-structure-project-setup.md` (organize code)
 3. Read: `continuous-integration/build-continuous-integration.md` (setup build)
 4. Read: `continuous-integration/test-continuous-integration.md` (setup tests)
 5. Read: `continuous-deployment/nuget-publish-continuous-deployment.md` (setup publishing)
@@ -329,7 +329,7 @@ What am I doing?
 
 ### "I'm starting a new .NET project"
 1. Read: `continuous-deployment/index-continuous-deployment.md` (determine deployment type)
-2. Read: `project-structure.md` (structure)
+2. Read: `project-setup/project-structure-project-setup.md` (structure)
 3. Read: `continuous-integration/build-continuous-integration.md` and `test.md` (CI setup)
 4. Read: specific deployment doc based on type
 5. Read: `workflow/git-workflow-workflow.md` (Git workflow)
