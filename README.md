@@ -7,7 +7,7 @@ C# / .NET development standards and reference guides for Olbrasoft projects.
 **New to the handbook?** Start here:
 - [Workflow Guide](development-guidelines/workflow.md) - Git, branches, PRs, sub-issues
 - [SOLID Principles](solid-principles/solid-principles.md) - Modern interpretation
-- [Testing Guide](development-guidelines/testing.md) - Unit tests, mocking, xUnit
+- [Testing Guide](development-guidelines/testing/index-testing.md) - Unit tests, integration tests, xUnit
 
 ## Development Guidelines
 
@@ -22,7 +22,9 @@ C# / .NET development standards and reference guides for Olbrasoft projects.
   - [Claude Code: /code-review command](development-guidelines/code-review/CLAUDE.md)
 
 ### Testing
-- **[Testing Guide](development-guidelines/testing.md)** - xUnit, Moq, test structure, CI integration
+- **[Testing Index](development-guidelines/testing/index-testing.md)** - Overview, decision tree
+- **[Unit Tests](development-guidelines/testing/unit-tests-testing.md)** - xUnit, Moq, in-memory DB
+- **[Integration Tests](development-guidelines/testing/integration-tests-testing.md)** - [SkipOnCIFact], real services
 
 ### Continuous Integration & Deployment
 

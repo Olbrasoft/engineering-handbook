@@ -2,13 +2,21 @@
 
 How to run automated tests in CI/CD pipelines using xUnit.
 
-## Basic Testing
+## What Tests Run in CI?
+
+**CI runs ONLY unit tests** - integration tests are skipped.
 
 ```bash
-dotnet test -c Release --no-build
+# Run unit tests (exclude integration tests)
+dotnet test -c Release --no-build --filter "FullyQualifiedName!~IntegrationTests"
 ```
 
-**Why `--no-build`?** Already built in previous step, saves time and ensures testing built artifacts.
+**Why filter?**
+- Integration tests call real APIs (costs money)
+- Integration tests are slow (seconds vs milliseconds)
+- Integration tests use `[SkipOnCIFact]` attribute to auto-skip on CI
+
+**See:** [Testing Guide](../testing/index-testing.md) for unit vs integration tests.
 
 ## GitHub Actions Workflow
 
@@ -29,8 +37,12 @@ jobs:
 
     - run: dotnet restore
     - run: dotnet build -c Release --no-restore
-    - run: dotnet test -c Release --no-build --verbosity normal
+
+    # Run ONLY unit tests (exclude integration tests)
+    - run: dotnet test -c Release --no-build --verbosity normal --filter "FullyQualifiedName!~IntegrationTests"
 ```
+
+**CRITICAL:** Always use `--filter "FullyQualifiedName!~IntegrationTests"` to skip integration tests in CI!
 
 ## Test Output
 
@@ -56,7 +68,7 @@ tests/
 - `YourProject.Core` → `YourProject.Core.Tests`
 - `YourProject.Providers` → `YourProject.Providers.Tests`
 
-See: [../testing.md](../testing.md) for project structure details.
+See: [Testing Guide](../testing/index-testing.md) for project structure details.
 
 ## Test Naming Convention
 
@@ -121,5 +133,7 @@ After tests pass:
 ## See Also
 
 - [Build](build-continuous-integration.md) - Build before testing
-- [Testing Guide](../testing.md) - Full testing documentation
+- [Testing Guide](../testing/index-testing.md) - Full testing documentation
+- [Unit Tests](../testing/unit-tests-testing.md) - Isolated tests with mocking
+- [Integration Tests](../testing/integration-tests-testing.md) - Tests with real services
 - [Workflow](../workflow.md) - Git workflow with tests

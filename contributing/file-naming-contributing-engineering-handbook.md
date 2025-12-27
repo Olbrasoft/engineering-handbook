@@ -48,18 +48,22 @@ desktop-release.md    # Creating desktop releases
 
 **Rationale:** Action words (publish, deploy, release) clarify the PURPOSE of the document.
 
-### 3. Index Files Start with "index" Then Directory Name
+### 3. Every Directory MUST Have Index File
+
+**CRITICAL RULE:** Every directory MUST have an index file that starts with "index".
 
 ❌ **WRONG:**
 ```
 development-guidelines/INDEX.md                     # Not lowercase
 continuous-integration/continuous-integration-index.md  # Wrong order
+testing/                                            # Missing index!
 ```
 
 ✅ **CORRECT:**
 ```
 development-guidelines/index-development-guidelines.md
 continuous-integration/index-continuous-integration.md
+testing/index-testing.md
 ```
 
 **Pattern:** `index-{directory-name}.md`
@@ -69,6 +73,9 @@ continuous-integration/index-continuous-integration.md
 - Directory postfix shows which directory it indexes
 - Alphabetically sorts first in directory listings
 - Consistent with general postfix rule
+- **Every directory needs navigation** - users should know what's inside
+
+**When creating directory:** ALWAYS create index file FIRST, then add content files.
 
 ### 4. Files in Directory MUST Have Directory Name as Postfix
 
@@ -212,30 +219,90 @@ workflow-cz.md
 
 ## When to Create Directories
 
-### Default: Single File
+### Core Principle: Break Down Into Smallest Parts
 
-Most topics should be a single file:
+**CRITICAL RULE:** Always divide topics into the smallest possible focused parts.
+
+**Why:**
+- Each file = ONE specific task
+- Easier to find exactly what you need
+- Easier to update specific information
+- Better for learning and reference
+
+**Pattern:**
+1. Identify distinct subtasks/topics
+2. Create ONE file per subtask
+3. If 2+ files → create directory
+4. Each file precisely solves ONE task
+
+### Rule: 2+ Files = Directory Required
+
+**If you have 2 or more related files → MUST create directory**
+
+❌ **WRONG:** Files at same level
 ```
-workflow.md
-testing.md
-repository-setup.md
+development-guidelines/
+├── unit-tests.md
+├── integration-tests.md
+├── test-ci.md
 ```
 
-### Exception: Tool-Specific Capabilities
-
-Create directory when a specific tool has unique capabilities others don't:
-
-**Example:** `code-review/`
+✅ **CORRECT:** Directory with focused files
 ```
-code-review/
-├── code-review.md           # General guidelines (all tools)
-├── CLAUDE.md                # Claude Code: /code-review command
-└── manual-review.md         # Manual review checklist
+development-guidelines/
+└── testing/
+    ├── index-testing.md                 # Overview
+    ├── unit-tests-testing.md            # Unit tests only
+    └── integration-tests-testing.md     # Integration tests only
 ```
 
-**Rationale:** Claude Code can run parallel background agents for code review - other tools can't.
+**Each file:**
+- Describes ONE specific task
+- 80-250 lines (focused content)
+- Clear, actionable instructions
 
-### Exception: Multiple Related Subtopics
+### Example: Testing Directory
+
+**Bad approach (single large file):**
+```
+testing.md  (829 lines - too much!)
+```
+
+**Good approach (focused files):**
+```
+testing/
+├── index-testing.md                 # What is testing, decision tree
+├── unit-tests-testing.md            # Unit tests with Moq, in-memory DB
+└── integration-tests-testing.md     # Integration tests with [SkipOnCIFact]
+```
+
+Each file solves ONE task:
+- Need unit tests? → Read unit-tests-testing.md
+- Need integration tests? → Read integration-tests-testing.md
+- Not sure? → Start with index-testing.md
+
+### Example: Continuous Integration
+
+```
+continuous-integration/
+├── index-continuous-integration.md  # Overview of CI
+├── build-continuous-integration.md  # Build process only
+└── test-continuous-integration.md   # Running tests in CI only
+```
+
+NOT one huge "ci-guide.md" file!
+
+### Single File Exception
+
+**ONLY use single file when:**
+- Topic is truly atomic (cannot be subdivided)
+- Content is < 250 lines
+- No related subtopics
+
+**Example:**
+```
+workflow.md  # Git workflow - single focused topic
+```
 
 Create directory when topic has distinct subtopics:
 

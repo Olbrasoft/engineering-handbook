@@ -136,15 +136,18 @@ Handbook uses this structure:
 engineering-handbook/
 ├── README.md                           # Root index
 ├── development-guidelines/
-│   ├── development-guidelines-index.md # Directory index
+│   ├── index-development-guidelines.md # Directory index
 │   ├── workflow.md                     # Single topic files
-│   ├── testing.md
+│   ├── testing/                        # Multi-file directory
+│   │   ├── index-testing.md
+│   │   ├── unit-tests-testing.md
+│   │   └── integration-tests-testing.md
 │   ├── continuous-integration/
-│   │   ├── continuous-integration-index.md
-│   │   ├── build.md
-│   │   └── test.md
+│   │   ├── index-continuous-integration.md
+│   │   ├── build-continuous-integration.md
+│   │   └── test-continuous-integration.md
 │   └── continuous-deployment/
-│       ├── continuous-deployment-index.md
+│       ├── index-continuous-deployment.md
 │       └── nuget-publish.md
 ├── contributing/
 │   ├── index-contributing-engineering-handbook.md
@@ -156,9 +159,9 @@ engineering-handbook/
 ```
 
 **Pattern rules:**
-1. **Index files** include directory name: `{directory}-index.md`
-2. **Single topic files** use simple names: `workflow.md`, `testing.md`
-3. **Subtopic files** in directories use descriptive names: `nuget-publish.md`
+1. **Index files** start with "index": `index-{directory}.md`
+2. **Single topic files** use simple names: `workflow.md`, `secrets-management.md`
+3. **Files in directories** use postfix: `{topic}-{directory}.md`
 4. **Contributing files** use postfix: `{topic}-contributing-engineering-handbook.md`
 
 ## When to Create New Files
