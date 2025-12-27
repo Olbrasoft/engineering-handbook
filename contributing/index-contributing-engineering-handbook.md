@@ -121,7 +121,7 @@ All files in `contributing/` directory follow this pattern:
 - `file-naming-contributing-engineering-handbook.md`
 - `structure-contributing-engineering-handbook.md`
 - `style-guide-contributing-engineering-handbook.md`
-- `contributing-engineering-handbook-index.md` (this file)
+- `index-contributing-engineering-handbook.md` (this file)
 
 **Why this pattern:**
 - Postfix matches directory name
@@ -147,7 +147,7 @@ engineering-handbook/
 │       ├── continuous-deployment-index.md
 │       └── nuget-publish.md
 ├── contributing/
-│   ├── contributing-engineering-handbook-index.md
+│   ├── index-contributing-engineering-handbook.md
 │   ├── file-naming-contributing-engineering-handbook.md
 │   ├── structure-contributing-engineering-handbook.md
 │   └── style-guide-contributing-engineering-handbook.md
@@ -288,7 +288,7 @@ Before committing new content:
 
 | File | Lines | Description |
 |------|-------|-------------|
-| contributing-engineering-handbook-index.md | ~250 | This file - overview |
+| index-contributing-engineering-handbook.md | ~250 | This file - overview |
 | file-naming-contributing-engineering-handbook.md | ~250 | Naming conventions |
 | structure-contributing-engineering-handbook.md | ~350 | Content organization |
 | style-guide-contributing-engineering-handbook.md | ~350 | Writing style |

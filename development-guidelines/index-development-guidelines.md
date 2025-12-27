@@ -36,7 +36,7 @@ What am I doing?
 ├─ Setting up Continuous Integration (Build & Test)
 │  ├─ Build process → continuous-integration/build-continuous-integration.md
 │  ├─ Testing → continuous-integration/test-continuous-integration.md
-│  └─ Overview → continuous-integration/continuous-integration-index.md
+│  └─ Overview → continuous-integration/index-continuous-integration.md
 │
 ├─ Setting up Continuous Deployment (Publish & Deploy)
 │  ├─ What type?
@@ -44,7 +44,7 @@ What am I doing?
 │  │  ├─ Web service (API/webapp) → continuous-deployment/web-deploy-continuous-deployment.md
 │  │  ├─ Local app → continuous-deployment/local-apps-deploy-continuous-deployment.md
 │  │  └─ Desktop app (GUI) → continuous-deployment/desktop-release-continuous-deployment.md
-│  └─ Not sure? → continuous-deployment/continuous-deployment-index.md (decision tree)
+│  └─ Not sure? → continuous-deployment/index-continuous-deployment.md (decision tree)
 │
 ├─ Structuring .NET project (folders/naming)
 │  └─ Read: project-structure.md
@@ -91,7 +91,7 @@ What am I doing?
 
 ### 2. Continuous Integration: Build & Test
 **Files:**
-- `continuous-integration/continuous-integration-index.md` - Overview
+- `continuous-integration/index-continuous-integration.md` - Overview
 - `continuous-integration/build-continuous-integration.md` - .NET build process
 - `continuous-integration/test-continuous-integration.md` - Automated testing
 
@@ -107,7 +107,7 @@ What am I doing?
 ---
 
 ### 3. Continuous Deployment: Which Type?
-**File:** `continuous-deployment/continuous-deployment-index.md`
+**File:** `continuous-deployment/index-continuous-deployment.md`
 
 **Read when:**
 - Not sure which deployment strategy to use
@@ -328,7 +328,7 @@ What am I doing?
 4. Test: ALL features work (100% functional rule)
 
 ### "I'm starting a new .NET project"
-1. Read: `continuous-deployment/continuous-deployment-index.md` (determine deployment type)
+1. Read: `continuous-deployment/index-continuous-deployment.md` (determine deployment type)
 2. Read: `project-structure.md` (structure)
 3. Read: `continuous-integration/build-continuous-integration.md` and `test.md` (CI setup)
 4. Read: specific deployment doc based on type

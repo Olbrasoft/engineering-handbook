@@ -48,21 +48,27 @@ desktop-release.md    # Creating desktop releases
 
 **Rationale:** Action words (publish, deploy, release) clarify the PURPOSE of the document.
 
-### 3. Index Files Should Include Parent Directory Name
+### 3. Index Files Start with "index" Then Directory Name
 
 ❌ **WRONG:**
 ```
-development-guidelines/INDEX.md
-continuous-integration/index.md
+development-guidelines/INDEX.md                     # Not lowercase
+continuous-integration/continuous-integration-index.md  # Wrong order
 ```
 
 ✅ **CORRECT:**
 ```
-development-guidelines/development-guidelines-index.md
-continuous-integration/continuous-integration-index.md
+development-guidelines/index-development-guidelines.md
+continuous-integration/index-continuous-integration.md
 ```
 
-**Rationale:** When searching or listing files, you can see what the index is for without checking its path.
+**Pattern:** `index-{directory-name}.md`
+
+**Rationale:**
+- "index" prefix makes it clear it's navigation file
+- Directory postfix shows which directory it indexes
+- Alphabetically sorts first in directory listings
+- Consistent with general postfix rule
 
 ### 4. Files in Directory MUST Have Directory Name as Postfix
 
@@ -89,28 +95,28 @@ contributing/
 **Rationale:**
 - When searching globally, you instantly see which directory the file belongs to
 - No ambiguity: `file-naming.md` vs `file-naming-contributing-engineering-handbook.md`
-- Consistent with index file pattern: `{directory}-index.md`
+- Consistent with index file pattern: `index-{directory-name}.md`
 - Self-descriptive even outside directory context
 
 **Examples from handbook:**
 
 ```
 development-guidelines/
-├── development-guidelines-index.md                    ← Index
+├── index-development-guidelines.md                    ← Index (starts with "index")
 ├── workflow.md                                        ← Top-level single topic
 ├── continuous-integration/
-│   ├── continuous-integration-index.md                ← Index with directory postfix
+│   ├── index-continuous-integration.md                ← Index (starts with "index")
 │   ├── build-continuous-integration.md                ← Topic with directory postfix
 │   └── test-continuous-integration.md                 ← Topic with directory postfix
 └── continuous-deployment/
-    ├── continuous-deployment-index.md                 ← Index with directory postfix
+    ├── index-continuous-deployment.md                 ← Index (starts with "index")
     ├── nuget-publish-continuous-deployment.md         ← Topic with directory postfix
     ├── web-deploy-continuous-deployment.md            ← Topic with directory postfix
     ├── local-apps-deploy-continuous-deployment.md     ← Topic with directory postfix
     └── desktop-release-continuous-deployment.md       ← Topic with directory postfix
 
 contributing/
-├── contributing-engineering-handbook-index.md         ← Index
+├── index-contributing-engineering-handbook.md         ← Index (starts with "index")
 ├── file-naming-contributing-engineering-handbook.md   ← Topic with directory postfix
 ├── structure-contributing-engineering-handbook.md     ← Topic with directory postfix
 └── style-guide-contributing-engineering-handbook.md   ← Topic with directory postfix
@@ -118,7 +124,7 @@ contributing/
 
 **When to use postfix:**
 - ✅ **ALWAYS** for ALL files in directories: `{topic}-{directory-name}.md`
-- ✅ **ALWAYS** for index files: `{directory}-index.md`
+- ✅ **ALWAYS** for index files: `index-{directory-name}.md`
 
 **No exceptions!** Every file in a directory must have the directory name as postfix for consistency and searchability.
 
@@ -328,4 +334,4 @@ If you answer "no" to any question, improve the name.
 
 - [Structure Guide](structure-contributing-engineering-handbook.md) - How to organize content within files
 - [Style Guide](style-guide-contributing-engineering-handbook.md) - Writing style and formatting
-- [Contributing Index](contributing-engineering-handbook-index.md) - Overview of all contributing guides
+- [Contributing Index](index-contributing-engineering-handbook.md) - Overview of all contributing guides

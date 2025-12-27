@@ -407,4 +407,4 @@ From actual handbook restructure:
 
 - [File Naming](file-naming-contributing-engineering-handbook.md) - How to name files and directories
 - [Style Guide](style-guide-contributing-engineering-handbook.md) - Writing style and formatting
-- [Contributing Index](contributing-engineering-handbook-index.md) - Overview
+- [Contributing Index](index-contributing-engineering-handbook.md) - Overview

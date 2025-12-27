@@ -27,12 +27,12 @@ C# / .NET development standards and reference guides for Olbrasoft projects.
 ### Continuous Integration & Deployment
 
 **Continuous Integration** (Build & Test):
-- **[CI Overview](development-guidelines/continuous-integration/continuous-integration-index.md)** - Build and test automation
+- **[CI Overview](development-guidelines/continuous-integration/index-continuous-integration.md)** - Build and test automation
 - **[Build](development-guidelines/continuous-integration/build-continuous-integration.md)** - .NET build process, multi-targeting
 - **[Testing](development-guidelines/continuous-integration/test-continuous-integration.md)** - xUnit, Moq, CI integration
 
 **Continuous Deployment** (Publish & Deploy):
-- **[CD Overview](development-guidelines/continuous-deployment/continuous-deployment-index.md)** - Decision tree for deployment strategy
+- **[CD Overview](development-guidelines/continuous-deployment/index-continuous-deployment.md)** - Decision tree for deployment strategy
 - **[NuGet Packages](development-guidelines/continuous-deployment/nuget-publish-continuous-deployment.md)** - Publishing to NuGet.org
 - **[Web Services](development-guidelines/continuous-deployment/web-deploy-continuous-deployment.md)** - ASP.NET Core, systemd, secrets
 - **[Local Applications](development-guidelines/continuous-deployment/local-apps-deploy-continuous-deployment.md)** - Self-hosted runner, systemd services
