@@ -31,10 +31,10 @@ What am I doing?
 │     └─ Terminal (OpenCode) → ht-mcp-terminal.md
 │
 ├─ Learning/applying SOLID principles
-│  └─ Read: solid-principles/solid-principles-2025.md
+│  └─ Read: solid-principles/solid-principles.md
 │
 └─ Implementing design patterns
-   └─ Read: design-patterns/gof-design-patterns-2025.md
+   └─ Read: design-patterns/gof-design-patterns.md
 ```
 
 ---
@@ -75,10 +75,10 @@ What am I doing?
 - Code review feedback about design
 - Learning modern SOLID interpretation
 
-**Index:** [solid-principles/solid-principles-2025.md](solid-principles/solid-principles-2025.md)
+**Index:** [solid-principles/solid-principles.md](solid-principles/solid-principles.md)
 
 **Key documents:**
-- `solid-principles-2025.md` - Modern SOLID (2025 update)
+- `solid-principles.md` - Modern SOLID (2025 update)
 - `solid-principles-2025-cz.md` - Czech version (detailed)
 
 ---
@@ -91,10 +91,10 @@ What am I doing?
 - Refactoring to patterns
 - Learning pattern catalog
 
-**Index:** [design-patterns/gof-design-patterns-2025.md](design-patterns/gof-design-patterns-2025.md)
+**Index:** [design-patterns/gof-design-patterns.md](design-patterns/gof-design-patterns.md)
 
 **Key documents:**
-- `gof-design-patterns-2025.md` - GoF patterns (2025 update)
+- `gof-design-patterns.md` - GoF patterns (2025 update)
 - `gof-design-patterns-2025-cz.md` - Czech version (detailed)
 
 ---
@@ -113,8 +113,8 @@ What am I doing?
 3. Follow: Deployment checklist
 
 ### "Refactor code for better design"
-1. Read: **solid-principles/solid-principles-2025.md**
-2. Read: **design-patterns/gof-design-patterns-2025.md**
+1. Read: **solid-principles/solid-principles.md**
+2. Read: **design-patterns/gof-design-patterns.md**
 3. Apply principles and patterns
 
 ---
@@ -192,8 +192,8 @@ Savings: 85% tokens
 |----------|------|
 | **This index** | `~/GitHub/Olbrasoft/engineering-handbook/AGENTS.md` |
 | **Development** | `~/GitHub/Olbrasoft/engineering-handbook/development-guidelines/AGENTS.md` |
-| **SOLID** | `~/GitHub/Olbrasoft/engineering-handbook/solid-principles/solid-principles-2025.md` |
-| **Patterns** | `~/GitHub/Olbrasoft/engineering-handbook/design-patterns/gof-design-patterns-2025.md` |
+| **SOLID** | `~/GitHub/Olbrasoft/engineering-handbook/solid-principles/solid-principles.md` |
+| **Patterns** | `~/GitHub/Olbrasoft/engineering-handbook/design-patterns/gof-design-patterns.md` |
 | **Secrets** | `~/Dokumenty/přístupy/api-keys.md` (NOT in handbook!) |
 
 ---

@@ -102,7 +102,7 @@ For Olbrasoft projects, add to project `.claude.json`:
 **Agent workflow:**
 1. Reads global .claude.json → "Check handbook"
 2. Reads `AGENTS.md` (root) → "Refactoring → SOLID principles"
-3. Reads `solid-principles/AGENTS.md` → "SRP violation → solid-principles-2025.md"
+3. Reads `solid-principles/AGENTS.md` → "SRP violation → solid-principles.md"
 4. Loads relevant section: Single Responsibility Principle
 5. Applies SRP guidance
 6. Optionally checks `design-patterns/AGENTS.md` for applicable patterns
@@ -171,8 +171,8 @@ cat ~/GitHub/Olbrasoft/engineering-handbook/development-guidelines/ci-cd-nuget-p
 ### Test 3: Find Specific Topic
 ```bash
 # Agent should find pattern/principle
-grep -A 20 "Observer Pattern" ~/GitHub/Olbrasoft/engineering-handbook/design-patterns/gof-design-patterns-2025.md
-grep -A 20 "Single Responsibility" ~/GitHub/Olbrasoft/engineering-handbook/solid-principles/solid-principles-2025.md
+grep -A 20 "Observer Pattern" ~/GitHub/Olbrasoft/engineering-handbook/design-patterns/gof-design-patterns.md
+grep -A 20 "Single Responsibility" ~/GitHub/Olbrasoft/engineering-handbook/solid-principles/solid-principles.md
 ```
 
 ---

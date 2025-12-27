@@ -58,5 +58,5 @@ To maximize efficiency, we distinguish between **Gemini** (Operational/Analysis)
 
 - **Process & Setup:** [development-guidelines/AGENTS.md](development-guidelines/AGENTS.md)
 - **Feature Dev:** [development-guidelines/feature-workflow.md](development-guidelines/feature-workflow.md)
-- **Code Standards:** [solid-principles/solid-principles-2025.md](solid-principles/solid-principles-2025.md)
-- **Patterns:** [design-patterns/gof-design-patterns-2025.md](design-patterns/gof-design-patterns-2025.md)
+- **Code Standards:** [solid-principles/solid-principles.md](solid-principles/solid-principles.md)
+- **Patterns:** [design-patterns/gof-design-patterns.md](design-patterns/gof-design-patterns.md)

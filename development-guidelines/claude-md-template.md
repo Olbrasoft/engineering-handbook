@@ -34,8 +34,8 @@
 
 **ALL code in this project MUST follow:**
 - Engineering Handbook: `~/GitHub/Olbrasoft/engineering-handbook/AGENTS.md`
-- SOLID Principles: `~/GitHub/Olbrasoft/engineering-handbook/solid-principles/solid-principles-2025.md`
-- Design Patterns: `~/GitHub/Olbrasoft/engineering-handbook/design-patterns/gof-design-patterns-2025.md`
+- SOLID Principles: `~/GitHub/Olbrasoft/engineering-handbook/solid-principles/solid-principles.md`
+- Design Patterns: `~/GitHub/Olbrasoft/engineering-handbook/design-patterns/gof-design-patterns.md`
 - Git Workflow: `~/GitHub/Olbrasoft/engineering-handbook/development-guidelines/workflow-guide.md`
 
 ---
@@ -70,7 +70,7 @@ tests/
 
 ### SOLID Principles (Enforced)
 
-Reference: `~/GitHub/Olbrasoft/engineering-handbook/solid-principles/solid-principles-2025.md`
+Reference: `~/GitHub/Olbrasoft/engineering-handbook/solid-principles/solid-principles.md`
 
 **Single Responsibility:**
 - One class = one reason to change
@@ -94,7 +94,7 @@ Reference: `~/GitHub/Olbrasoft/engineering-handbook/solid-principles/solid-princ
 
 ### Design Patterns (Expected)
 
-Reference: `~/GitHub/Olbrasoft/engineering-handbook/design-patterns/gof-design-patterns-2025.md`
+Reference: `~/GitHub/Olbrasoft/engineering-handbook/design-patterns/gof-design-patterns.md`
 
 **Required patterns in this project:**
 - **Repository Pattern:** For all data access (`IRepository<T>`)
@@ -305,8 +305,8 @@ Example:
 ## Related Documentation
 
 - Engineering Handbook: `~/GitHub/Olbrasoft/engineering-handbook/`
-- SOLID Principles: `~/GitHub/Olbrasoft/engineering-handbook/solid-principles/solid-principles-2025.md`
-- Design Patterns: `~/GitHub/Olbrasoft/engineering-handbook/design-patterns/gof-design-patterns-2025.md`
+- SOLID Principles: `~/GitHub/Olbrasoft/engineering-handbook/solid-principles/solid-principles.md`
+- Design Patterns: `~/GitHub/Olbrasoft/engineering-handbook/design-patterns/gof-design-patterns.md`
 - Code Review Guide: `~/GitHub/Olbrasoft/engineering-handbook/development-guidelines/code-review-claude.md`
 ```
 

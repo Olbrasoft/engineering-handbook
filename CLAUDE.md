@@ -39,11 +39,11 @@
 
 ### 🎯 SOLID Principles
 **Task:** Apply modern SOLID principles
-**Read:** [solid-principles/solid-principles-2025.md](solid-principles/solid-principles-2025.md)
+**Read:** [solid-principles/solid-principles.md](solid-principles/solid-principles.md)
 
 ### 🧩 Design Patterns
 **Task:** Implement Gang of Four patterns
-**Read:** [design-patterns/gof-design-patterns-2025.md](design-patterns/gof-design-patterns-2025.md)
+**Read:** [design-patterns/gof-design-patterns.md](design-patterns/gof-design-patterns.md)
 
 ---
 

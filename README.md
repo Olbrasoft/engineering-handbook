@@ -6,7 +6,7 @@ C# / .NET development standards and reference guides for Olbrasoft projects.
 
 **New to the handbook?** Start here:
 - [Workflow Guide](development-guidelines/workflow.md) - Git, branches, PRs, sub-issues
-- [SOLID Principles](solid-principles/solid-principles-2025.md) - Modern interpretation
+- [SOLID Principles](solid-principles/solid-principles.md) - Modern interpretation
 - [Testing Guide](development-guidelines/testing.md) - Unit tests, mocking, xUnit
 
 ## Development Guidelines
@@ -44,8 +44,8 @@ C# / .NET development standards and reference guides for Olbrasoft projects.
 
 ## Design & Architecture
 
-- **[SOLID Principles (2025)](solid-principles/solid-principles-2025.md)** - Modern interpretation with Olbrasoft examples
-- **[GoF Design Patterns (2025)](design-patterns/gof-design-patterns-2025.md)** - All 23 patterns with current best practices
+- **[SOLID Principles (2025)](solid-principles/solid-principles.md)** - Modern interpretation with Olbrasoft examples
+- **[GoF Design Patterns (2025)](design-patterns/gof-design-patterns.md)** - All 23 patterns with current best practices
 
 ## For AI Agents
 

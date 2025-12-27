@@ -825,5 +825,5 @@ Before claiming work is "done" or "completed":
 
 **Related Files:**
 - [workflow.md](workflow.md) - Git workflow and testing requirements
-- [SOLID Principles](../../solid-principles/solid-principles-2025.md) - Design principles
-- [Design Patterns](../../design-patterns/gof-design-patterns-2025.md) - Pattern implementations
+- [SOLID Principles](../../solid-principles/solid-principles.md) - Design principles
+- [Design Patterns](../../design-patterns/gof-design-patterns.md) - Pattern implementations

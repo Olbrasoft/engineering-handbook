@@ -58,10 +58,10 @@ What am I doing?
 │  └─ OpenCode (manual) → code-review/AGENTS.md
 │
 ├─ Learning SOLID principles
-│  └─ Read: ../solid-principles/solid-principles-2025.md
+│  └─ Read: ../solid-principles/solid-principles.md
 │
 └─ Learning design patterns
-   └─ Read: ../design-patterns/gof-design-patterns-2025.md
+   └─ Read: ../design-patterns/gof-design-patterns.md
 ```
 
 ---
@@ -222,7 +222,7 @@ What am I doing?
 ---
 
 ### 10. SOLID Principles
-**File:** `../solid-principles/solid-principles-2025.md` (English)
+**File:** `../solid-principles/solid-principles.md` (English)
 
 **Read when:**
 - Designing new classes/interfaces
@@ -232,7 +232,7 @@ What am I doing?
 ---
 
 ### 11. Design Patterns
-**File:** `../design-patterns/gof-design-patterns-2025.md` (English)
+**File:** `../design-patterns/gof-design-patterns.md` (English)
 
 **Read when:**
 - Implementing common patterns

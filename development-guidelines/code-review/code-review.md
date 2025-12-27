@@ -40,7 +40,7 @@ Code review ensures code quality, adherence to standards, and catches bugs befor
 - Dependency Injection for all services
 
 **SOLID Principles**  
-Reference: [solid-principles-2025.md](../../solid-principles/solid-principles-2025.md)
+Reference: [solid-principles.md](../../solid-principles/solid-principles.md)
 
 - **Single Responsibility:** One class = one reason to change
 - **Open/Closed:** Extend via inheritance/composition, not modification
@@ -49,7 +49,7 @@ Reference: [solid-principles-2025.md](../../solid-principles/solid-principles-20
 - **Dependency Inversion:** Depend on abstractions, not concretions
 
 **Design Patterns**  
-Reference: [gof-design-patterns-2025.md](../../design-patterns/gof-design-patterns-2025.md)
+Reference: [gof-design-patterns.md](../../design-patterns/gof-design-patterns.md)
 
 - **Strategy:** Interchangeable algorithms
 - **Factory:** Object creation with varying types
@@ -235,8 +235,8 @@ Create `CLAUDE.md` in project root to customize review standards:
 
 Follow standards from:
 - ~/GitHub/Olbrasoft/engineering-handbook/development-guidelines/code-review/code-review.md
-- ~/GitHub/Olbrasoft/engineering-handbook/solid-principles/solid-principles-2025.md
-- ~/GitHub/Olbrasoft/engineering-handbook/design-patterns/gof-design-patterns-2025.md
+- ~/GitHub/Olbrasoft/engineering-handbook/solid-principles/solid-principles.md
+- ~/GitHub/Olbrasoft/engineering-handbook/design-patterns/gof-design-patterns.md
 
 ## Project-Specific Rules
 
@@ -265,15 +265,15 @@ When documenting issues, reference relevant handbook sections:
 
 | Issue Type | Reference |
 |------------|-----------|
-| SOLID violations | [solid-principles-2025.md](../../solid-principles/solid-principles-2025.md) |
-| Design patterns | [gof-design-patterns-2025.md](../../design-patterns/gof-design-patterns-2025.md) |
+| SOLID violations | [solid-principles.md](../../solid-principles/solid-principles.md) |
+| Design patterns | [gof-design-patterns.md](../../design-patterns/gof-design-patterns.md) |
 | Testing | [workflow.md](../workflow.md) |
 | Project structure | [structure.md](../project-structure.md) |
 | CI/CD | [overview.md](../ci-cd-overview.md) |
 
 **Example:**
 ```
-Missing Repository pattern for data access (see design-patterns/gof-design-patterns-2025.md#repository)
+Missing Repository pattern for data access (see design-patterns/gof-design-patterns.md#repository)
 ```
 
 ---
@@ -292,8 +292,8 @@ Missing Repository pattern for data access (see design-patterns/gof-design-patte
 ## See Also
 
 - **Engineering Handbook:** [AGENTS.md](../../AGENTS.md)
-- **SOLID Principles:** [solid-principles-2025.md](../../solid-principles/solid-principles-2025.md)
-- **Design Patterns:** [gof-design-patterns-2025.md](../../design-patterns/gof-design-patterns-2025.md)
+- **SOLID Principles:** [solid-principles.md](../../solid-principles/solid-principles.md)
+- **Design Patterns:** [gof-design-patterns.md](../../design-patterns/gof-design-patterns.md)
 - **Git Workflow:** [workflow.md](../workflow.md)
 - **Project Structure:** [structure.md](../project-structure.md)
 
