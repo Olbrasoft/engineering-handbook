@@ -61,7 +61,7 @@ Reference: [gof-patterns-design-patterns.md](../../design-patterns/gof-patterns-
 
 ### Testing Standards
 
-Reference: [Git Workflow](../workflow/git-workflow-workflow.md)
+Reference: [Testing Guide](../testing/index-testing.md)
 
 **Framework:** xUnit + Moq (NOT NUnit/NSubstitute)
 
@@ -70,10 +70,12 @@ Reference: [Git Workflow](../workflow/git-workflow-workflow.md)
 - Test project: `{SourceProject}.Tests` (e.g., `TextToSpeech.Core.Tests`)
 - Test class: `{SourceClass}Tests` (e.g., `TtsResultTests`)
 - **NEVER** single shared test project for multiple source projects
+- See: [Project Structure](../testing/index-testing.md#project-structure)
 
 **Coverage:**
 - All public methods must have tests
 - Test naming: `[Method]_[Scenario]_[Expected]`
+- See: [Unit Tests](../testing/unit-tests-testing.md) for detailed examples
 
 ---
 
