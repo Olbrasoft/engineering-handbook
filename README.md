@@ -51,6 +51,7 @@ C# / .NET development standards and reference guides for Olbrasoft projects.
 - **[Project Setup Index](development-guidelines/project-setup/index-project-setup.md)** - Overview and quick start
 - **[Repository Setup](development-guidelines/project-setup/repository-setup-project-setup.md)** - GitHub repo creation, branch protection, webhooks
 - **[Project Structure](development-guidelines/project-setup/project-structure-project-setup.md)** - Naming conventions, folders, test organization
+- **[Project Config](development-guidelines/project-setup/project-config-project-setup.md)** - CLAUDE.md template for AI assistant configuration
 
 ### Package Management
 - **[Package Management Index](development-guidelines/package-management/index-package-management.md)** - Overview and quick start
@@ -61,7 +62,6 @@ C# / .NET development standards and reference guides for Olbrasoft projects.
 - **[Tools Index](development-guidelines/tools/index-tools.md)** - Overview
 - **[Research Guide](development-guidelines/tools/research-guide-tools.md)** - SearXNG, web search workflow
 - **[HT Terminal](development-guidelines/tools/ht-terminal-tools.md)** - Terminal operations for restricted environments
-- **[CLAUDE.md Template](development-guidelines/tools/claude-template-tools.md)** - Project configuration template
 
 ## Design & Architecture
 

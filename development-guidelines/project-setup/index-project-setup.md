@@ -8,6 +8,7 @@ This section covers everything needed to start a new .NET project:
 
 - **Repository Setup** - Creating GitHub repo, cloning, initial configuration
 - **Project Structure** - Organizing code, folders, naming conventions
+- **Project Config** - CLAUDE.md template for AI assistant configuration
 
 ## Quick Start
 
@@ -43,6 +44,7 @@ See: [Repository Setup](repository-setup-project-setup.md) for complete guide.
 
 - **[repository-setup-project-setup.md](repository-setup-project-setup.md)** - GitHub repository creation, cloning, initial setup
 - **[project-structure-project-setup.md](project-structure-project-setup.md)** - Folder organization, naming conventions, project layout
+- **[project-config-project-setup.md](project-config-project-setup.md)** - CLAUDE.md template for project-specific AI assistant configuration
 
 ## Common Scenarios
 
