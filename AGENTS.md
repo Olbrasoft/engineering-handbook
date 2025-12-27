@@ -31,10 +31,10 @@ What am I doing?
 │     └─ Terminal (OpenCode) → ht-mcp-terminal.md
 │
 ├─ Learning/applying SOLID principles
-│  └─ Read: solid-principles/AGENTS.md
+│  └─ Read: solid-principles/solid-principles-2025.md
 │
 └─ Implementing design patterns
-   └─ Read: design-patterns/AGENTS.md
+   └─ Read: design-patterns/gof-design-patterns-2025.md
 ```
 
 ---
@@ -58,10 +58,10 @@ What am I doing?
 - `github-operations.md` - GitHub CLI, issues, sub-issues, API
 - `research-guide.md` - Internet search, SearXNG, research workflow
 - `ht-mcp-terminal.md` - Terminal for OpenCode (bash disabled)
-- `github-repository-setup.md` - Repo configuration
+- `repository-setup.md` - Repo configuration
 - `ci-cd-overview.md` - Which CI/CD type?
-- `ci-cd-nuget-packages.md` - NuGet publishing
-- `dotnet-project-structure.md` - Folder/naming conventions
+- `ci-cd-nuget.md` - NuGet publishing
+- `project-structure.md` - Folder/naming conventions
 - `workflow.md` - Git workflow, issues, branches
 
 ---
@@ -75,7 +75,7 @@ What am I doing?
 - Code review feedback about design
 - Learning modern SOLID interpretation
 
-**Index:** [solid-principles/AGENTS.md](solid-principles/AGENTS.md)
+**Index:** [solid-principles/solid-principles-2025.md](solid-principles/solid-principles-2025.md)
 
 **Key documents:**
 - `solid-principles-2025.md` - Modern SOLID (2025 update)
@@ -91,7 +91,7 @@ What am I doing?
 - Refactoring to patterns
 - Learning pattern catalog
 
-**Index:** [design-patterns/AGENTS.md](design-patterns/AGENTS.md)
+**Index:** [design-patterns/gof-design-patterns-2025.md](design-patterns/gof-design-patterns-2025.md)
 
 **Key documents:**
 - `gof-design-patterns-2025.md` - GoF patterns (2025 update)
@@ -109,12 +109,12 @@ What am I doing?
 
 ### "Deploy web service to production"
 1. Read: **development-guidelines/AGENTS.md**
-2. Navigate to: `ci-cd-web-services.md`
+2. Navigate to: `ci-cd-web.md`
 3. Follow: Deployment checklist
 
 ### "Refactor code for better design"
-1. Read: **solid-principles/AGENTS.md**
-2. Read: **design-patterns/AGENTS.md**
+1. Read: **solid-principles/solid-principles-2025.md**
+2. Read: **design-patterns/gof-design-patterns-2025.md**
 3. Apply principles and patterns
 
 ---
@@ -192,8 +192,8 @@ Savings: 85% tokens
 |----------|------|
 | **This index** | `~/GitHub/Olbrasoft/engineering-handbook/AGENTS.md` |
 | **Development** | `~/GitHub/Olbrasoft/engineering-handbook/development-guidelines/AGENTS.md` |
-| **SOLID** | `~/GitHub/Olbrasoft/engineering-handbook/solid-principles/AGENTS.md` |
-| **Patterns** | `~/GitHub/Olbrasoft/engineering-handbook/design-patterns/AGENTS.md` |
+| **SOLID** | `~/GitHub/Olbrasoft/engineering-handbook/solid-principles/solid-principles-2025.md` |
+| **Patterns** | `~/GitHub/Olbrasoft/engineering-handbook/design-patterns/gof-design-patterns-2025.md` |
 | **Secrets** | `~/Dokumenty/přístupy/api-keys.md` (NOT in handbook!) |
 
 ---

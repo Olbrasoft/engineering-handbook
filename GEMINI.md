@@ -56,7 +56,7 @@ To maximize efficiency, we distinguish between **Gemini** (Operational/Analysis)
 
 ## 📍 Navigation (Where I look for details)
 
-- **Process & Setup:** [development-guidelines/GEMINI.md](development-guidelines/GEMINI.md)
+- **Process & Setup:** [development-guidelines/AGENTS.md](development-guidelines/AGENTS.md)
 - **Feature Dev:** [development-guidelines/feature-workflow.md](development-guidelines/feature-workflow.md)
 - **Code Standards:** [solid-principles/solid-principles-2025.md](solid-principles/solid-principles-2025.md)
 - **Patterns:** [design-patterns/gof-design-patterns-2025.md](design-patterns/gof-design-patterns-2025.md)
