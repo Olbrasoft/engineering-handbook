@@ -7,15 +7,11 @@ Publishing standalone GUI applications via GitHub Releases.
 - Distribution: GitHub Releases
 - Examples: Desktop apps with GUI
 
-## Supported Formats
+## Distribution Format
 
-| Platform | Format | Description |
-|----------|--------|-------------|
-| Linux | AppImage | Single-file executable, no install |
-| Linux | .deb | Debian/Ubuntu package |
-| Windows | .exe | Installer (MSI/NSIS) |
-| macOS | .app | DMG disk image |
-| All | .zip | Portable binaries |
+**ZIP archives** containing portable binaries for each platform.
+
+Users download and extract - no installer required.
 
 ## Build Workflow
 
@@ -136,19 +132,7 @@ dotnet publish \
 - [ ] Version extracted from Git tag
 - [ ] Release notes in GitHub Release
 
-## Advanced Topics (Future Documentation)
-
-The following topics will be covered in future updates:
-
-- **AppImage creation** - Creating single-file Linux executables
-- **.deb package creation** - Building Debian/Ubuntu packages
-- **MSI installer for Windows** - Creating Windows installers
-- **Code signing** - Signing binaries for Windows and macOS
-
-For now, use `.zip` portable binaries for distribution. See [.NET Publish Docs](https://learn.microsoft.com/en-us/dotnet/core/deploying/) for platform-specific publishing.
-
 ## Reference
 
 - [.NET Publish Docs](https://learn.microsoft.com/en-us/dotnet/core/deploying/)
 - [GitHub Releases](https://docs.github.com/en/repositories/releasing-projects-on-github)
-- [AppImage](https://appimage.org/)
