@@ -33,13 +33,18 @@ What am I doing?
 ├─ Setting up NEW GitHub repository
 │  └─ Read: repository-setup.md
 │
-├─ Setting up Continuous Integration/Deployment for .NET project
+├─ Setting up Continuous Integration (Build & Test)
+│  ├─ Build process → continuous-integration/build.md
+│  ├─ Testing → continuous-integration/test.md
+│  └─ Overview → continuous-integration/continuous-integration-index.md
+│
+├─ Setting up Continuous Deployment (Publish & Deploy)
 │  ├─ What type?
-│  │  ├─ NuGet package (library) → continuous-integration-deployment/nuget.md
-│  │  ├─ Web service (API/webapp) → continuous-integration-deployment/web.md
-│  │  ├─ Local app → continuous-integration-deployment/local-apps.md
-│  │  └─ Desktop app (GUI) → continuous-integration-deployment/desktop.md
-│  └─ Not sure? → continuous-integration-deployment/overview.md (then pick specific doc)
+│  │  ├─ NuGet package (library) → continuous-deployment/nuget-publish.md
+│  │  ├─ Web service (API/webapp) → continuous-deployment/web-deploy.md
+│  │  ├─ Local app → continuous-deployment/local-apps-deploy.md
+│  │  └─ Desktop app (GUI) → continuous-deployment/desktop-release.md
+│  └─ Not sure? → continuous-deployment/continuous-deployment-index.md (decision tree)
 │
 ├─ Structuring .NET project (folders/naming)
 │  └─ Read: project-structure.md
@@ -84,8 +89,25 @@ What am I doing?
 
 ---
 
-### 2. Continuous Integration/Deployment: Which Type?
-**File:** `continuous-integration-deployment/overview.md`
+### 2. Continuous Integration: Build & Test
+**Files:**
+- `continuous-integration/continuous-integration-index.md` - Overview
+- `continuous-integration/build.md` - .NET build process
+- `continuous-integration/test.md` - Automated testing
+
+**Read when:**
+- Setting up automated builds
+- Configuring test workflows
+- Understanding CI pipeline
+
+**Key workflows:**
+- `build.yml` - Build & test on push/PR
+- GitHub Actions with ubuntu-latest runner
+
+---
+
+### 3. Continuous Deployment: Which Type?
+**File:** `continuous-deployment/continuous-deployment-index.md`
 
 **Read when:**
 - Not sure which deployment strategy to use
@@ -96,8 +118,8 @@ What am I doing?
 
 ---
 
-### 3. Continuous Integration/Deployment: NuGet Packages
-**File:** `continuous-integration-deployment/nuget.md`
+### 4. Continuous Deployment: NuGet Packages
+**File:** `continuous-deployment/nuget-publish.md`
 
 **Read when:**
 - Publishing class library to NuGet.org
@@ -118,8 +140,8 @@ What am I doing?
 
 ---
 
-### 4. Continuous Integration/Deployment: Web Services
-**File:** `continuous-integration-deployment/web.md`
+### 5. Continuous Deployment: Web Services
+**File:** `continuous-deployment/web-deploy.md`
 
 **Read when:**
 - Deploying ASP.NET Core application to Linux server
@@ -137,8 +159,8 @@ What am I doing?
 
 ---
 
-### 5. Continuous Integration/Deployment: Desktop Apps
-**File:** `continuous-integration-deployment/desktop.md`
+### 6. Continuous Deployment: Desktop Apps
+**File:** `continuous-deployment/desktop-release.md`
 
 **Read when:**
 - Building GUI application (WinForms/WPF/Avalonia/MAUI)
@@ -154,7 +176,7 @@ What am I doing?
 
 ---
 
-### 6. .NET Project Structure
+### 7. .NET Project Structure
 **File:** `project-structure.md`
 
 **Read when:**
@@ -169,7 +191,7 @@ What am I doing?
 
 ---
 
-### 7. Git Workflow
+### 8. Git Workflow
 **File:** `workflow.md` (English)
 
 **Read when:**
@@ -178,7 +200,7 @@ What am I doing?
 - Commit messages
 - Sub-issues (NOT checkboxes!)
 
-### 8. Feature Development
+### 9. Feature Development
 **File:** `feature-workflow.md`
 
 **Read when:**
@@ -187,7 +209,7 @@ What am I doing?
 - Exploring unknown codebase
 - Using 7-phase systematic process
 
-### 9. Code Review & Refactoring (General)
+### 10. Code Review & Refactoring (General)
 **File:** `code-review-refactoring-guide.md` (English) / `code-review-refactoring-guide-cz.md` (Czech)
 
 **Read when:**
@@ -198,7 +220,7 @@ What am I doing?
 
 ---
 
-### 9. Code Review with Claude Code (Automated)
+### 11. Code Review with Claude Code (Automated)
 **File:** `code-review-claude.md` (English) / `code-review-claude-cz.md` (Czech)
 
 **Read when:**
@@ -220,7 +242,7 @@ What am I doing?
 
 ---
 
-### 10. SOLID Principles
+### 12. SOLID Principles
 **File:** `../solid-principles/solid-principles.md` (English)
 
 **Read when:**
@@ -230,7 +252,7 @@ What am I doing?
 
 ---
 
-### 11. Design Patterns
+### 13. Design Patterns
 **File:** `../design-patterns/gof-design-patterns.md` (English)
 
 **Read when:**
@@ -240,7 +262,7 @@ What am I doing?
 
 ---
 
-### 12. GitHub Operations (OpenCode)
+### 14. GitHub Operations (OpenCode)
 **File:** `github-operations/AGENTS.md`
 
 **Read when:**
@@ -257,7 +279,7 @@ What am I doing?
 
 ---
 
-### 13. Web Search & Research (OpenCode)
+### 15. Web Search & Research (OpenCode)
 **File:** `research-guide.md`
 
 **Read when:**
@@ -273,7 +295,7 @@ What am I doing?
 
 ---
 
-### 14. ht-mcp Terminal (OpenCode)
+### 16. ht-mcp Terminal (OpenCode)
 **File:** `ht-mcp-terminal.md`
 
 **Read when:**
@@ -294,20 +316,23 @@ What am I doing?
 ### "I need to create a new NuGet package repository"
 1. Read: `repository-setup.md` (create repo)
 2. Read: `project-structure.md` (organize code)
-3. Read: `continuous-integration-deployment/nuget.md` (setup deployment)
-4. Read: `workflow.md` (issues/branches)
+3. Read: `continuous-integration/build.md` (setup build)
+4. Read: `continuous-integration/test.md` (setup tests)
+5. Read: `continuous-deployment/nuget-publish.md` (setup publishing)
+6. Read: `workflow.md` (issues/branches)
 
 ### "I need to deploy a web service"
-1. Read: `continuous-integration-deployment/web.md` (deployment process)
+1. Read: `continuous-deployment/web-deploy.md` (deployment process)
 2. Check: `/opt/olbrasoft/<app>/` structure
 3. Verify: systemd EnvironmentFile has ALL secrets
 4. Test: ALL features work (100% functional rule)
 
 ### "I'm starting a new .NET project"
-1. Read: `continuous-integration-deployment/overview.md` (determine type)
+1. Read: `continuous-deployment/continuous-deployment-index.md` (determine deployment type)
 2. Read: `project-structure.md` (structure)
-3. Read: specific deployment doc based on type
-4. Read: `workflow.md` (Git workflow)
+3. Read: `continuous-integration/build.md` and `test.md` (CI setup)
+4. Read: specific deployment doc based on type
+5. Read: `workflow.md` (Git workflow)
 
 ---
 
@@ -351,15 +376,17 @@ What am I doing?
 
 | Document | Status | Notes |
 |----------|--------|-------|
-| ci-cd-overview | ✅ Complete | Decision tree |
-| ci-cd-nuget | ✅ Complete | Multi-package examples |
-| ci-cd-web | ✅ Complete | systemd, secrets |
-| ci-cd-desktop | ⚠️ Incomplete | TODO: AppImage, .deb |
+| continuous-integration/build | ✅ Complete | .NET build process |
+| continuous-integration/test | ✅ Complete | Automated testing |
+| continuous-deployment/nuget-publish | ✅ Complete | Publishing to NuGet.org |
+| continuous-deployment/web-deploy | ✅ Complete | systemd, secrets |
+| continuous-deployment/local-apps-deploy | ✅ Complete | Self-hosted runner |
+| continuous-deployment/desktop-release | ⚠️ Incomplete | TODO: AppImage, .deb |
+| local-package-testing | ✅ Complete | Test before publish |
 | repository-setup | ✅ Complete | - |
 | project-structure | ✅ Complete | - |
-| workflow-guide | ✅ Complete | - |
-| code-review-refactoring-guide | ✅ Complete | Manual review |
-| code-review-claude | ✅ Complete | Claude Code /code-review |
+| workflow | ✅ Complete | - |
+| code-review/ | ✅ Complete | Multiple files |
 
 ---
 
