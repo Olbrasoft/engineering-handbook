@@ -168,6 +168,14 @@ Tests run automatically in GitHub Actions:
 - Test handler behavior
 - See: [Unit Tests - Database Testing](unit-tests-testing.md#database-testing-with-in-memory)
 
+### Scenario 5: Testing Clipboard
+
+→ **Use Unit Tests with Abstraction**
+- Create interface for clipboard (IClipboard)
+- Mock the interface in tests
+- Use `[StaFact]` only if testing real implementation
+- See: [Clipboard Testing](clipboard-testing.md)
+
 ## Required Packages
 
 ### Unit Tests
@@ -371,3 +379,4 @@ Choose your test type:
 - [Test Continuous Integration](../continuous-integration/test-continuous-integration.md) - Running tests in CI
 - [Unit Tests](unit-tests-testing.md) - Detailed unit testing guide
 - [Integration Tests](integration-tests-testing.md) - Detailed integration testing guide
+- [Clipboard Testing](clipboard-testing.md) - Testing clipboard operations

@@ -170,7 +170,7 @@ Workflow integrates with CI/CD pipeline:
 2. **Create PR** → CI runs full build + test
 3. **Merge to main** → CD deploys to production
 
-See: [Continuous Integration](../continuous-integration/index-continuous-integration.md) for CI setup.
+See: [Continuous Integration](../dotnet/continuous-integration/index-continuous-integration.md) for CI setup.
 
 ## Secrets Management
 
@@ -192,7 +192,7 @@ Choose your workflow guide:
 
 ## See Also
 
-- [Testing Guide](../testing/index-testing.md) - Test before committing
+- [Testing Guide](../dotnet/testing/index-testing.md) - Test before committing
 - [Code Review](../code-review/index-code-review.md) - Review before merging
-- [Continuous Integration](../continuous-integration/index-continuous-integration.md) - CI/CD setup
-- [Continuous Deployment](../continuous-deployment/index-continuous-deployment.md) - Deployment workflows
+- [Continuous Integration](../dotnet/continuous-integration/index-continuous-integration.md) - CI/CD setup
+- [Continuous Deployment](../dotnet/continuous-deployment/index-continuous-deployment.md) - Deployment workflows

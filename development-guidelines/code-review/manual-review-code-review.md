@@ -70,7 +70,7 @@ Use after code works. For workflow/branches see [Git Workflow](../workflow/git-w
 
 ## Test Coverage
 
-Reference: [Testing Guide](../testing/index-testing.md)
+Reference: [Testing Guide](../dotnet/testing/index-testing.md)
 
 | Type | Min | Target |
 |------|-----|--------|
@@ -81,7 +81,7 @@ Reference: [Testing Guide](../testing/index-testing.md)
 
 **Quality > quantity.** 100% coverage ≠ bug-free.
 
-**Test structure:** See [Project Structure](../testing/index-testing.md#project-structure) for how to organize test projects and directories.
+**Test structure:** See [Project Structure](../dotnet/testing/index-testing.md#project-structure) for how to organize test projects and directories.
 
 **Test checklist:** Meaningful assertions? Edge cases? Descriptive name? Independent? Fails if code wrong?
 

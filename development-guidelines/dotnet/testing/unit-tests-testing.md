@@ -211,6 +211,7 @@ public class LlmCorrectionServiceTests : IDisposable
 - Database repositories
 - Logging (ILogger)
 - Time providers (ISystemClock)
+- System resources (clipboard, file system)
 
 ❌ **NEVER mock:**
 - Classes under test
@@ -402,3 +403,4 @@ public class MyTests : IDisposable
 - [Integration Tests](integration-tests-testing.md) - Testing with real services
 - [Testing Index](index-testing.md) - Overview of all testing guides
 - [CI Testing](../continuous-integration/test-continuous-integration.md) - Running tests in GitHub Actions
+- [Clipboard Testing](clipboard-testing.md) - Testing clipboard operations

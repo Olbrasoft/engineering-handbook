@@ -128,5 +128,5 @@ Key patterns:
 ## See Also
 
 - [SOLID Principles](../solid-principles/solid-principles.md) - Design principles that complement patterns
-- [Architecture Guide](../development-guidelines/architecture/index-architecture.md) - Architecture design and decisions
-- [Feature Development](../development-guidelines/workflow/feature-development-workflow.md) - Applying patterns in feature development
+- [Architecture Guide](../../architecture/index-architecture.md) - Architecture design and decisions
+- [Feature Development](../../workflow/feature-development-workflow.md) - Applying patterns in feature development

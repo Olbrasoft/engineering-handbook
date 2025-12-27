@@ -29,7 +29,7 @@ This section covers everything needed to start a new .NET project:
    ```
 
 3. **Set Up Project Structure**
-   - See: [Project Structure](project-structure-project-setup.md) for folder organization
+   - See: [Project Structure](../dotnet/project-structure-dotnet.md) for folder organization
 
 4. **Initial Commit**
    ```bash
@@ -43,8 +43,11 @@ See: [Repository Setup](repository-setup-project-setup.md) for complete guide.
 ## File Index
 
 - **[repository-setup-project-setup.md](repository-setup-project-setup.md)** - GitHub repository creation, cloning, initial setup
-- **[project-structure-project-setup.md](project-structure-project-setup.md)** - Folder organization, naming conventions, project layout
 - **[project-config-project-setup.md](project-config-project-setup.md)** - CLAUDE.md template for project-specific AI assistant configuration
+
+**See also:** [.NET Project Structure](../dotnet/project-structure-dotnet.md) - Folder organization, naming conventions, project layout
+
+**See also:** [.NET Layered Naming](../dotnet/layered-naming-dotnet.md) - Project naming for multi-layered applications (Blog example)
 
 ## Common Scenarios
 
@@ -140,19 +143,19 @@ git push
 After setting up project:
 
 1. **Set up Continuous Integration**
-   - See: [Build CI](../continuous-integration/build-continuous-integration.md)
-   - See: [Test CI](../continuous-integration/test-continuous-integration.md)
+   - See: [Build CI](../dotnet/continuous-integration/build-continuous-integration.md)
+   - See: [Test CI](../dotnet/continuous-integration/test-continuous-integration.md)
 
 2. **Set up Continuous Deployment**
-   - See: [Continuous Deployment](../continuous-deployment/index-continuous-deployment.md)
+   - See: [Continuous Deployment](../dotnet/continuous-deployment/index-continuous-deployment.md)
 
 ## Next Steps
 
 - **[Repository Setup →](repository-setup-project-setup.md)** - Create GitHub repo and clone
-- **[Project Structure →](project-structure-project-setup.md)** - Organize code and folders
+- **[Project Structure →](../dotnet/project-structure-dotnet.md)** - Organize code and folders
 
 ## See Also
 
 - [Workflow Guide](../workflow/index-workflow.md) - Git workflow and issues
-- [Testing Guide](../testing/index-testing.md) - Set up tests
-- [Package Management](../package-management/index-package-management.md) - NuGet packages
+- [Testing Guide](../dotnet/testing/index-testing.md) - Set up tests
+- [Package Management](../dotnet/package-management/index-package-management.md) - NuGet packages

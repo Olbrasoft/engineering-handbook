@@ -61,7 +61,7 @@ Reference: [gof-patterns-design-patterns.md](../../design-patterns/gof-patterns-
 
 ### Testing Standards
 
-Reference: [Testing Guide](../testing/index-testing.md)
+Reference: [Testing Guide](../dotnet/testing/index-testing.md)
 
 **Framework:** xUnit + Moq (NOT NUnit/NSubstitute)
 
@@ -70,12 +70,12 @@ Reference: [Testing Guide](../testing/index-testing.md)
 - Test project: `{SourceProject}.Tests` (e.g., `TextToSpeech.Core.Tests`)
 - Test class: `{SourceClass}Tests` (e.g., `TtsResultTests`)
 - **NEVER** single shared test project for multiple source projects
-- See: [Project Structure](../testing/index-testing.md#project-structure)
+- See: [Project Structure](../dotnet/testing/index-testing.md#project-structure)
 
 **Coverage:**
 - All public methods must have tests
 - Test naming: `[Method]_[Scenario]_[Expected]`
-- See: [Unit Tests](../testing/unit-tests-testing.md) for detailed examples
+- See: [Unit Tests](../dotnet/testing/unit-tests-testing.md) for detailed examples
 
 ---
 
@@ -129,7 +129,7 @@ Reference: [Testing Guide](../testing/index-testing.md)
 
 ### File Organization
 
-Reference: [structure.md](../project-setup/project-structure-project-setup.md)
+Reference: [project-structure.md](../dotnet/project-structure-dotnet.md)
 
 ```
 src/
@@ -267,11 +267,11 @@ When documenting issues, reference relevant handbook sections:
 
 | Issue Type | Reference |
 |------------|-----------|
-| SOLID violations | [solid-principles.md](../../solid-principles/solid-principles.md) |
-| Design patterns | [gof-patterns-design-patterns.md](../../design-patterns/gof-patterns-design-patterns.md) |
-| Testing | [Testing Guide](../testing/index-testing.md) |
-| Project structure | [structure.md](../project-setup/project-structure-project-setup.md) |
-| CI/CD | [Continuous Integration](../continuous-integration/index-continuous-integration.md) |
+| SOLID violations | [solid-principles.md](../dotnet/solid-principles/solid-principles.md) |
+| Design patterns | [gof-patterns-design-patterns.md](../dotnet/design-patterns/gof-patterns-design-patterns.md) |
+| Testing | [Testing Guide](../dotnet/testing/index-testing.md) |
+| Project structure | [project-structure.md](../dotnet/project-structure-dotnet.md) |
+| CI/CD | [Continuous Integration](../dotnet/continuous-integration/index-continuous-integration.md) |
 
 **Example:**
 ```

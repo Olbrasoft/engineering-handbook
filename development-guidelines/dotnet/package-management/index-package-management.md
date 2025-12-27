@@ -183,5 +183,5 @@ dotnet list package
 ## See Also
 
 - [Continuous Deployment - NuGet](../continuous-deployment/nuget-publish-continuous-deployment.md) - Publish packages in CI/CD
-- [Project Structure](../project-setup/project-structure-project-setup.md) - Organize package projects
-- [Workflow Guide](../workflow/index-workflow.md) - Git workflow for packages
+- [Project Structure](../project-structure-dotnet.md) - Organize package projects
+- [Workflow Guide](../../workflow/index-workflow.md) - Git workflow for packages

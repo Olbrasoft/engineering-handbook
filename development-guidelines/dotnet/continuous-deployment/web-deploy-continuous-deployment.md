@@ -215,5 +215,5 @@ journalctl --user -u myapp.service -n 50
 
 - [Build](../continuous-integration/build-continuous-integration.md) - Build before deploying
 - [Test](../continuous-integration/test-continuous-integration.md) - Test before deploying
-- [Secrets Guide](../secrets-management.md) - Full secrets documentation
+- [Secrets Guide](../../secrets-management.md) - Full secrets documentation
 - [VirtualAssistant deploy.sh](https://github.com/Olbrasoft/VirtualAssistant/blob/main/deploy/deploy.sh) - Real example
