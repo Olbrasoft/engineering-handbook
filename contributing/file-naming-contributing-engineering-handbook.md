@@ -168,7 +168,35 @@ gof-design-patterns.md
 - Updates should be in-place, not versioned files
 - Exception: If you need historical versions, use separate `archive/` directory
 
-### 7. Czech Translations Get `-cz` Suffix
+### 7. Tool-Specific Configuration Files (EXCEPTION)
+
+**ONLY exception to postfix rule:** Tool-specific configuration files
+
+**Pattern:** `UPPERCASE.md` (no postfix, uppercase)
+
+**Files:**
+- `CLAUDE.md` - Claude Code configuration
+- `AGENTS.md` - General AI agents configuration
+- `GEMINI.md` - Gemini configuration
+
+**Example in handbook:**
+```
+code-review/
+├── index-code-review.md              ← Index (follows postfix rule)
+├── general-code-review.md            ← Topic (follows postfix rule)
+├── manual-review-code-review.md      ← Topic (follows postfix rule)
+└── CLAUDE.md                         ← Tool-specific (EXCEPTION - no postfix)
+```
+
+**Rationale:**
+- These are standard conventions for specific tools
+- UPPERCASE signals "tool configuration, not documentation"
+- Tools expect exact filenames (e.g., Claude Code looks for `CLAUDE.md`)
+- Currently only 1 such file in handbook: `code-review/CLAUDE.md`
+
+**CRITICAL:** This is the ONLY exception to the postfix rule!
+
+### 8. Czech Translations Get `-cz` Suffix
 
 **Pattern:**
 ```
