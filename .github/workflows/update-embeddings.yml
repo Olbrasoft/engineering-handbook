@@ -1,0 +1,78 @@
+name: Update Handbook Embeddings
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**/*.md'
+
+jobs:
+  update-embeddings:
+    runs-on: [self-hosted, handbook-search]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # Need previous commit for diff
+
+      - name: Get changed markdown files
+        id: changed-files
+        uses: tj-actions/changed-files@v47
+        with:
+          files: |
+            **/*.md
+
+      - name: Display changed files
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          echo "Changed markdown files:"
+          echo "${{ steps.changed-files.outputs.all_changed_files }}"
+
+      - name: Import changed files to HandbookSearch
+        if: steps.changed-files.outputs.any_changed == 'true'
+        working-directory: ${{ github.workspace }}
+        run: |
+          failed=0
+          success=0
+
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "::group::Importing: $file"
+
+            # Get absolute path to the file
+            file_path="${{ github.workspace }}/$file"
+
+            if [ ! -f "$file_path" ]; then
+              echo "::warning::File not found: $file_path"
+              failed=$((failed + 1))
+              echo "::endgroup::"
+              continue
+            fi
+
+            # Import using HandbookSearch.Cli
+            if /home/jirka/Olbrasoft/HandbookSearch/src/HandbookSearch.Cli/bin/Release/net10.0/HandbookSearch.Cli import-files --files "$file_path"; then
+              echo "::notice::Successfully imported: $file"
+              success=$((success + 1))
+            else
+              echo "::error::Failed to import: $file"
+              failed=$((failed + 1))
+            fi
+
+            echo "::endgroup::"
+          done
+
+          echo ""
+          echo "✅ Import summary:"
+          echo "   Success: $success"
+          echo "   Failed:  $failed"
+          echo "   Total:   $(( success + failed ))"
+
+          if [ $failed -gt 0 ]; then
+            echo "::error::$failed file(s) failed to import"
+            exit 1
+          fi
+        env:
+          ConnectionStrings__DefaultConnection: "Host=localhost;Database=handbook_search;Username=postgres"
+          Ollama__BaseUrl: "http://localhost:11434"
+          Ollama__Model: "nomic-embed-text"
+          Ollama__Dimensions: "768"
