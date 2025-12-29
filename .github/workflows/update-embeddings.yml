@@ -29,6 +29,11 @@ jobs:
           echo "Changed markdown files:"
           echo "${{ steps.changed-files.outputs.all_changed_files }}"
 
+      - name: Setup .NET environment
+        run: |
+          echo "PATH=/home/jirka/.dotnet:$PATH" >> $GITHUB_ENV
+          echo "DOTNET_ROOT=/home/jirka/.dotnet" >> $GITHUB_ENV
+
       - name: Delete removed files from HandbookSearch
         if: steps.changed-files.outputs.deleted_files != ''
         working-directory: ${{ github.workspace }}
