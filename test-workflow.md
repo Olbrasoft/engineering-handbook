@@ -2,6 +2,8 @@
 
 This is a test file to verify the updated GitHub Actions workflow for HandbookSearch embeddings.
 
+**Test run #2**: Testing with .NET 10 PATH configuration.
+
 ## Purpose
 
 Testing automatic import with:
