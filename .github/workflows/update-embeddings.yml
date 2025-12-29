@@ -43,7 +43,8 @@ jobs:
           for file in ${{ steps.changed-files.outputs.deleted_files }}; do
             echo "::group::Deleting: $file"
 
-            if /opt/olbrasoft/handbook-search/cli/HandbookSearch.Cli delete-files --files "$file"; then
+            # Run from CLI directory to ensure appsettings.json is found
+            if (cd /opt/olbrasoft/handbook-search/cli && ./HandbookSearch.Cli delete-files --files "$file"); then
               echo "::notice::Successfully deleted: $file"
               deleted_count=$((deleted_count + 1))
             else
@@ -79,9 +80,10 @@ jobs:
             fi
 
             # Import using deployed HandbookSearch.Cli with Czech translation
-            if /opt/olbrasoft/handbook-search/cli/HandbookSearch.Cli import-files \
+            # Run from CLI directory to ensure appsettings.json is found
+            if (cd /opt/olbrasoft/handbook-search/cli && ./HandbookSearch.Cli import-files \
               --files "$file_path" \
-              --translate-cs; then
+              --translate-cs); then
               echo "::notice::Successfully imported: $file (+Czech embedding)"
               success=$((success + 1))
             else
