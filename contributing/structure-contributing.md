@@ -12,17 +12,20 @@ How to organize and structure content within handbook files.
 ## File Length Guidelines
 
 **Target length:** 80-250 lines per file
+**Maximum file size:** 30 KB (30,000 bytes)
 
 **Why:**
 - Easier to read and scan
 - Faster to load (token efficiency for AI)
 - Forces focus on single topic
 - Easier to maintain and update
+- **CRITICAL**: Translation APIs have character limits (Azure Translator: ~33,300 chars/minute)
 
-**If file exceeds ~300 lines:**
-- Consider splitting into multiple focused files
+**If file exceeds ~300 lines OR 30 KB:**
+- **MUST** split into multiple focused files
 - Create a directory with subtopic files
 - Keep index file short (~80-100 lines)
+- Ensure each file stays under 30 KB
 
 **Example:**
 
