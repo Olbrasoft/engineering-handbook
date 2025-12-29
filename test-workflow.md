@@ -2,7 +2,7 @@
 
 This is a test file to verify the updated GitHub Actions workflow for HandbookSearch embeddings.
 
-**Test run #2**: Testing with .NET 10 PATH configuration.
+**Test run #3**: Testing with fixed CLI execution from deployment directory.
 
 ## Purpose
 
