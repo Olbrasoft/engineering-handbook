@@ -79,12 +79,12 @@ jobs:
               continue
             fi
 
-            # Import using deployed HandbookSearch.Cli with Czech translation
+            # Import using deployed HandbookSearch.Cli
             # Run from CLI directory to ensure appsettings.json is found
+            # TODO: Enable --translate-cs when AZURE_TRANSLATOR_API_KEY secret is configured
             if (cd /opt/olbrasoft/handbook-search/cli && ./HandbookSearch.Cli import-files \
-              --files "$file_path" \
-              --translate-cs); then
-              echo "::notice::Successfully imported: $file (+Czech embedding)"
+              --files "$file_path"); then
+              echo "::notice::Successfully imported: $file"
               success=$((success + 1))
             else
               echo "::error::Failed to import: $file"
