@@ -24,6 +24,8 @@
 
 **Production Runtime** (`/opt/olbrasoft/github-issues/config/appsettings.json`):
 
+**Note**: Actual API keys are stored in `~/Dokumenty/přístupy/api-keys.md` and loaded into production config.
+
 ```json
 {
   "TranslatorPool": {
@@ -39,8 +41,8 @@
     "AzureRegion": "westeurope",
     "AzureEndpoint": "https://api.cognitive.microsofttranslator.com/",
     "DeepLApiKeys": [
-      "c236f93a-7fd9-4225-beb3-cfacc1f32f18:fx",
-      "96470ca9-c69b-4f13-99d6-3f49b76af4cd:fx"
+      "YOUR_DEEPL_API_KEY_1:fx",
+      "YOUR_DEEPL_API_KEY_2:fx"
     ],
     "DeepLEndpoint": "https://api.deepl.com/v2/",
     "DeepLFreeEndpoint": "https://api-free.deepl.com/v2/"

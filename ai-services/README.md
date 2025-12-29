@@ -289,13 +289,15 @@ CREATE TABLE ProviderUsage (
 
 **Service**: DeepL Free API
 
-| Account | Email | Created | Reset Date |
-|---------|-------|---------|------------|
-| Main | github.issues@email.cz | 2025-01-12 | 12th of each month |
-| Crow | tuma.rsrobot@gmail.com | Unknown | Check dashboard |
-| OpenCode | opencode@seznam.cz | Unknown | Check dashboard |
+**Note**: Account details stored in `~/Dokumenty/přístupy/api-keys.md`
 
-**Unpredictable**: Each account resets on different date
+Each DeepL Free account resets based on its creation date (not calendar month). Each account has:
+- Associated email address
+- Account creation date
+- Monthly reset date (based on creation date)
+- Current quota usage
+
+**Unpredictable**: Each account resets on different date based on when it was created
 
 **How to Find**:
 1. Log in to https://www.deepl.com/pro-account

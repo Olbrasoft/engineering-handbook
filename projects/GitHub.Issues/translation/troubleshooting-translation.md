@@ -54,13 +54,15 @@ curl -X GET 'https://api-free.deepl.com/v2/usage' \
 
 3. **Update config**:
 
+**Note**: Get actual API keys from `~/Dokumenty/přístupy/api-keys.md`
+
 ```json
 {
   "TranslatorPool": {
     "DeepLApiKeys": [
-      "c236f93a-7fd9-4225-beb3-cfacc1f32f18:fx",  // Crow - 100% available
-      "96470ca9-c69b-4f13-99d6-3f49b76af4cd:fx"   // OpenCode - 93.5% available
-      // "83a8506c-4a9b-4ca5-ad45-9bdcd858ce2a:fx" // Main - EXHAUSTED (removed)
+      "YOUR_DEEPL_API_KEY_1:fx",  // Active key 1
+      "YOUR_DEEPL_API_KEY_2:fx"   // Active key 2
+      // Remove exhausted keys from array
     ]
   }
 }

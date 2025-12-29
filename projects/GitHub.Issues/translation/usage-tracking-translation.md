@@ -40,9 +40,11 @@ public record DeepLUsage(long CharacterCount, long CharacterLimit, long Characte
 
 **Usage**:
 
+**Note**: Replace `YOUR_DEEPL_API_KEY` with actual key from `~/Dokumenty/přístupy/api-keys.md`
+
 ```bash
 curl -X GET 'https://api-free.deepl.com/v2/usage' \
-  -H "Authorization: DeepL-Auth-Key c236f93a-7fd9-4225-beb3-cfacc1f32f18:fx"
+  -H "Authorization: DeepL-Auth-Key YOUR_DEEPL_API_KEY:fx"
 ```
 
 **Response**:

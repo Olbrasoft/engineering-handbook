@@ -17,32 +17,17 @@
 
 #### DeepL API Keys
 
-Located at lines 661-746 in `api-keys.md`:
+**Location**: `~/Dokumenty/přístupy/api-keys.md` (lines 661-746)
 
-```markdown
-## DeepL API Keys
+DeepL API keys are stored securely in the local access credentials file. Each key includes:
+- Key value (with `:fx` suffix for Free tier)
+- Associated email account
+- Tier information (Free: 500k chars/month)
+- Current status and usage
+- Reset date (based on account creation date)
+- Designated usage (Primary/Secondary for GitHub.Issues)
 
-### 1. Main (github.issues@email.cz)
-- **Key**: `83a8506c-4a9b-4ca5-ad45-9bdcd858ce2a:fx`
-- **Tier**: Free (500k chars/month)
-- **Status**: EXHAUSTED (500k/500k used)
-- **Reset Date**: 2026-01-12 (account creation date)
-- **Usage**: Primary for GitHub.Issues (currently disabled due to exhaustion)
-
-### 2. Crow (tuma.rsrobot@gmail.com)
-- **Key**: `c236f93a-7fd9-4225-beb3-cfacc1f32f18:fx`
-- **Tier**: Free (500k chars/month)
-- **Status**: ACTIVE - 100% available (0/500k used)
-- **Reset Date**: Account-specific (check DeepL dashboard)
-- **Usage**: Primary replacement for GitHub.Issues
-
-### 3. OpenCode (opencode@seznam.cz)
-- **Key**: `96470ca9-c69b-4f13-99d6-3f49b76af4cd:fx`
-- **Tier**: Free (500k chars/month)
-- **Status**: ACTIVE - 93.5% available (32,735/500k used)
-- **Reset Date**: Account-specific (check DeepL dashboard)
-- **Usage**: Secondary for GitHub.Issues
-```
+**To access keys**: See `~/Dokumenty/přístupy/api-keys.md`
 
 **Important Notes**:
 - DeepL Free keys have `:fx` suffix
@@ -51,21 +36,14 @@ Located at lines 661-746 in `api-keys.md`:
 
 #### Azure Translator Keys
 
-Located at lines 103-110 in `api-keys.md`:
+**Location**: `~/Dokumenty/přístupy/api-keys.md` (lines 103-110)
 
-```markdown
-## Azure Translator API Keys
+Azure Translator API keys are stored securely in the local access credentials file. Configuration includes:
+- Resource name and region
+- Tier information (Free F0: 2M chars/month)
+- Two active keys (KEY 1 and KEY 2)
 
-### Resource: olbrasoft-translator
-- **Region**: West Europe
-- **Tier**: Free F0 (2M chars/month)
-
-### Keys (both active)
-- **KEY 1**: `YOUR_AZURE_TRANSLATOR_KEY_1`
-- **KEY 2**: `YOUR_AZURE_TRANSLATOR_KEY_2`
-
-**Usage**: Both keys share the same 2M character quota (not 2M each!)
-```
+**To access keys**: See `~/Dokumenty/přístupy/api-keys.md`
 
 **Important Notes**:
 - Both keys share the **same quota** (2M total, NOT 4M)

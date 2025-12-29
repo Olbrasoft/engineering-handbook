@@ -53,7 +53,7 @@ DeepL provides one of the **best quality** machine translation services, especia
 | **Ultimate** | €49.99 | + €9.99/1M chars | `xxxxxx` | `https://api.deepl.com` |
 
 **Important Notes**:
-- Free tier keys have `:fx` suffix (e.g., `c236f93a-7fd9-4225-beb3-cfacc1f32f18:fx`)
+- Free tier keys have `:fx` suffix (e.g., `xxxxxx:fx`)
 - Free tier has **hard limit** of 500k chars/month - no overages allowed
 - Paid tiers have base characters + pay-as-you-go for additional usage
 - Character counting uses Unicode code points (not bytes)
@@ -157,29 +157,17 @@ curl -X GET 'https://api-free.deepl.com/v2/usage' \
 
 **Location**: `~/Dokumenty/přístupy/api-keys.md` (lines 661-746)
 
-#### 1. Main (github.issues@email.cz)
-- **Key**: `83a8506c-4a9b-4ca5-ad45-9bdcd858ce2a:fx`
-- **Tier**: Free
-- **Status**: ❌ EXHAUSTED (500k/500k used)
-- **Reset Date**: 2026-01-12
-- **Account Created**: 2025-01-12
-- **Usage**: Previously primary for GitHub.Issues (currently disabled)
+DeepL API keys are stored securely in the local access credentials file. Each key entry includes:
+- API key value (Free tier format: `xxxxxx:fx`)
+- Associated email account
+- Tier information (Free: 500k chars/month)
+- Current status (Active/Exhausted)
+- Reset date (based on account creation date)
+- Designated usage (Primary/Secondary for GitHub.Issues)
 
-#### 2. Crow (tuma.rsrobot@gmail.com)
-- **Key**: `c236f93a-7fd9-4225-beb3-cfacc1f32f18:fx`
-- **Tier**: Free
-- **Status**: ✅ ACTIVE - 100% available (0/500k used)
-- **Reset Date**: Check DeepL dashboard (account-specific)
-- **Usage**: Primary for GitHub.Issues (as of 2025-12-29)
+**To access keys**: See `~/Dokumenty/přístupy/api-keys.md`
 
-#### 3. OpenCode (opencode@seznam.cz)
-- **Key**: `96470ca9-c69b-4f13-99d6-3f49b76af4cd:fx`
-- **Tier**: Free
-- **Status**: ✅ ACTIVE - 93.5% available (32,735/500k used)
-- **Reset Date**: Check DeepL dashboard (account-specific)
-- **Usage**: Secondary for GitHub.Issues (as of 2025-12-29)
-
-**Total Capacity**: 1,000,000 characters/month (2 active keys × 500k)
+**Current Setup**: Multiple Free tier keys (500k chars/month each) for load distribution
 
 ### Key Format
 
@@ -261,10 +249,13 @@ public record DeepLUsage(
 
 **Bash Example**:
 
+**Note**: Get API key from `~/Dokumenty/přístupy/api-keys.md`
+
 ```bash
 #!/bin/bash
 
-API_KEY="c236f93a-7fd9-4225-beb3-cfacc1f32f18:fx"
+# Replace with your actual API key from ~/Dokumenty/přístupy/api-keys.md
+API_KEY="YOUR_DEEPL_API_KEY:fx"
 
 # Get usage
 RESPONSE=$(curl -s -X GET 'https://api-free.deepl.com/v2/usage' \
@@ -504,13 +495,15 @@ DeepL supports **31 languages** (as of 2025):
 
 ### Basic Translation
 
+**Note**: Replace `YOUR_DEEPL_API_KEY` with actual key from `~/Dokumenty/přístupy/api-keys.md`
+
 ```csharp
 using System.Net.Http;
 using System.Text.Json;
 
 public async Task<string> TranslateAsync(string text, string targetLang)
 {
-    var apiKey = "c236f93a-7fd9-4225-beb3-cfacc1f32f18:fx";
+    var apiKey = "YOUR_DEEPL_API_KEY:fx";
     var endpoint = "https://api-free.deepl.com/v2/translate";
 
     using var client = new HttpClient();
@@ -546,7 +539,7 @@ public class Translation
 ```csharp
 public async Task<string> SafeTranslateAsync(string text, string targetLang)
 {
-    var apiKey = "c236f93a-7fd9-4225-beb3-cfacc1f32f18:fx";
+    var apiKey = "YOUR_DEEPL_API_KEY:fx";
 
     // Check usage first
     var usage = await GetUsageAsync(apiKey);
