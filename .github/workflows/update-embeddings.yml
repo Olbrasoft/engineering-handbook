@@ -29,14 +29,38 @@ jobs:
           echo "Changed markdown files:"
           echo "${{ steps.changed-files.outputs.all_changed_files }}"
 
-      - name: Import changed files to HandbookSearch
-        if: steps.changed-files.outputs.any_changed == 'true'
+      - name: Delete removed files from HandbookSearch
+        if: steps.changed-files.outputs.deleted_files != ''
+        working-directory: ${{ github.workspace }}
+        run: |
+          deleted_count=0
+
+          for file in ${{ steps.changed-files.outputs.deleted_files }}; do
+            echo "::group::Deleting: $file"
+
+            if /opt/olbrasoft/handbook-search/cli/HandbookSearch.Cli delete-files --files "$file"; then
+              echo "::notice::Successfully deleted: $file"
+              deleted_count=$((deleted_count + 1))
+            else
+              echo "::warning::Failed to delete (may not exist in DB): $file"
+            fi
+
+            echo "::endgroup::"
+          done
+
+          echo "✅ Deleted $deleted_count file(s)"
+        env:
+          ConnectionStrings__DefaultConnection: "Host=localhost;Database=handbook_search;Username=postgres;Password=${{ secrets.POSTGRES_PASSWORD }}"
+
+      - name: Import added/modified files to HandbookSearch
+        if: steps.changed-files.outputs.added_files != '' || steps.changed-files.outputs.modified_files != ''
         working-directory: ${{ github.workspace }}
         run: |
           failed=0
           success=0
 
-          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+          # Process added and modified files
+          for file in ${{ steps.changed-files.outputs.added_files }} ${{ steps.changed-files.outputs.modified_files }}; do
             echo "::group::Importing: $file"
 
             # Get absolute path to the file
@@ -49,9 +73,11 @@ jobs:
               continue
             fi
 
-            # Import using HandbookSearch.Cli
-            if /home/jirka/Olbrasoft/HandbookSearch/src/HandbookSearch.Cli/bin/Release/net10.0/HandbookSearch.Cli import-files --files "$file_path"; then
-              echo "::notice::Successfully imported: $file"
+            # Import using deployed HandbookSearch.Cli with Czech translation
+            if /opt/olbrasoft/handbook-search/cli/HandbookSearch.Cli import-files \
+              --files "$file_path" \
+              --translate-cs; then
+              echo "::notice::Successfully imported: $file (+Czech embedding)"
               success=$((success + 1))
             else
               echo "::error::Failed to import: $file"
@@ -72,7 +98,8 @@ jobs:
             exit 1
           fi
         env:
-          ConnectionStrings__DefaultConnection: "Host=localhost;Database=handbook_search;Username=postgres"
+          ConnectionStrings__DefaultConnection: "Host=localhost;Database=handbook_search;Username=postgres;Password=${{ secrets.POSTGRES_PASSWORD }}"
+          AZURE_TRANSLATOR_API_KEY: "${{ secrets.AZURE_TRANSLATOR_API_KEY }}"
           Ollama__BaseUrl: "http://localhost:11434"
-          Ollama__Model: "nomic-embed-text"
-          Ollama__Dimensions: "768"
+          Ollama__Model: "qwen3-embedding:0.6b"
+          Ollama__Dimensions: "1024"
