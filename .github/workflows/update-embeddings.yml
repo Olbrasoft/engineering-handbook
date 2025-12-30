@@ -81,9 +81,11 @@ jobs:
 
             # Import using deployed HandbookSearch.Cli
             # Run from CLI directory to ensure appsettings.json is found
+            # Pass handbook-path to ensure correct relative path calculation
             # TODO: Enable --translate-cs when AZURE_TRANSLATOR_API_KEY secret is configured
             if (cd /opt/olbrasoft/handbook-search/cli && ./HandbookSearch.Cli import-files \
-              --files "$file_path"); then
+              --files "$file_path" \
+              --handbook-path "${{ github.workspace }}"); then
               echo "::notice::Successfully imported: $file"
               success=$((success + 1))
             else
