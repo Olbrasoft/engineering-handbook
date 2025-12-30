@@ -10,3 +10,5 @@ Verify that:
 - Czech embedding is created
 
 **Character count:** ~250 chars (minimal quota usage)
+
+**Status:** Test ready - Ollama service restarted
