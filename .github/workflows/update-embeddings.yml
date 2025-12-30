@@ -84,7 +84,7 @@ jobs:
             # Pass handbook-path to ensure correct relative path calculation
             # Export environment variables to ensure they're available in subshell
             if (cd /opt/olbrasoft/handbook-search/cli && \
-                AZURE_TRANSLATOR_API_KEY="$AZURE_TRANSLATOR_API_KEY" \
+                AzureTranslator__ApiKey="$AZURE_TRANSLATOR_API_KEY" \
                 ConnectionStrings__DefaultConnection="$ConnectionStrings__DefaultConnection" \
                 Ollama__BaseUrl="$Ollama__BaseUrl" \
                 Ollama__Model="$Ollama__Model" \
