@@ -2,7 +2,7 @@
 
 This is a test file to verify the updated GitHub Actions workflow for HandbookSearch embeddings.
 
-**Test run #7**: Testing with fixed environment variables passing to subshell.
+**Test run #8**: Testing with correct .NET Configuration variable name (AzureTranslator__ApiKey).
 
 ## Purpose
 
