@@ -85,6 +85,7 @@ jobs:
             # Export environment variables to ensure they're available in subshell
             if (cd /opt/olbrasoft/handbook-search/cli && \
                 AzureTranslator__ApiKey="$AZURE_TRANSLATOR_API_KEY" \
+                AzureTranslator__FallbackApiKey="$AZURE_TRANSLATOR_FALLBACK_API_KEY" \
                 ConnectionStrings__DefaultConnection="$ConnectionStrings__DefaultConnection" \
                 Ollama__BaseUrl="$Ollama__BaseUrl" \
                 Ollama__Model="$Ollama__Model" \
@@ -116,6 +117,7 @@ jobs:
         env:
           ConnectionStrings__DefaultConnection: "Host=localhost;Database=handbook_search;Username=postgres;Password=${{ secrets.POSTGRES_PASSWORD }}"
           AZURE_TRANSLATOR_API_KEY: "${{ secrets.AZURE_TRANSLATOR_API_KEY }}"
+          AZURE_TRANSLATOR_FALLBACK_API_KEY: "${{ secrets.AZURE_TRANSLATOR_FALLBACK_API_KEY }}"
           Ollama__BaseUrl: "http://localhost:11434"
           Ollama__Model: "qwen3-embedding:0.6b"
           Ollama__Dimensions: "1024"
