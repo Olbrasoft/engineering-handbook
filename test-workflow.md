@@ -2,7 +2,7 @@
 
 This is a test file to verify the updated GitHub Actions workflow for HandbookSearch embeddings.
 
-**Test run #4**: Testing without Czech translation (API key not configured yet).
+**Test run #5**: Testing with --handbook-path for correct relative path storage.
 
 ## Purpose
 
