@@ -9,3 +9,9 @@ Testing complete lifecycle:
 - Translation to Czech
 - Modification with re-translation
 - Deletion from database
+
+## Update Test
+
+This section was added to test modification workflow.
+
+Testing re-translation and embedding updates.
