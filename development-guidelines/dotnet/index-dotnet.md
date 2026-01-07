@@ -16,6 +16,12 @@ All Olbrasoft .NET projects follow these standards:
 
 ## Quick Navigation
 
+### Core Development
+| Topic | File | Description |
+|-------|------|-------------|
+| **C# Coding** | [csharp-coding-dotnet.md](csharp-coding-dotnet.md) | Best practices for C# code quality |
+| **CLAUDE.md Setup** | [claude-md-best-practices-dotnet.md](claude-md-best-practices-dotnet.md) | AI assistant configuration for .NET |
+
 ### Project Structure & Naming
 | Topic | File | Description |
 |-------|------|-------------|
