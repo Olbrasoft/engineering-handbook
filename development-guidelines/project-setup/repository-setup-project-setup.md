@@ -87,7 +87,7 @@ dotnet test
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) file.
+MIT License - see LICENSE file in repository root.
 ```
 
 ### AGENTS.md
@@ -375,6 +375,6 @@ template-dotnet/
 
 ## Related Documentation
 
-- [Workflow Guide](workflow-guide.md) - Git workflow, commits, branches
-- [CI/CD Pipeline Setup](ci-cd-pipeline-setup.md) - Detailed CI/CD configuration
-- [Code Review Guide](code-review/general-code-review.md) - Code review practices
+- [Workflow Guide](../workflow/index-workflow.md) - Git workflow, commits, branches
+- [CI/CD Pipeline Setup](../dotnet/continuous-integration/index-continuous-integration.md) - Detailed CI/CD configuration
+- [Code Review Guide](../code-review/general-code-review.md) - Code review practices

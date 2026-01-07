@@ -1,6 +1,6 @@
 # ht-mcp Terminal Guide
 
-**Index:** [INDEX.md](INDEX.md)
+**Index:** [INDEX.md](index-tools.md)
 
 ---
 

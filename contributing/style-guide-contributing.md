@@ -250,12 +250,12 @@ Use sparingly and consistently:
 
 ✅ **GOOD:**
 ```markdown
-See [Build Guide](continuous-integration/build.md) for details.
+See [Build Guide](path/to/build.md) for details.
 ```
 
 ❌ **VAGUE:**
 ```markdown
-Click [here](continuous-integration/build.md) for more info.
+Click [here](path/to/build.md) for more info.
 ```
 
 ### Relative Paths
@@ -263,8 +263,8 @@ Click [here](continuous-integration/build.md) for more info.
 Use relative paths from current file:
 
 ```markdown
-[Build](../continuous-integration/build.md)
-[Test](./test.md)
+[Build](../path/to/build.md)
+[Test](./path/to/test.md)
 ```
 
 ### Link to Specific Sections
@@ -272,7 +272,7 @@ Use relative paths from current file:
 When possible:
 
 ```markdown
-[Prerequisites](web-deploy.md#prerequisites)
+[Prerequisites](path/to/doc.md#prerequisites)
 ```
 
 ## Decision Trees

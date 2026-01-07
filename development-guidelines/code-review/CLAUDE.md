@@ -186,7 +186,7 @@ Use this list when evaluating issues in Steps 4 and 5 (these are false positives
 
 ## Next Steps
 
-**Read:** [code-review.md](code-review.md) for .NET-specific CLAUDE.md template and code review standards.
+**Read:** [index-code-review.md](index-code-review.md) for .NET-specific CLAUDE.md template and code review standards.
 
 ---
 

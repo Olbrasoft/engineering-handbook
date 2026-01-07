@@ -542,7 +542,7 @@ Each source project has its own test project:
 | `Olbrasoft.Blog.Business` | `Olbrasoft.Blog.Business.Tests` |
 | `Olbrasoft.Blog.AspNetCore.Mvc` | `Olbrasoft.Blog.AspNetCore.Mvc.Tests` |
 
-See: [Testing Guide](../testing/index-testing.md)
+See: [Testing Guide](testing/index-testing.md)
 
 ## See Also
 

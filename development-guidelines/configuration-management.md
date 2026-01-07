@@ -604,8 +604,8 @@ public class MistralProvider
 ## Related Documentation
 
 - [Secrets Management](secrets-management.md) - API keys, passwords
-- [Project Structure](project-setup/project-structure-project-setup.md) - Where to place files
-- [Testing Guide](testing/index-testing.md) - Testing configuration loading
+- [Project Structure](dotnet/project-structure-dotnet.md) - Where to place files
+- [Testing Guide](dotnet/testing/index-testing.md) - Testing configuration loading
 
 ---
 

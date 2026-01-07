@@ -1,6 +1,6 @@
 # GitHub Operations
 
-**Index:** [INDEX.md](INDEX.md)
+**Index:** [index-workflow.md](index-workflow.md)
 
 ---
 

@@ -921,7 +921,7 @@ public async Task<string> QueuedRecognizeAsync(string audioFile)
 
 ## Related Documentation
 
-- [Azure Translator](../translation/azure-translator.md) - Text translation service
+- [Azure Translator](../translation/azure/index-azure.md) - Text translation service
 - [DeepL API](../translation/deepl.md) - Alternative translation with native usage tracking
 
 ---

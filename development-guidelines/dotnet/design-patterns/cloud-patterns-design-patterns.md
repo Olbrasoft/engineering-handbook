@@ -472,7 +472,7 @@ Many patterns built into platforms:
 - [Microservices Patterns](microservices-patterns-design-patterns.md) - Saga, CQRS, Service Discovery
 - [Enterprise Patterns](enterprise-patterns-design-patterns.md) - Service Layer, Repository
 - [Architectural Patterns](architectural-patterns-design-patterns.md) - Microservices Architecture
-- [Testing Guide](../development-guidelines/testing/index-testing.md) - Testing resilience patterns
+- [Testing Guide](../testing/index-testing.md) - Testing resilience patterns
 
 ## References
 

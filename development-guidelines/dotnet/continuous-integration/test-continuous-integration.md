@@ -128,7 +128,7 @@ mockService.Setup(x => x.GetData()).Returns("test");
 
 After tests pass:
 - Merge PR
-- Deploy: See [../continuous-deployment/](../continuous-deployment/)
+- Deploy: See [../continuous-deployment/](../continuous-deployment/index-continuous-deployment.md)
 
 ## See Also
 

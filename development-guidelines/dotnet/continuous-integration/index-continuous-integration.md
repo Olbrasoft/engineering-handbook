@@ -8,7 +8,7 @@ Automated build and testing for .NET projects.
 
 **Goal:** Verify code **works** and is **quality**.
 
-**NOT for deployment** - see [../continuous-deployment/](../continuous-deployment/) for that.
+**NOT for deployment** - see [../continuous-deployment/](../continuous-deployment/index-continuous-deployment.md) for that.
 
 ## Quick Navigation
 
@@ -69,7 +69,7 @@ Test (dotnet test)
 
 **After CI succeeds:**
 - Merge pull request
-- Deploy to production - see [../continuous-deployment/](../continuous-deployment/)
+- Deploy to production - see [../continuous-deployment/](../continuous-deployment/index-continuous-deployment.md)
 
 ## Files in This Directory
 
@@ -81,5 +81,5 @@ Test (dotnet test)
 - [Testing Guide](../testing/index-testing.md) - Full testing documentation
 - [Unit Tests](../testing/unit-tests-testing.md) - Isolated tests with mocking
 - [Integration Tests](../testing/integration-tests-testing.md) - Tests with real services
-- [Continuous Deployment](../continuous-deployment/) - Deploy after CI succeeds
+- [Continuous Deployment](../continuous-deployment/index-continuous-deployment.md) - Deploy after CI succeeds
 - [Workflow Guide](../../workflow/index-workflow.md) - Git workflow with CI

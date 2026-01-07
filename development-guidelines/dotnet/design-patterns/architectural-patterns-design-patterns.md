@@ -468,7 +468,7 @@ Separate read and write models.
 - [Cloud Patterns](cloud-patterns-design-patterns.md) - Resilience, scalability
 - [Enterprise Patterns](enterprise-patterns-design-patterns.md) - Service Layer, Repository
 - [SOLID Principles](../solid-principles/solid-principles.md) - Design principles
-- [Architecture Design](../development-guidelines/architecture/architecture-design-architecture.md) - Design decisions
+- [Architecture Design](../../architecture/architecture-design-architecture.md) - Design decisions
 
 ## References
 

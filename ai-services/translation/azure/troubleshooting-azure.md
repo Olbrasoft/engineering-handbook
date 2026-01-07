@@ -347,8 +347,8 @@ await handbook.TranslateAllFilesAsync("~/GitHub/Olbrasoft/engineering-handbook/"
 4. ✅ Fewer errors with complex markdown
 
 **See Also**:
-- [Main README - Markdown Recommendation](../README.md#special-case-markdown-documents)
-- [Translation System Guide](../../projects/GitHub.Issues/translation-system.md)
+- [Main README - Markdown Recommendation](../../README.md#special-case-markdown-documents)
+- [Translation System Guide](../../../projects/GitHub.Issues/translation/index-translation.md)
 
 ---
 

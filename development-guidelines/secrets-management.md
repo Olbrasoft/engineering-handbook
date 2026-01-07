@@ -663,6 +663,6 @@ sudo -u $(whoami) cat ~/.config/virtual-assistant/keys/secrets.key > /dev/null &
 ## See Also
 
 - [Git Workflow](workflow/git-workflow-workflow.md) - Git best practices, commit checklist
-- [Web Deployment](continuous-deployment/web-deploy-continuous-deployment.md) - Deploying with secrets
-- [NuGet Publishing](continuous-deployment/nuget-publish-continuous-deployment.md) - Publishing with API keys
+- [Web Deployment](dotnet/continuous-deployment/web-deploy-continuous-deployment.md) - Deploying with secrets
+- [NuGet Publishing](dotnet/continuous-deployment/nuget-publish-continuous-deployment.md) - Publishing with API keys
 - [GitHub Operations](workflow/github-operations-workflow.md) - GitHub API authentication

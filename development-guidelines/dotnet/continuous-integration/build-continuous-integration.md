@@ -89,7 +89,7 @@ dotnet build -c Release
 
 After build succeeds:
 - Run tests: [test-continuous-integration.md](test-continuous-integration.md)
-- Package for deployment: See [../continuous-deployment/](../continuous-deployment/)
+- Package for deployment: See [../continuous-deployment/](../continuous-deployment/index-continuous-deployment.md)
 
 ## See Also
 

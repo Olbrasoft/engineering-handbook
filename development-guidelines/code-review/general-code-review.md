@@ -40,7 +40,7 @@ Code review ensures code quality, adherence to standards, and catches bugs befor
 - Dependency Injection for all services
 
 **SOLID Principles**  
-Reference: [solid-principles.md](../../solid-principles/solid-principles.md)
+Reference: [solid-principles.md](../dotnet/solid-principles/solid-principles.md)
 
 - **Single Responsibility:** One class = one reason to change
 - **Open/Closed:** Extend via inheritance/composition, not modification
@@ -49,7 +49,7 @@ Reference: [solid-principles.md](../../solid-principles/solid-principles.md)
 - **Dependency Inversion:** Depend on abstractions, not concretions
 
 **Design Patterns**  
-Reference: [gof-patterns-design-patterns.md](../../design-patterns/gof-patterns-design-patterns.md)
+Reference: [gof-patterns-design-patterns.md](../dotnet/design-patterns/gof-patterns-design-patterns.md)
 
 - **Strategy:** Interchangeable algorithms
 - **Factory:** Object creation with varying types
@@ -294,10 +294,10 @@ Missing Repository pattern for data access (see design-patterns/gof-patterns-des
 ## See Also
 
 - **Engineering Handbook:** [README.md](../../README.md)
-- **SOLID Principles:** [solid-principles.md](../../solid-principles/solid-principles.md)
-- **Design Patterns:** [gof-patterns-design-patterns.md](../../design-patterns/gof-patterns-design-patterns.md)
+- **SOLID Principles:** [solid-principles.md](../dotnet/solid-principles/solid-principles.md)
+- **Design Patterns:** [gof-patterns-design-patterns.md](../dotnet/design-patterns/gof-patterns-design-patterns.md)
 - **Git Workflow:** [Git Workflow](../workflow/git-workflow-workflow.md)
-- **Project Structure:** [structure.md](../project-setup/project-structure-project-setup.md)
+- **Project Structure:** [structure.md](../dotnet/project-structure-dotnet.md)
 
 ---
 

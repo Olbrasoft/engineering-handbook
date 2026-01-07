@@ -64,7 +64,7 @@ This directory contains detailed documentation for **external AI services** (API
 
 ---
 
-### [Azure Translator](./translation/azure-translator.md)
+### [Azure Translator](./translation/azure/index-azure.md)
 
 **Provider**: Microsoft Azure
 **Type**: Official API
@@ -162,9 +162,9 @@ var translatorPool = new TranslatorPoolBuilder()
 ```
 
 **See Also**:
-- [Azure Translator - Markdown Support](./translation/azure-translator.md#markdown-support)
+- [Azure Translator - Markdown Support](./translation/azure/index-azure.md#markdown-support)
 - [DeepL - Markdown Limitations](./translation/deepl.md#markdown-limitations)
-- [Translation System Guide](../projects/GitHub.Issues/translation-system.md)
+- [Translation System Guide](../projects/GitHub.Issues/translation/index-translation.md)
 
 ---
 
@@ -265,7 +265,7 @@ CREATE TABLE ProviderUsage (
 
 **See**:
 - [GitHub Issue #303](https://github.com/Olbrasoft/GitHub.Issues/issues/303) - Full implementation plan
-- [Translation System](../projects/GitHub.Issues/translation-system.md) - Multi-provider setup
+- [Translation System](../projects/GitHub.Issues/translation/index-translation.md) - Multi-provider setup
 
 ---
 
@@ -334,8 +334,8 @@ Each DeepL Free account resets based on its creation date (not calendar month). 
 
 ### Project-Specific
 
-- [GitHub.Issues - Translation System](../projects/GitHub.Issues/translation-system.md) - Multi-provider implementation guide
-- [GitHub.Issues - Main README](../projects/GitHub.Issues/README.md) - Project architecture
+- [GitHub.Issues - Translation System](../projects/GitHub.Issues/translation/index-translation.md) - Multi-provider implementation guide
+- [GitHub.Issues - Main README](../projects/GitHub.Issues/index-GitHub.Issues.md) - Project architecture
 
 ### GitHub Issues
 
@@ -353,7 +353,7 @@ Each DeepL Free account resets based on its creation date (not calendar month). 
 2. **Read individual service docs** (DeepL.md, Azure-Translator.md, etc.)
 3. **Get API keys** from `~/Dokumenty/přístupy/api-keys.md`
 4. **Implement usage tracking** (see [Issue #303](https://github.com/Olbrasoft/GitHub.Issues/issues/303))
-5. **Set up multi-provider fallback** (see [Translation System](../projects/GitHub.Issues/translation-system.md))
+5. **Set up multi-provider fallback** (see [Translation System](../projects/GitHub.Issues/translation/index-translation.md))
 
 ### For Existing Projects
 

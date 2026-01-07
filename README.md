@@ -21,7 +21,7 @@ C# / .NET development standards and reference guides for Olbrasoft projects.
 - **[Architecture Index](development-guidelines/architecture/index-architecture.md)** - Overview
 - **[Architecture Design](development-guidelines/architecture/architecture-design-architecture.md)** - Design trade-offs and decisions
 - **[Code Exploration](development-guidelines/architecture/code-exploration-architecture.md)** - Codebase navigation techniques
-- **[Code Review](development-guidelines/code-review/)** - Automated and manual review processes
+- **[Code Review](development-guidelines/code-review/index-code-review.md)** - Automated and manual review processes
   - [General Guidelines](development-guidelines/code-review/general-code-review.md)
   - [Manual Review Checklist](development-guidelines/code-review/manual-review-code-review.md)
   - [Claude Code: /code-review command](development-guidelines/code-review/CLAUDE.md)

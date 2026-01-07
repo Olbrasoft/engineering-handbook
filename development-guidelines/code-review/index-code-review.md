@@ -14,7 +14,7 @@ Standards and processes for reviewing .NET code quality.
 |-------|------|-------------------|
 | **General Standards** | [general-code-review.md](general-code-review.md) | What to check in any code review |
 | **Manual Review** | [manual-review-code-review.md](manual-review-code-review.md) | Step-by-step manual review checklist |
-| **Claude Code** | [claude-code-review.md](claude-code-review.md) | `/code-review` command workflow |
+| **Claude Code** | [CLAUDE.md](CLAUDE.md) | `/code-review` command workflow |
 
 ## Decision Tree
 
@@ -28,7 +28,7 @@ What do I need?
 │  └─ Read: manual-review-code-review.md
 │
 ├─ "How to use Claude Code /code-review command?"
-│  └─ Read: claude-code-review.md
+│  └─ Read: CLAUDE.md
 │
 └─ "Overview of code review process"
    └─ Read this file (index)
@@ -51,7 +51,7 @@ What do I need?
 - Before requesting human review
 - Automated quality gate
 
-**Read:** [claude-code-review.md](claude-code-review.md)
+**Read:** [CLAUDE.md](CLAUDE.md)
 
 ### 2. Manual Review
 
@@ -142,7 +142,7 @@ User runs: /code-review
 | index-code-review.md | ~200 | This file - overview |
 | general-code-review.md | ~250 | Standards for all reviews |
 | manual-review-code-review.md | ~200 | Manual review checklist |
-| claude-code-review.md | ~300 | Claude Code automation |
+| CLAUDE.md | ~194 | Claude Code automation |
 
 ## Configuration
 
@@ -219,6 +219,6 @@ Skip code review for:
 
 - [General Standards](general-code-review.md) - What to check
 - [Manual Review](manual-review-code-review.md) - How to review manually
-- [Claude Code](claude-code-review.md) - Automated review setup
+- [Claude Code](CLAUDE.md) - Automated review setup
 - [Workflow Guide](../workflow/index-workflow.md) - Git workflow with PR reviews
 - [Testing Guide](../dotnet/testing/index-testing.md) - Test requirements

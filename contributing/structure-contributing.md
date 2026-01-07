@@ -70,8 +70,8 @@ List what must be done BEFORE this doc:
 ```markdown
 ## Prerequisites
 
-- ✅ Build succeeds (see [build.md](build.md))
-- ✅ Tests pass (see [test.md](test.md))
+- ✅ Build succeeds (see `build.md`)
+- ✅ Tests pass (see `test.md`)
 - ✅ NuGet API key configured
 ```
 
@@ -164,9 +164,9 @@ End with related documents:
 ```markdown
 ## See Also
 
-- [Build](continuous-integration/build.md) - Build before deploying
-- [Test](continuous-integration/test.md) - Test before deploying
-- [Workflow](workflow.md) - Git workflow
+- Build (`continuous-integration/build.md`) - Build before deploying
+- Test (`continuous-integration/test.md`) - Test before deploying
+- Workflow (`workflow.md`) - Git workflow
 ```
 
 ## Content Organization Patterns
@@ -306,8 +306,8 @@ Automated build and testing for .NET projects.
 
 | Task | File |
 |------|------|
-| Build .NET project | [build.md](build.md) |
-| Run automated tests | [test.md](test.md) |
+| Build .NET project | `build.md` |
+| Run automated tests | `test.md` |
 
 ## CI Pipeline Steps
 
@@ -403,7 +403,7 @@ From actual handbook restructure:
 
 ## See Also
 
-- [Related Doc](link.md) - Description
+- Related Doc (`link.md`) - Description
 ```
 
 ## See Also

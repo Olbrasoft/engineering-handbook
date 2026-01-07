@@ -300,7 +300,7 @@ Before committing new content:
 
 ### Handbook Content
 
-- [Development Guidelines Index](../development-guidelines/development-guidelines-index.md) - Main development docs
+- [Development Guidelines Index](../development-guidelines/index-development-guidelines.md) - Main development docs
 - [README](../README.md) - Root handbook index
 
 ### Contributing Files

@@ -790,15 +790,15 @@ var translatorPool = new TranslatorPoolBuilder()
 - ✅ Critical translations where quality > convenience
 
 **See Also**:
-- [Azure Translator - Markdown Support](./azure-translator.md#markdown-support)
+- [Azure Translator - Markdown Support](./azure/index-azure.md#markdown-support)
 - [Main README - Markdown Recommendation](../README.md#special-case-markdown-documents)
 
 ---
 
 ## Related Documentation
 
-- [Azure Translator](./azure-translator.md) - Alternative translation service
-- [Translation System Implementation](../../projects/GitHub.Issues/translation-system.md) - Multi-provider setup
+- [Azure Translator](./azure/index-azure.md) - Alternative translation service
+- [Translation System Implementation](../../projects/GitHub.Issues/translation/index-translation.md) - Multi-provider setup
 - [GitHub Issue #303](https://github.com/Olbrasoft/GitHub.Issues/issues/303) - Usage tracking implementation
 
 ---

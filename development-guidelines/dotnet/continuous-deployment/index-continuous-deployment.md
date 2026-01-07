@@ -8,7 +8,7 @@ Automated publishing and deployment after successful build and tests.
 
 **Goal:** Deliver code to **users** (NuGet.org, production server, GitHub Releases).
 
-**Requires CI first** - see [../continuous-integration/](../continuous-integration/)
+**Requires CI first** - see [../continuous-integration/](../continuous-integration/index-continuous-integration.md)
 
 ## Decision Tree
 
@@ -90,12 +90,12 @@ gh release create v1.0.0 MyApp-linux-x64.zip
 ## Prerequisites
 
 Before deployment:
-- ✅ CI succeeds ([../continuous-integration/](../continuous-integration/))
+- ✅ CI succeeds ([../continuous-integration/](../continuous-integration/index-continuous-integration.md))
 - ✅ All tests pass
 - ✅ Secrets configured (API keys, database connections)
 
 ## See Also
 
-- [Continuous Integration](../continuous-integration/) - Build and test before deployment
+- [Continuous Integration](../continuous-integration/index-continuous-integration.md) - Build and test before deployment
 - [Local Package Testing](../package-management/local-testing-package-management.md) - Test NuGet packages locally before publishing
 - [Secrets Management](../../secrets-management.md) - How to manage production secrets
