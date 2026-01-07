@@ -533,6 +533,133 @@ Before deploying:
 
 ---
 
+## SecureStore for VirtualAssistant
+
+**VirtualAssistant** uses **SecureStore** - an encrypted JSON vault with keyfile-based decryption.
+
+### Why SecureStore?
+
+| Approach | Pros | Cons |
+|----------|------|------|
+| User Secrets | Simple, built-in | Per-user, not portable |
+| Environment Variables | Standard | Visible in process list, systemd files |
+| **SecureStore** | Encrypted, portable, single keyfile | Requires SecureStore CLI |
+
+SecureStore provides:
+- **Encrypted vault** - JSON file safe to commit to Git
+- **Single keyfile** - One file to protect (chmod 600)
+- **IConfiguration integration** - Works seamlessly with .NET configuration
+
+### Setup
+
+```bash
+# 1. Install CLI tool
+dotnet tool install --global SecureStore.Client
+
+# 2. Create vault and keyfile
+mkdir -p ~/.config/virtual-assistant/secrets
+mkdir -p ~/.config/virtual-assistant/keys
+
+SecureStore create \
+  -s ~/.config/virtual-assistant/secrets/secrets.json \
+  -k ~/.config/virtual-assistant/keys/secrets.key
+
+# 3. Secure the keyfile (CRITICAL!)
+chmod 600 ~/.config/virtual-assistant/keys/secrets.key
+```
+
+### Managing Secrets
+
+```bash
+# Define paths (add to ~/.bashrc for convenience)
+SECRETS_PATH=~/.config/virtual-assistant/secrets/secrets.json
+KEY_PATH=~/.config/virtual-assistant/keys/secrets.key
+
+# Add a secret
+SecureStore set -s $SECRETS_PATH -k $KEY_PATH "Database:Password=MySecretPassword"
+
+# Get a secret
+SecureStore get -s $SECRETS_PATH -k $KEY_PATH "Database:Password"
+
+# List all secrets
+SecureStore get -s $SECRETS_PATH -k $KEY_PATH --all
+
+# Delete a secret
+SecureStore delete -s $SECRETS_PATH -k $KEY_PATH "Database:Password"
+```
+
+### Secret Naming Convention
+
+Use colon-separated hierarchy matching IConfiguration paths:
+
+```bash
+# Database
+Database:Password
+
+# TTS Providers
+TTS:AzureTTS:SubscriptionKey
+TTS:VoiceRSS:ApiKey
+GoogleTTS:ApiKey1
+GoogleTTS:ApiKey2
+
+# LLM Chain
+LlmChain:Mistral:ApiKey
+LlmChain:Cerebras:ApiKeys    # Comma-separated for multiple keys
+LlmChain:Groq:ApiKeys
+
+# GitHub
+GitHub:Token
+```
+
+### Integration with ASP.NET Core
+
+**Program.cs:**
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+// Add SecureStore as configuration source
+builder.Configuration.AddSecureStore(
+    secretsPath: "~/.config/virtual-assistant/secrets/secrets.json",
+    keyPath: "~/.config/virtual-assistant/keys/secrets.key");
+
+// Secrets now available via IConfiguration
+var dbPassword = builder.Configuration["Database:Password"];
+```
+
+### Security Best Practices
+
+1. **Keyfile permissions:** Always `chmod 600` - readable only by owner
+2. **Never commit keyfile:** Add `*.key` to `.gitignore`
+3. **Vault is safe to commit:** Encrypted JSON, useless without keyfile
+4. **Backup keyfile securely:** Losing keyfile = losing access to secrets
+5. **One keyfile per environment:** Dev/staging/prod should have separate keyfiles
+
+### Deployment Checklist
+
+- [ ] Keyfile exists at expected path
+- [ ] Keyfile has chmod 600 permissions
+- [ ] Encrypted vault exists
+- [ ] All required secrets present in vault
+- [ ] Service has read access to keyfile
+- [ ] No keyfiles in Git repository
+
+### Troubleshooting
+
+```bash
+# Verify keyfile permissions
+ls -la ~/.config/virtual-assistant/keys/secrets.key
+# Should show: -rw------- (600)
+
+# Test vault access
+SecureStore get -s $SECRETS_PATH -k $KEY_PATH --all
+
+# Check service can read keyfile
+sudo -u $(whoami) cat ~/.config/virtual-assistant/keys/secrets.key > /dev/null && echo "OK"
+```
+
+---
+
 ## See Also
 
 - [Git Workflow](workflow/git-workflow-workflow.md) - Git best practices, commit checklist
