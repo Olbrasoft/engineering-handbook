@@ -40,7 +40,7 @@ public record DeepLUsage(long CharacterCount, long CharacterLimit, long Characte
 
 **Usage**:
 
-**Note**: Replace `YOUR_DEEPL_API_KEY` with actual key from `~/Dokumenty/přístupy/api-keys.md`
+**Note**: Replace `YOUR_DEEPL_API_KEY` with actual key from SecureStore vault
 
 ```bash
 curl -X GET 'https://api-free.deepl.com/v2/usage' \

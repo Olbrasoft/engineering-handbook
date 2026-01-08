@@ -2,6 +2,61 @@
 
 Managing NuGet packages, dependencies, and their configuration in .NET projects.
 
+## Olbrasoft Package Versioning
+
+### Floating Versions for Olbrasoft Packages
+
+**CRITICAL:** Olbrasoft packages (packages created and maintained by Olbrasoft) are ALWAYS referenced with **wildcard/floating versions** to automatically get the latest version.
+
+```xml
+<!-- ✅ CORRECT: Olbrasoft packages use wildcard -->
+<PackageReference Include="Olbrasoft.Data" Version="10.*" />
+<PackageReference Include="Olbrasoft.Extensions" Version="1.*" />
+<PackageReference Include="Olbrasoft.Text.Translation" Version="10.*" />
+<PackageReference Include="Olbrasoft.Testing.Xunit.Attributes" Version="1.*" />
+
+<!-- ❌ WRONG: Never use exact versions for Olbrasoft packages in production -->
+<PackageReference Include="Olbrasoft.Data" Version="10.0.2" />
+```
+
+**Why floating versions for Olbrasoft packages?**
+- Automatic updates when new versions are published
+- Consistent versioning across all projects
+- No manual version bumping required
+- All projects automatically get bug fixes and improvements
+
+**Exception: Local Testing**
+During local testing of **unpublished** packages, use exact versions temporarily:
+```xml
+<!-- Temporary during local testing ONLY -->
+<PackageReference Include="Olbrasoft.NewPackage" Version="1.0.5" />
+
+<!-- After testing, switch back to floating version -->
+<PackageReference Include="Olbrasoft.NewPackage" Version="1.*" />
+```
+
+### Third-Party Packages: Exact Versions
+
+Third-party packages (Microsoft, Moq, xUnit, etc.) use exact versions for stability:
+
+```xml
+<!-- Third-party packages: exact versions -->
+<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+<PackageReference Include="Moq" Version="4.20.72" />
+<PackageReference Include="xunit" Version="2.9.3" />
+<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.1" />
+```
+
+### Version Summary Table
+
+| Package Type | Version Format | Example |
+|--------------|----------------|---------|
+| **Olbrasoft packages** | Wildcard (`Major.*`) | `Version="10.*"` |
+| **Third-party packages** | Exact | `Version="17.14.1"` |
+| **Local testing (temp)** | Exact | `Version="10.0.5"` |
+
+---
+
 ## Two-Phase Deployment Process
 
 Package deployment follows a **two-phase approach** to ensure stability:

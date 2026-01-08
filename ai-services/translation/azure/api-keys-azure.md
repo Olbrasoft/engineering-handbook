@@ -1,20 +1,37 @@
 ## API Keys
 
-### Our API Keys
+### Storage Location
 
-**Location**: `~/Dokumenty/přístupy/api-keys.md` (lines 103-110)
+**All Olbrasoft projects use SecureStore** for API key storage.
 
-#### Resource: olbrasoft-translator
+See [Secrets Management](../../../development-guidelines/secrets-management.md#securestore---standard-for-olbrasoft-projects) for setup instructions.
+
+**SecureStore paths:**
+```
+~/.config/{app-name}/secrets/secrets.json  # Encrypted vault
+~/.config/{app-name}/keys/secrets.key      # Encryption key
+```
+
+**Example for GitHub.Issues:**
+```bash
+# Add Azure Translator keys
+SecureStore set -s ~/.config/github-issues/secrets/secrets.json \
+  -k ~/.config/github-issues/keys/secrets.key \
+  "TranslatorPool:AzureApiKey1=YOUR_KEY_HERE"
+```
+
+### Resource: olbrasoft-translator
+
 - **Region**: West Europe
 - **Tier**: Free F0 (2M chars/month)
-- **Resource Group**: olbrasoft-resources (or similar)
+- **Resource Group**: olbrasoft-resources
 
 **Keys** (both active, **share same quota**):
 
-| Key Name | API Key | Status |
-|----------|---------|--------|
-| **KEY 1** | `YOUR_AZURE_TRANSLATOR_KEY_1` | ✅ Active |
-| **KEY 2** | `YOUR_AZURE_TRANSLATOR_KEY_2` | ✅ Active |
+| Key Name | SecureStore Key | Status |
+|----------|-----------------|--------|
+| **KEY 1** | `TranslatorPool:AzureApiKey1` | ✅ Active |
+| **KEY 2** | `TranslatorPool:AzureApiKey2` | ✅ Active |
 
 **Total Capacity**: 2,000,000 characters/month (shared between both keys)
 
@@ -25,10 +42,7 @@
 
 ### Key Format
 
-Azure Translator API keys are **64 characters** long:
-```
-YOUR_AZURE_TRANSLATOR_KEY_HERE (64 characters)
-```
+Azure Translator API keys are **64 characters** long (hexadecimal).
 
 ### Required Configuration
 
@@ -42,7 +56,6 @@ Ocp-Apim-Subscription-Region: westeurope
 - `westeurope` - West Europe (Ireland)
 - `northeurope` - North Europe (Netherlands)
 - `eastus` - East US
-- etc.
 
 ---
 

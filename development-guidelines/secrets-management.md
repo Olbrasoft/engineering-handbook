@@ -533,9 +533,9 @@ Before deploying:
 
 ---
 
-## SecureStore for VirtualAssistant
+## SecureStore - Standard for Olbrasoft Projects
 
-**VirtualAssistant** uses **SecureStore** - an encrypted JSON vault with keyfile-based decryption.
+All Olbrasoft production applications use **NeoSmart.SecureStore** - an encrypted JSON vault with keyfile-based decryption.
 
 ### Why SecureStore?
 
@@ -543,37 +543,58 @@ Before deploying:
 |----------|------|------|
 | User Secrets | Simple, built-in | Per-user, not portable |
 | Environment Variables | Standard | Visible in process list, systemd files |
-| **SecureStore** | Encrypted, portable, single keyfile | Requires SecureStore CLI |
+| Plaintext files | Simple | **Security risk - NOT RECOMMENDED** |
+| **SecureStore** | Encrypted, portable, single keyfile | Requires initial setup |
 
 SecureStore provides:
-- **Encrypted vault** - JSON file safe to commit to Git
+- **Encrypted vault** - AES + HMAC encryption, secrets encrypted at rest
 - **Single keyfile** - One file to protect (chmod 600)
 - **IConfiguration integration** - Works seamlessly with .NET configuration
+- **Portable** - Copy vault + keyfile to any machine
+
+### Directory Structure
+
+All Olbrasoft projects use the same pattern:
+
+```
+~/.config/{app-name}/
+├── secrets/
+│   └── secrets.json      # Encrypted vault (AES + HMAC)
+└── keys/
+    └── secrets.key       # Encryption key (chmod 600!)
+```
+
+**Examples:**
+- `~/.config/github-issues/secrets/secrets.json`
+- `~/.config/handbook-search/secrets/secrets.json`
+- `~/.config/virtual-assistant/secrets/secrets.json`
 
 ### Setup
 
 ```bash
-# 1. Install CLI tool
+# 1. Install NeoSmart.SecureStore CLI tool
 dotnet tool install --global SecureStore.Client
 
-# 2. Create vault and keyfile
-mkdir -p ~/.config/virtual-assistant/secrets
-mkdir -p ~/.config/virtual-assistant/keys
+# 2. Create vault and keyfile (replace {app-name})
+APP_NAME=github-issues  # or handbook-search, virtual-assistant, etc.
+mkdir -p ~/.config/$APP_NAME/secrets
+mkdir -p ~/.config/$APP_NAME/keys
 
 SecureStore create \
-  -s ~/.config/virtual-assistant/secrets/secrets.json \
-  -k ~/.config/virtual-assistant/keys/secrets.key
+  -s ~/.config/$APP_NAME/secrets/secrets.json \
+  -k ~/.config/$APP_NAME/keys/secrets.key
 
 # 3. Secure the keyfile (CRITICAL!)
-chmod 600 ~/.config/virtual-assistant/keys/secrets.key
+chmod 600 ~/.config/$APP_NAME/keys/secrets.key
 ```
 
 ### Managing Secrets
 
 ```bash
 # Define paths (add to ~/.bashrc for convenience)
-SECRETS_PATH=~/.config/virtual-assistant/secrets/secrets.json
-KEY_PATH=~/.config/virtual-assistant/keys/secrets.key
+APP_NAME=github-issues
+SECRETS_PATH=~/.config/$APP_NAME/secrets/secrets.json
+KEY_PATH=~/.config/$APP_NAME/keys/secrets.key
 
 # Add a secret
 SecureStore set -s $SECRETS_PATH -k $KEY_PATH "Database:Password=MySecretPassword"
@@ -588,43 +609,64 @@ SecureStore get -s $SECRETS_PATH -k $KEY_PATH --all
 SecureStore delete -s $SECRETS_PATH -k $KEY_PATH "Database:Password"
 ```
 
-### Secret Naming Convention
+### Common Secret Names by Project
 
-Use colon-separated hierarchy matching IConfiguration paths:
-
+**GitHub.Issues:**
 ```bash
-# Database
+TranslatorPool:AzureApiKey1
+TranslatorPool:AzureApiKey2
+TranslatorPool:DeepLApiKey1
+TranslatorPool:DeepLApiKey2
+GitHub:Token
+GitHubApp:WebhookSecret
 Database:Password
+AiProviders:Cohere:Key1
+```
 
-# TTS Providers
+**HandbookSearch:**
+```bash
+Database:Password
+AzureTranslator:SubscriptionKey
+GitHub:Token
+```
+
+**VirtualAssistant:**
+```bash
+Database:Password
 TTS:AzureTTS:SubscriptionKey
-TTS:VoiceRSS:ApiKey
-GoogleTTS:ApiKey1
-GoogleTTS:ApiKey2
-
-# LLM Chain
 LlmChain:Mistral:ApiKey
-LlmChain:Cerebras:ApiKeys    # Comma-separated for multiple keys
-LlmChain:Groq:ApiKeys
-
-# GitHub
+LlmChain:Cerebras:ApiKeys
 GitHub:Token
 ```
 
 ### Integration with ASP.NET Core
 
+**Add NuGet package:**
+```bash
+dotnet add package NeoSmart.SecureStore
+```
+
 **Program.cs:**
 
 ```csharp
+using NeoSmart.SecureStore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add SecureStore as configuration source
-builder.Configuration.AddSecureStore(
-    secretsPath: "~/.config/virtual-assistant/secrets/secrets.json",
-    keyPath: "~/.config/virtual-assistant/keys/secrets.key");
+var appName = "github-issues";
+var secretsPath = Path.Combine(
+    Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+    $".config/{appName}/secrets/secrets.json");
+var keyPath = Path.Combine(
+    Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+    $".config/{appName}/keys/secrets.key");
+
+builder.Configuration.AddSecureStore(secretsPath, keyPath);
 
 // Secrets now available via IConfiguration
 var dbPassword = builder.Configuration["Database:Password"];
+var azureKey = builder.Configuration["TranslatorPool:AzureApiKey1"];
 ```
 
 ### Security Best Practices
@@ -637,9 +679,9 @@ var dbPassword = builder.Configuration["Database:Password"];
 
 ### Deployment Checklist
 
-- [ ] Keyfile exists at expected path
+- [ ] Keyfile exists at expected path (`~/.config/{app}/keys/secrets.key`)
 - [ ] Keyfile has chmod 600 permissions
-- [ ] Encrypted vault exists
+- [ ] Encrypted vault exists (`~/.config/{app}/secrets/secrets.json`)
 - [ ] All required secrets present in vault
 - [ ] Service has read access to keyfile
 - [ ] No keyfiles in Git repository
@@ -648,15 +690,29 @@ var dbPassword = builder.Configuration["Database:Password"];
 
 ```bash
 # Verify keyfile permissions
-ls -la ~/.config/virtual-assistant/keys/secrets.key
+ls -la ~/.config/github-issues/keys/secrets.key
 # Should show: -rw------- (600)
 
 # Test vault access
 SecureStore get -s $SECRETS_PATH -k $KEY_PATH --all
 
 # Check service can read keyfile
-sudo -u $(whoami) cat ~/.config/virtual-assistant/keys/secrets.key > /dev/null && echo "OK"
+sudo -u $(whoami) cat ~/.config/github-issues/keys/secrets.key > /dev/null && echo "OK"
+
+# If permission denied - check ownership
+ls -la ~/.config/github-issues/keys/
 ```
+
+### Migration from Old Approaches
+
+If migrating from plaintext files or environment variables:
+
+1. **Identify all secrets** in old location
+2. **Create SecureStore vault** (see Setup above)
+3. **Add each secret** to vault
+4. **Update application** to use SecureStore configuration provider
+5. **Test locally** before deploying
+6. **Remove old secrets** (delete plaintext files, unset env vars)
 
 ---
 

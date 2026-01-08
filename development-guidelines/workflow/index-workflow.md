@@ -176,11 +176,10 @@ See: [Continuous Integration](../dotnet/continuous-integration/index-continuous-
 
 **CRITICAL:** Never commit secrets!
 
-- **Development:** User secrets (`dotnet user-secrets`)
-- **Production:** Environment variables (systemd, Docker)
-- **Catalog:** `~/Dokumenty/přístupy/api-keys.md`
+- **Development:** User secrets (`dotnet user-secrets`) or SecureStore
+- **Production:** SecureStore (`~/.config/{app}/secrets/secrets.json`)
 
-See: [Git Workflow - Secrets](git-workflow-workflow.md#secrets-management) for complete guide.
+See: [Secrets Management](../secrets-management.md#securestore---standard-for-olbrasoft-projects) for complete guide.
 
 ## Next Steps
 

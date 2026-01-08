@@ -52,21 +52,16 @@ curl -X GET 'https://api-free.deepl.com/v2/usage' \
    - ✅ OR wait until reset date (check account creation date)
    - ✅ OR remove exhausted key from config
 
-3. **Update config**:
+3. **Update SecureStore**:
 
-**Note**: Get actual API keys from `~/Dokumenty/přístupy/api-keys.md`
-
-```json
-{
-  "TranslatorPool": {
-    "DeepLApiKeys": [
-      "YOUR_DEEPL_API_KEY_1:fx",  // Active key 1
-      "YOUR_DEEPL_API_KEY_2:fx"   // Active key 2
-      // Remove exhausted keys from array
-    ]
-  }
-}
+```bash
+# Add new DeepL key to SecureStore
+SecureStore set -s ~/.config/github-issues/secrets/secrets.json \
+  -k ~/.config/github-issues/keys/secrets.key \
+  "TranslatorPool:DeepLApiKey1=NEW_KEY:fx"
 ```
+
+See [API Keys Management](api-keys-translation.md) for SecureStore setup.
 
 **Related**: [Issue #303](https://github.com/Olbrasoft/GitHub.Issues/issues/303)
 

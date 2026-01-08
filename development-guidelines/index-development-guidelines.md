@@ -354,11 +354,11 @@ What am I doing?
 | Secret Type | Location |
 |-------------|----------|
 | NuGet API key | `~/Dokumenty/Keys/nuget-key.txt` |
-| GitHub tokens | `~/Dokumenty/přístupy/api-keys.md` |
-| AI provider keys | `~/Dokumenty/přístupy/llmchain-*.txt` |
-| Azure keys | `~/Dokumenty/přístupy/api-keys.md` |
-| Production secrets | systemd EnvironmentFile (`~/.config/systemd/user/<service>.env`) |
-| Development secrets | User Secrets (`dotnet user-secrets list`) |
+| All API keys | SecureStore (`~/.config/{app}/secrets/secrets.json`) |
+| Production secrets | SecureStore encrypted vault |
+| Development secrets | User Secrets (`dotnet user-secrets list`) or SecureStore |
+
+See [Secrets Management](secrets-management.md#securestore---standard-for-olbrasoft-projects) for SecureStore setup.
 
 ---
 

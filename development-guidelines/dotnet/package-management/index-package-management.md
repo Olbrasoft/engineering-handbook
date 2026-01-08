@@ -2,6 +2,23 @@
 
 Managing NuGet packages, dependencies, and configuration in .NET projects.
 
+## Olbrasoft Package Versioning
+
+**CRITICAL:** Olbrasoft packages ALWAYS use **floating/wildcard versions** to automatically get the latest version.
+
+```xml
+<!-- ✅ CORRECT: Olbrasoft packages use wildcard -->
+<PackageReference Include="Olbrasoft.Data" Version="10.*" />
+<PackageReference Include="Olbrasoft.Testing.Xunit.Attributes" Version="1.*" />
+
+<!-- ❌ WRONG: Never use exact versions for Olbrasoft packages -->
+<PackageReference Include="Olbrasoft.Data" Version="10.0.2" />
+```
+
+**Exception:** During local testing of unpublished packages, use exact versions temporarily.
+
+See: [Package Versioning](overview-package-management.md#olbrasoft-package-versioning) for complete guide.
+
 ## Overview
 
 This section covers NuGet package management workflow:
@@ -86,6 +103,17 @@ dotnet add package PackageName # Repeat for each
 ```
 
 ## Best Practices
+
+### Package Versioning
+
+✅ **DO:**
+- Use floating versions for Olbrasoft packages (`10.*`, `1.*`)
+- Use exact versions for third-party packages
+- Use exact versions ONLY during local testing of unpublished packages
+
+❌ **DON'T:**
+- Use exact versions for Olbrasoft packages in production
+- Use floating versions for third-party packages
 
 ### Local Testing
 

@@ -61,11 +61,30 @@ curl "http://localhost:5170/api/search?q=SOLID%20principles&limit=5"
 
 ## Configuration
 
+### Application Settings
+
 Located in `/opt/olbrasoft/handbook-search/cli/appsettings.json`:
 
-- **Database**: PostgreSQL connection string
+- **Database**: PostgreSQL connection string (without password)
 - **Ollama**: Model and dimensions
-- **Azure Translator**: API key and region
+- **Azure Translator**: Region only (key in SecureStore)
+
+### Secrets (SecureStore)
+
+All secrets are stored in encrypted SecureStore vault:
+
+```
+~/.config/handbook-search/
+├── secrets/secrets.json    # Encrypted vault
+└── keys/secrets.key        # Encryption key (chmod 600!)
+```
+
+**Required secrets:**
+- `Database:Password` - PostgreSQL password
+- `AzureTranslator:SubscriptionKey` - Azure API key
+- `GitHub:Token` - GitHub personal access token
+
+See [Secrets Management](../../development-guidelines/secrets-management.md#securestore---standard-for-olbrasoft-projects) for setup instructions.
 
 ## GitHub Actions Integration
 

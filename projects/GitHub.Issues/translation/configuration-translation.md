@@ -24,7 +24,7 @@
 
 **Production Runtime** (`/opt/olbrasoft/github-issues/config/appsettings.json`):
 
-**Note**: Actual API keys are stored in `~/Dokumenty/přístupy/api-keys.md` and loaded into production config.
+**Note**: API keys are stored in SecureStore vault (`~/.config/github-issues/secrets/secrets.json`). See [API Keys Management](api-keys-translation.md).
 
 ```json
 {

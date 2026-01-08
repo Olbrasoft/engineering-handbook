@@ -110,16 +110,18 @@ Events: `issues`, `issue_comment`, `label`, `repository`, `sub_issues`
 
 ## Secrets
 
-### Locations
+### SecureStore (Recommended)
+
+All Olbrasoft projects use SecureStore for encrypted secrets:
 ```
-~/Dokumenty/přístupy/
-├── api-keys.md          # GitHub, NuGet tokens
-├── github-issues/       # Project-specific
-├── databases.md
-└── hosting.md
+~/.config/{app-name}/
+├── secrets/secrets.json    # Encrypted vault
+└── keys/secrets.key        # Encryption key (chmod 600!)
 ```
 
-### User Secrets
+See [Secrets Management](../secrets-management.md#securestore---standard-for-olbrasoft-projects) for setup.
+
+### User Secrets (Development)
 ```bash
 dotnet user-secrets init
 dotnet user-secrets set "GitHub:Token" "ghp_xxx"

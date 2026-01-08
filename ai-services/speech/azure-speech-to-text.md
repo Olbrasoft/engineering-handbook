@@ -148,9 +148,11 @@ dotnet add package Microsoft.CognitiveServices.Speech --version 1.34.0
 
 ## API Keys
 
-### Our API Keys
+### Storage Location
 
-**Location**: `~/Dokumenty/přístupy/api-keys.md` (Azure Speech section - if exists)
+API keys are stored in **SecureStore** encrypted vault.
+
+See [Secrets Management](../../development-guidelines/secrets-management.md#securestore---standard-for-olbrasoft-projects) for setup.
 
 **Note**: If you don't have Azure Speech resource yet, you need to create one:
 

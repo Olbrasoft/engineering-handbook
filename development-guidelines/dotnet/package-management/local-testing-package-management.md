@@ -13,6 +13,20 @@ How to test NuGet packages locally BEFORE publishing to NuGet.org.
 | Test realistic integration | Find bugs after public release |
 | Save CI/CD time | Waste workflow runs |
 
+## Important: Version Strategy
+
+**Olbrasoft packages normally use floating versions (`10.*`, `1.*`)** - see [Package Versioning](overview-package-management.md#olbrasoft-package-versioning).
+
+**During local testing ONLY:** Use exact versions temporarily to ensure the local package is used.
+
+```xml
+<!-- TEMPORARY during local testing -->
+<PackageReference Include="Olbrasoft.YourPackage" Version="1.0.5" />
+
+<!-- AFTER testing - switch back to floating version -->
+<PackageReference Include="Olbrasoft.YourPackage" Version="1.*" />
+```
+
 ## Workflow Steps
 
 ### 1. Build Package Locally

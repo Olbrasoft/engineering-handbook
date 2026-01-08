@@ -74,7 +74,7 @@ sudo ./deploy/deploy.sh /opt/olbrasoft/github-issues
 - **Repository**: https://github.com/Olbrasoft/GitHub.Issues
 - **Production**: https://plumbaginous-zoe-unexcusedly.ngrok-free.dev
 - **CLAUDE.md**: `/home/jirka/Olbrasoft/GitHub.Issues/CLAUDE.md` (project-specific instructions)
-- **API Keys**: `~/Dokumenty/přístupy/api-keys.md` (NOT in Git!)
+- **API Keys**: SecureStore vault (`~/.config/github-issues/secrets/secrets.json`)
 
 ---
 

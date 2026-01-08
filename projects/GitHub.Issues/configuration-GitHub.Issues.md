@@ -102,7 +102,7 @@ Configuration is split across multiple files:
 }
 ```
 
-**Security Note**: API keys are stored in `~/Dokumenty/přístupy/api-keys.md` (NOT committed to Git) and populated in production config.
+**Security Note**: API keys are stored in SecureStore encrypted vault (`~/.config/github-issues/secrets/secrets.json`). See [API Keys Management](translation/api-keys-translation.md).
 
 ---
 

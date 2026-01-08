@@ -1,60 +1,55 @@
 ## API Keys Management
 
-### Where API Keys Are Stored
+### Storage with SecureStore
 
 **CRITICAL SECURITY RULE**: API keys are **NEVER committed to Git**.
 
-| Location | Purpose | Contains |
-|----------|---------|----------|
-| `~/Dokumenty/přístupy/api-keys.md` | Master key storage (local only) | All API keys with metadata |
-| `/opt/olbrasoft/github-issues/config/appsettings.json` | Production runtime config | Actual keys used by app |
-| `src/*/appsettings.json` | Source code template | Empty arrays `[]` - NO keys! |
-| Environment variables | Runtime injection | Connection strings, sensitive data |
+GitHub.Issues uses **NeoSmart.SecureStore** for encrypted API key storage.
 
-### API Keys Structure
+**Storage Location:**
+```
+~/.config/github-issues/
+├── secrets/
+│   └── secrets.json      # Encrypted vault (AES + HMAC)
+└── keys/
+    └── secrets.key       # Encryption key (chmod 600!)
+```
 
-**File**: `~/Dokumenty/přístupy/api-keys.md` (NEVER commit to Git!)
+See [Secrets Management](../../../development-guidelines/secrets-management.md#securestore---standard-for-olbrasoft-projects) for complete setup guide.
 
-#### DeepL API Keys
+### Managing API Keys
 
-**Location**: `~/Dokumenty/přístupy/api-keys.md` (lines 661-746)
+```bash
+# Define paths
+SECRETS_PATH=~/.config/github-issues/secrets/secrets.json
+KEY_PATH=~/.config/github-issues/keys/secrets.key
 
-DeepL API keys are stored securely in the local access credentials file. Each key includes:
-- Key value (with `:fx` suffix for Free tier)
-- Associated email account
-- Tier information (Free: 500k chars/month)
-- Current status and usage
-- Reset date (based on account creation date)
-- Designated usage (Primary/Secondary for GitHub.Issues)
+# List all secrets
+SecureStore get -s $SECRETS_PATH -k $KEY_PATH --all
 
-**To access keys**: See `~/Dokumenty/přístupy/api-keys.md`
+# Add/update a key
+SecureStore set -s $SECRETS_PATH -k $KEY_PATH "TranslatorPool:DeepLApiKey1=YOUR_KEY:fx"
+```
 
-**Important Notes**:
+### Translation API Keys
+
+| Provider | SecureStore Key | Tier | Monthly Quota |
+|----------|-----------------|------|---------------|
+| DeepL #1 | `TranslatorPool:DeepLApiKey1` | Free | 500k chars |
+| DeepL #2 | `TranslatorPool:DeepLApiKey2` | Free | 500k chars |
+| Azure #1 | `TranslatorPool:AzureApiKey1` | Free F0 | 2M chars (shared) |
+| Azure #2 | `TranslatorPool:AzureApiKey2` | Free F0 | 2M chars (shared) |
+
+**Notes:**
 - DeepL Free keys have `:fx` suffix
-- Reset date is based on **account creation date**, NOT calendar month
-- Each key is tied to specific email account
+- Azure keys share quota (2M total, NOT 4M)
+- DeepL resets on account creation date, Azure on 1st of month
 
-#### Azure Translator Keys
+### Current Production Configuration
 
-**Location**: `~/Dokumenty/přístupy/api-keys.md` (lines 103-110)
+**Active Providers** (priority order):
 
-Azure Translator API keys are stored securely in the local access credentials file. Configuration includes:
-- Resource name and region
-- Tier information (Free F0: 2M chars/month)
-- Two active keys (KEY 1 and KEY 2)
-
-**To access keys**: See `~/Dokumenty/přístupy/api-keys.md`
-
-**Important Notes**:
-- Both keys share the **same quota** (2M total, NOT 4M)
-- Use key rotation for load balancing, not quota multiplication
-- Reset date is calendar month (1st of each month)
-
-### Current Production Configuration (2025-12-29)
-
-**Active Providers** (in order):
-
-1. **DeepL** - 2 keys (Crow + OpenCode) = 1M chars/month available
+1. **DeepL** - 2 keys = 1M chars/month
 2. **Azure** - 2 keys = 2M chars/month total
 3. **Google** - No key = Unlimited (soft limits)
 4. **Bing** - No key = Rate-limited (last resort)

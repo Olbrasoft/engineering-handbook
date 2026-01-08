@@ -153,19 +153,32 @@ curl -X GET 'https://api-free.deepl.com/v2/usage' \
 
 ## API Keys
 
-### Our API Keys
+### Storage Location
 
-**Location**: `~/Dokumenty/přístupy/api-keys.md` (lines 661-746)
+**All Olbrasoft projects use SecureStore** for API key storage.
 
-DeepL API keys are stored securely in the local access credentials file. Each key entry includes:
-- API key value (Free tier format: `xxxxxx:fx`)
-- Associated email account
-- Tier information (Free: 500k chars/month)
-- Current status (Active/Exhausted)
-- Reset date (based on account creation date)
-- Designated usage (Primary/Secondary for GitHub.Issues)
+See [Secrets Management](../../development-guidelines/secrets-management.md#securestore---standard-for-olbrasoft-projects) for setup instructions.
 
-**To access keys**: See `~/Dokumenty/přístupy/api-keys.md`
+**SecureStore paths:**
+```
+~/.config/{app-name}/secrets/secrets.json  # Encrypted vault
+~/.config/{app-name}/keys/secrets.key      # Encryption key
+```
+
+**Example for GitHub.Issues:**
+```bash
+# Add DeepL keys
+SecureStore set -s ~/.config/github-issues/secrets/secrets.json \
+  -k ~/.config/github-issues/keys/secrets.key \
+  "TranslatorPool:DeepLApiKey1=YOUR_KEY:fx"
+```
+
+### Key Configuration
+
+| Key | SecureStore Key | Tier | Quota |
+|-----|-----------------|------|-------|
+| Primary | `TranslatorPool:DeepLApiKey1` | Free | 500k chars/month |
+| Secondary | `TranslatorPool:DeepLApiKey2` | Free | 500k chars/month |
 
 **Current Setup**: Multiple Free tier keys (500k chars/month each) for load distribution
 
@@ -249,12 +262,12 @@ public record DeepLUsage(
 
 **Bash Example**:
 
-**Note**: Get API key from `~/Dokumenty/přístupy/api-keys.md`
+**Note**: Get API key from SecureStore vault (see [Secrets Management](../../development-guidelines/secrets-management.md))
 
 ```bash
 #!/bin/bash
 
-# Replace with your actual API key from ~/Dokumenty/přístupy/api-keys.md
+# Replace with your actual API key from SecureStore
 API_KEY="YOUR_DEEPL_API_KEY:fx"
 
 # Get usage
@@ -495,7 +508,7 @@ DeepL supports **31 languages** (as of 2025):
 
 ### Basic Translation
 
-**Note**: Replace `YOUR_DEEPL_API_KEY` with actual key from `~/Dokumenty/přístupy/api-keys.md`
+**Note**: Replace `YOUR_DEEPL_API_KEY` with actual key from SecureStore vault
 
 ```csharp
 using System.Net.Http;

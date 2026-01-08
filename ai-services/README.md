@@ -186,10 +186,12 @@ var translatorPool = new TranslatorPoolBuilder()
 
 | Location | Purpose | Security |
 |----------|---------|----------|
-| `~/Dokumenty/přístupy/api-keys.md` | Master key storage | ✅ Local only, NOT in Git |
-| `/opt/*/config/appsettings.json` | Production runtime | ✅ NOT in Git (deployment only) |
-| `src/*/appsettings.json` | Source code template | ⚠️ Empty arrays `[]` only |
-| Environment variables | Runtime injection | ✅ Secure (systemd, Docker) |
+| SecureStore vault | Encrypted key storage | ✅ AES + HMAC encrypted |
+| `~/.config/{app}/secrets/secrets.json` | Production runtime | ✅ Encrypted vault |
+| `~/.config/{app}/keys/secrets.key` | Encryption key | ⚠️ chmod 600 only! |
+| `src/*/appsettings.json` | Source code template | ⚠️ NO keys, only config |
+
+See [Secrets Management](../development-guidelines/secrets-management.md#securestore---standard-for-olbrasoft-projects) for setup.
 
 ### Current API Keys Summary
 
@@ -203,8 +205,8 @@ var translatorPool = new TranslatorPoolBuilder()
 - KEY 2: `EKLQ...VPa` - ✅ Active
 
 **Azure Speech** (if configured):
-- KEY 1: [Check `~/Dokumenty/přístupy/api-keys.md`]
-- KEY 2: [Check `~/Dokumenty/přístupy/api-keys.md`]
+- KEY 1: [Check SecureStore vault]
+- KEY 2: [Check SecureStore vault]
 
 **Total Translation Capacity** (as of 2025-12-29):
 - DeepL: 1M chars/month (2 active keys)
@@ -289,7 +291,7 @@ CREATE TABLE ProviderUsage (
 
 **Service**: DeepL Free API
 
-**Note**: Account details stored in `~/Dokumenty/přístupy/api-keys.md`
+**Note**: Account details and keys stored in SecureStore encrypted vault
 
 Each DeepL Free account resets based on its creation date (not calendar month). Each account has:
 - Associated email address
@@ -351,7 +353,7 @@ Each DeepL Free account resets based on its creation date (not calendar month). 
 
 1. **Choose services** based on requirements (quality, quota, languages)
 2. **Read individual service docs** (DeepL.md, Azure-Translator.md, etc.)
-3. **Get API keys** from `~/Dokumenty/přístupy/api-keys.md`
+3. **Set up API keys** in SecureStore vault (see [Secrets Management](../development-guidelines/secrets-management.md))
 4. **Implement usage tracking** (see [Issue #303](https://github.com/Olbrasoft/GitHub.Issues/issues/303))
 5. **Set up multi-provider fallback** (see [Translation System](../projects/GitHub.Issues/translation/index-translation.md))
 
