@@ -26,6 +26,23 @@ gh issue close 123 -R owner/repo
 
 ## Sub-Issues
 
+> [!CAUTION]
+> **STRICT RULE: SUB-ISSUE LINKING VIA API ONLY**
+>
+> It is **STRICTLY FORBIDDEN** to link sub-issues by pasting text links into the parent issue body.
+>
+> | ❌ FORBIDDEN | ✅ REQUIRED |
+> |--------------|-------------|
+> | Adding `#123` to description | Use GraphQL `addSubIssue` mutation |
+> | Adding `- [ ] #123` checkbox | Use `gh api graphql` command below |
+> | Pasting `https://github.com/.../issues/123` | Use MCP `github_sub_issue_write` tool |
+>
+> **Why this matters:**
+> - Text links create NO database relationship
+> - GitHub project boards cannot track text links
+> - Automation tools cannot detect text links
+> - Sub-issue progress tracking requires formal API linking
+
 **Why sub-issues > checkboxes:**
 - Trackable separately
 - Assignable to different people
@@ -34,12 +51,13 @@ gh issue close 123 -R owner/repo
 
 **Naming convention:** "Issue #57 - part of #56"
 
-**Create via API:**
+**Create via API (MANDATORY METHOD):**
 ```bash
-# Get issue node ID (not number!)
-gh api repos/owner/repo/issues/123 --jq '.node_id'
+# Step 1: Get issue node IDs (not numbers!)
+gh api repos/owner/repo/issues/123 --jq '.node_id'  # Parent
+gh api repos/owner/repo/issues/456 --jq '.node_id'  # Child
 
-# Link as sub-issue (GraphQL)
+# Step 2: Link as sub-issue (GraphQL) - THIS IS REQUIRED!
 gh api graphql -f query='
 mutation {
   addSubIssue(input: {
@@ -49,6 +67,14 @@ mutation {
     issue { id }
   }
 }'
+```
+
+**Using MCP Server (alternative):**
+```
+github_sub_issue_write:
+  - method: "add"
+  - issue_number: 123 (parent)
+  - sub_issue_id: 3725925667 (child numeric ID from API)
 ```
 
 ## PRs

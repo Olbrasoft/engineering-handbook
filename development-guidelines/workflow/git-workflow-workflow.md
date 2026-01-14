@@ -41,6 +41,19 @@ Never call without `perPage`. Max 100, rarely needed.
 
 ## Sub-Issues
 
+> [!CAUTION]
+> **STRICT PROHIBITION: TEXT LINKS ARE FORBIDDEN**
+>
+> It is **STRICTLY FORBIDDEN** to create sub-issues by pasting text links into the parent issue body.
+>
+> - ❌ **NEVER:** Add `#123` or `- [ ] #123` to issue description
+> - ❌ **NEVER:** Paste `https://github.com/.../issues/123` as link
+> - ✅ **ALWAYS:** Use `github_sub_issue_write` MCP tool or GraphQL API
+>
+> Text links create NO database relationship and break project tracking!
+>
+> **See:** [GitHub Operations](github-operations-workflow.md) for required API commands.
+
 **NEVER use checkboxes** → use native sub-issues.
 
 **WRONG:** "Part of #123" in body (just text, no relationship)
@@ -238,6 +251,8 @@ public void Test_WithData_Works(int value)
 - [ ] I know NOT to close an issue without user approval.
 
 - [ ] I've verified I'm working in the correct repository.
+
+- [ ] **I understand sub-issues MUST be linked via API, NOT text links.**
 
 
 
